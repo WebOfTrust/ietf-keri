@@ -2,7 +2,7 @@
 
 title: "Key Event Receipt Infrastructure (KERI)"
 abbrev: "KERI"
-docname: draft-todo-yourname-protocol-latest
+docname: draft-ssmith-keri-latest
 category: info
 
 ipr: trust200902

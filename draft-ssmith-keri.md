@@ -82,7 +82,7 @@ The attributable identifier may also be thought of as the autonomic identifier, 
 |kt| Keys Signing Threshold || |
 |k| List of Signing Keys (ordered key set)| | |
 |nt| Next Keys Signing Threshold || |
-|n| List of Next Key Digests |   | |
+|n| List of Next Key Digests (ordered digest set) |   | |
 |bt| Backer Threshold || |
 |b| List of Backers  (ordered backer set) | | |
 |br| List of Witnesses to Remove (ordered witness set) | | |

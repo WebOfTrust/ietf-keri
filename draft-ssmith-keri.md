@@ -31,19 +31,126 @@ informative:
         name: Samuel M. Smith
         org: ProSapien LLC
     date: 2021
+    
+  HCR:
+    target: https://en.wikipedia.org/wiki/Collision_resistance
+    title: Hash Collision Resistance
+  
+  ITPS:
+    target: https://en.wikipedia.org/wiki/Information-theoretic_security
+    title: Information-Theoretic and Perfect Security
+
+  OTP: 
+    target: https://en.wikipedia.org/wiki/One-time_pad
+    title: One-Time-Pad
+
+  VCphr: 
+    target: https://www.ciphermachinesandcryptology.com/en/onetimepad.htm
+    title: Vernom Cipher (OTP)
+    
+  SSplt: 
+    target: https://www.ciphermachinesandcryptology.com/en/secretsplitting.htm
+    title: Secret Splitting
+    
+  SShr: 
+    target: https://en.wikipedia.org/wiki/Secret_sharing
+    title: Secret Sharing
+    
+  CSPRNG: 
+    target: https://en.wikipedia.org/wiki/Cryptographically-secure_pseudorandom_number_generator
+    title: Cryptographically-secure pseudorandom number generator (CSPRNG)
+  
+  IThry: 
+    target: https://en.wikipedia.org/wiki/Information_theory
+    title: Information Theory
+    
+  QCHC:
+    target: https://cr.yp.to/hash/collisioncost-20090823.pdf
+    title: "Cost analysis of hash collisions: Will quantum computers make SHARCS obsolete?"
+    
+  EdSC:
+    target: https://eprint.iacr.org/2020/823
+    title: "The Provable Security of Ed25519: Theory and Practice Report"
+    
+  PSEd:
+    target: https://ieeexplore.ieee.org/document/9519456?denied=
+    title: "The Provable Security of Ed25519: Theory and Practice"
+    seriesinfo: 2021 IEEE Symposium on Security and Privacy (SP)
+    author:
+      -
+        ins: J. Brendel  
+        name: Jacqueline Brendel  
+      -
+        ins: C. Cremers  
+        name: Cas Cremers  
+      -
+        ins: D. Jackson  
+        name: Dennis Jackson    
+      -
+        ins: M. Zhao  
+        name: Mang Zhao  
+    date: 2021-05-24
+
+  TMEd:
+    target: https://eprint.iacr.org/2020/1244.pdf
+    title: Taming the many EdDSAs  
+  
+  Salt:
+    target: https://medium.com/@fridakahsas/salt-nonces-and-ivs-whats-the-difference-d7a44724a447
+    title: Salts, Nonces, and Initial Values 
+    
+  RB:
+    target: https://en.wikipedia.org/wiki/Rainbow_table
+    title: Rainbow Table 
+    
+  DRB:
+    target: https://www.commonlounge.com/discussion/2ee3f431a19e4deabe4aa30b43710aa7
+    title: Dictionary Attacks, Rainbow Table Attacks and how Password Salting defends against them
+    
+  BDay:
+    target: https://en.wikipedia.org/wiki/Birthday_attack
+    title: Birthday Attack
+    
+  BDC:
+    target: https://auth0.com/blog/birthday-attacks-collisions-and-password-strength/
+    title: Birthday Attacks, Collisions, And Password Strength
+      
+  DHKE:
+    target: https://www.infoworld.com/article/3647751/understand-diffie-hellman-key-exchange.html
+    title: "Diffie-Hellman Key Exchange" 
+
+  KeyEx:
+    target: https://libsodium.gitbook.io/doc/key_exchange
+    title: Key Exchange  
+    
+  IDSys:
+    target: https://github.com/SmithSamuelM/Papers/blob/master/whitepapers/Identity-System-Essentials.pdf
+    title: Identity System Essentials 
+    
+  Hash:
+    target: https://en.wikipedia.org/wiki/Cryptographic_hash_function
+    title: Cryptographic Hash Function 
+
+  W3C_DID:
+    target: https://w3c-ccg.github.io/did-spec/
+    title: W3C Decentralized Identifiers (DIDs) v1.0
+
+
 
 --- abstract
 
-An identity system based secure overlay for the Internet is presented. This is based on a Key Event Receipt Infrastructure (KERI) or the [KERI] protocol. This includes a primary root-of-trust in self-certifying identifiers (SCIDs). It presents a formalism for Autonomic Identifiers (AIDs) and Autonomic Namespaces (ANs). They are part of an Autonomic Identity System (AIS). This system uses the design principle of minimally sufficient means to provide a candidate trust spanning layer for the internet. Associated with this system is a decentralized key management infrastructure (DKMI). The primary root-of-trust are self-certifying identifiers that are strongly bound at issuance to a cryptographic signing (public, private) key-pair. These are self-contained until/unless control needs to be transferred to a new key-pair. In that event an append only chained key-event log of signed transfer statements provides end verifiable control provenance. This makes intervening operational infrastructure replaceable because the event logs may be served up by any infrastructure including ambient infrastructure. End verifiable logs on ambient infrastructure enables ambient verifiability (verifiable by anyone, anywhere, at anytime). 
+An identity system-based secure overlay for the Internet is presented. This is based on a Key Event Receipt Infrastructure (KERI) or the KERI protocol {{KERI}}{{KERI_ID}} . This includes a primary root-of-trust in self-certifying identifiers (SCIDs). It presents a formalism for Autonomic Identifiers (AIDs) and Autonomic Namespaces (ANs). They are part of an Autonomic Identity System (AIS). This system uses the design principle of minimally sufficient means to provide a candidate trust spanning layer for the internet. Associated with this system is a decentralized key management infrastructure (DKMI). The primary root-of-trust are self-certifying identifiers that are strongly bound at issuance to a cryptographic signing (public, private) key-pair. These are self-contained until/unless control needs to be transferred to a new key-pair. In that event an append-only chained key-event log of signed transfer statements provides end verifiable control provenance. This makes intervening operational infrastructure replaceable because the event logs may be served up by any infrastructure including ambient infrastructure. End verifiable logs on ambient infrastructure enable ambient verifiability (verifiable by anyone, anywhere, at anytime). 
 The primary key management operation is key rotation (transference) via a novel key pre-rotation scheme. Two primary trust modalities motivated the design, these are a direct (one-to-one) mode and an indirect (one-to-any) mode. The indirect mode depends on witnessed key event receipt logs (KERL) as a secondary root-of-trust for validating events. This gives rise to the acronym KERI for key event receipt infrastructure. In the direct mode, the identity controller establishes control via verified signatures of the controlling key-pair. The indirect mode extends that trust basis with witnessed key event receipt logs (KERL) for validating events. The security and accountability guarantees of indirect mode are provided by KA2CE or KERI’s Agreement Algorithm for Control Establishment among a set of witnesses. 
-The KA2CE approach may be much more performant and scalable than more complex approaches that depend on a total ordering distributed consensus ledger. Nevertheless KERI may employ a distributed consensus ledger  when other considerations make it the best choice. The KERI approach to DKMI allows more granular composition. Moreover, because KERI is event streamed it enables DKMI that operates in-stride with data events streaming applications such as web 3.0, IoT, and others where performance and scalability are more important. The core KERI engine is identifier independent. This makes KERI a candidate for a universal portable DKMI. 
+The KA2CE approach may be much more performant and scalable than more complex approaches that depend on a total ordering distributed consensus ledger. Nevertheless, KERI may employ a distributed consensus ledger when other considerations make it the best choice. The KERI approach to DKMI allows for more granular composition. Moreover, because KERI is event streamed it enables DKMI that operates in-stride with data events streaming applications such as web 3.0, IoT, and others where performance and scalability are more important. The core KERI engine is identifier namespace independent. This makes KERI a candidate for a universal portable DKMI {{KERI}}{{KERI_ID}}. 
 
 
 --- middle
 
 # Introduction
 
-The major motivation for this work is to provide a secure decentralized foundation of trust for the Internet as a trustable spanning layer. A major flaw in the original design of the Internet Protocol was that it had security layer (i.e. Session or Presentation layers). There was no built-in mechanism for security. Specifically the IP packet header includes a source address field to indicate the IP address of the device that sent the packet. Because the source address may be forged, a recipient may not know if the packet was sent by an imposter. Anyone can forge an IP (Internet Protocol) packet. This means that security mechanisms for the Internet must be overlaid (bolted-on). [KERI] provides such a security overlay.
+The major motivation for this work is to provide a secure decentralized foundation of trust for the Internet as a trustable spanning layer. A major flaw in the original design of the Internet Protocol was that it had a security layer (i.e. Session or Presentation layers). There was no built-in mechanism for security. Specifically, the IP packet header includes a source address field to indicate the IP address of the device that sent the packet. Because the source address may be forged, a recipient may not know if the packet was sent by an imposter. Anyone can forge an IP (Internet Protocol) packet. This means that security mechanisms for the Internet must be overlaid (bolted-on). KERI provides such a security overlay.
+
+
 
 # KERI Message and Seal Formats
 
@@ -55,17 +162,16 @@ The newly revised messages and seals are shown below.
 
 ### SAIDs and KERI Label Convention Normalization
 
+Because the order of appearance of fields is enforced in all KERI messages, where a label appears (in which message or which block in a message) adds the necessary context to fully determine its meaning.  
 
-Because the order of appearance of fields is enforced then where a label appears can add context to help
-clarify its meaning.  
+### Special Label Ordering Requirements
 
-`v` for version string when. it appears must be the first field
+The version string, `v`, field MUST be the first field when it appears. This enables a RegEx stream parser to consistently find the version string.
 
-We have two other identifiers that appear after `v` when `v` is present or may appear first
+There are two other identifiers that appear after `v` when `v` is present or may appear first
 when `v` is not present. These are `i` and `d`. 
 
-In this context, `i` is short for `ai`, the attributable identifier (controller identifier prefix).
-The attributable identifier may also be thought of as the autonomic identifier, the attesting identifier (testator), the authorizing identifier, the author identifier, and the authenticated identifier. A way of thinking about an `i` or `ai` is that it is the identifier of the authoritative entity to which a statement may be securely attributed, thereby making the statement verifiably authentic.
+In this context, `i` is short for `ai`, which is short for the Autonomic IDentifier (AID). The AID given by the `i` field may also be thought of as a securely attributable identifier, authoritative identifier, authenticatable identifier, authorizing identifier, or authoring identifier. Because AIDs may be namespaced, the essential component of an AID is the cryptographically derived Controller identifier prefix. An AID MUST be self-certifying. An AID may be simply the Controller identifier prefix or may be namespaced as part of a W3C Decentralized IDentifier (DID) {{W3C_DID}}. Another way of thinking about an `i` field is that it is the identifier of the authoritative entity to which a statement may be securely attributed, thereby making the statement verifiably authentic via a non-repudiable signature made by that authoritative entity as the Controller of the private key(s).
 
 
 ### KERI Defined Element Labels
@@ -78,7 +184,7 @@ The attributable identifier may also be thought of as the autonomic identifier, 
 |t| Message Type| | |
 |te| Last received Event Message Type in Key State Notice | | |
 |d| SAID of Event ||
-|p| Prior Event Digest | | |
+|p| Prior Event SAID | | |
 |kt| Keys Signing Threshold || |
 |k| List of Signing Keys (ordered key set)| | |
 |nt| Next Keys Signing Threshold || |
@@ -98,15 +204,13 @@ The attributable identifier may also be thought of as the autonomic identifier, 
 A label may have different values in different contexts but not a different value ***type***.
 
 
-## Normalized ACDC Labels
+## Common Normalized ACDC Labels
 
-`v` is version
-`t` is message type
-`s` is schema
-`d` is said everywhere
-`i` is a keri identifier prefix testator id and subject id AID
-`a` is attributes data anchors data 
-`p` is provenance include prior events and chained events and chained acdc sources
+`v` is version string
+`d` is SAID of enclosing block or map
+`i` is a KERI identifier AID
+`a` is data attributes or data anchors
+
 
 
 
@@ -360,12 +464,12 @@ For receipts the `d` field is the SAID of the asssociated event not the receipt 
 }
 ~~~
 
-## Registrar Seal
+### Backer Seal
 
 ~~~json
 {
-  "d" : "EFGKDDA8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM",
-  "bi": "BACDEFG8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
+  "bi": "BACDEFG8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM",
+  "d" : "EFGKDDA8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
 }
 
 ~~~
@@ -378,6 +482,17 @@ For receipts the `d` field is the SAID of the asssociated event not the receipt 
   "s": "3"
 }
 ~~~
+
+
+### Last Establishment Event Seal
+
+~~~json
+{
+  "i": "BACDEFG8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM",
+}
+
+~~~
+
 
 
 ## Other Messages
@@ -750,6 +865,22 @@ For receipts the `d` field is the SAID of the asssociated event not the receipt 
 ~~~
 
 
+
+
+# Appendix: Cryptographic Strength and Security
+
+## Cryptographic Strength 
+
+For crypto-systems with *perfect-security*, the critical design parameter is the number of bits of entropy needed to resist any practical brute force attack. In other words, when a large random or pseudo-random number from a cryptographic strength pseudo-random number generator (CSPRNG) {{CSPRNG}} expressed as a string of characters is used as a seed or private key to a cryptosystem with *perfect-security*, the critical design parameter is determined by the amount of random entropy in that string needed to withstand a brute force attack. Any subsequent cryptographic operations must preserve that minimum level of cryptographic strength. In information theory {{IThry}}{{ITPS}} the entropy of a message or string of characters is measured in bits. Another way of saying this is that the degree of randomness of a string of characters can be measured by the number of bits of entropy in that string.  Assuming conventional non-quantum computers, the convention wisdom is that, for systems with information-theoretic or perfect security, the seed/key needs to have on the order of 128 bits (16 bytes, 32 hex characters) of entropy to practically withstand any brute force attack. A cryptographic quality random or pseudo-random number expressed as a string of characters will have essentially as many bits of entropy as the number of bits in the number. For other crypto-systems such as digital signatures that do not have perfect security, the size of the seed/key may need to be much larger than 128 bits in order to maintain 128 bits of cryptographic strength.
+
+An N-bit long base-2 random number has 2<sup>N</sup> different possible values. Given that no other information is available to an attacker with perfect security, the attacker may need to try every possible value before finding the correct one. Thus the number of attempts that the attacker would have to try maybe as much as 2<sup>N-1</sup>.  Given available computing power, one can easily show that 128 is a large enough N to make brute force attack computationally infeasible.  
+
+Let's suppose that the adversary has access to supercomputers. Current supercomputers can perform on the order of one quadrillion operations per second. Individual CPU cores can only perform about 4 billion operations per second, but a supercomputer will parallelly employ many cores. A quadrillion is approximately 2<sup>50</sup> = 1,125,899,906,842,624. Suppose somehow an adversary had control over one million (2<sup>20</sup> = 1,048,576) supercomputers which could be employed in parallel when mounting a brute force attack. The adversary could then try 2<sup>50</sup> * 2<sup>20</sup> = 2<sup>70</sup> values per second (assuming very conservatively that each try only took one operation).
+There are about 3600 * 24 * 365 = 313,536,000 = 2<sup>log<sub>2</sub>313536000</sup>=2<sup>24.91</sup> ~= 2<sup>25</sup> seconds in a year. Thus this set of a million super computers could try 2<sup>50+20+25</sup> = 2<sup>95</sup> values per year. For a 128-bit random number this means that the adversary would need on the order of 2<sup>128-95</sup> = 2<sup>33</sup> = 8,589,934,592 years to find the right value. This assumes that the value of breaking the cryptosystem is worth the expense of that much computing power. Consequently, a cryptosystem with perfect security and 128 bits of cryptographic strength is computationally infeasible to break via brute force attack.
+
+## Information Theoretic Security and Perfect Security
+
+The highest level of cryptographic security with respect to a cryptographic secret (seed, salt, or private key) is called  *information-theoretic security* {{ITPS}}. A cryptosystem that has this level of security cannot be broken algorithmically even if the adversary has nearly unlimited computing power including quantum computing. It must be broken by brute force if at all. Brute force means that in order to guarantee success the adversary must search for every combination of key or seed. A special case of *information-theoretic security* is called *perfect-security* {{ITPS}}.  *Perfect-security* means that the ciphertext provides no information about the key. There are two well-known cryptosystems that exhibit *perfect security*. The first is a *one-time-pad* (OTP) or Vernum Cipher {{OTP}}{{VCphr}}, the other is *secret splitting* {{SSplt}}, a type of secret sharing {{SShr}} that uses the same technique as a *one-time-pad*. 
 
 
 

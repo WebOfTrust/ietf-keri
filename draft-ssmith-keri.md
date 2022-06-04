@@ -342,7 +342,7 @@ informative:
 
   DNSP:
     target: https://www.thesslstore.com/blog/dns-poisoning-attacks-a-guide-for-website-admins/
-    title: DNS Poisoning Attacks: A Guide for Website Admins
+    title: "DNS Poisoning Attacks: A Guide for Website Admins"
     seriesinfo: HashedOut, 2020/01/21
     author:
       ins: G. Stevens
@@ -358,7 +358,7 @@ informative:
 
   BBGP:
     target: https://www.usenix.org/conference/usenixsecurity18/presentation/birge-lee
-    title: Bamboozling certificate authorities with {BGP}
+    title: "Bamboozling certificate authorities with BGP"
     seriesinfo: "vol. 27th USENIX Security Symposium, no. 18, pp. 833-849, 2018"
     author:
       ins: H. Birge-Lee

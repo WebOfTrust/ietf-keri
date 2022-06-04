@@ -382,7 +382,7 @@ informative:
 
   RFC6962:
     target: https://tools.ietf.org/html/rfc6962
-    title: “RFC6962: Certificate Transparency, IETF, 2013"
+    title: "RFC6962: Certificate Transparency, IETF, 2013"
     author:
       -
         ins: B. Laurie

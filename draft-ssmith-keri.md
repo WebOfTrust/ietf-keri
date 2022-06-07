@@ -232,7 +232,6 @@ informative:
         ins: M. Zhao
         name: Mang Zhao
 
-
   TMEd:
     target: https://eprint.iacr.org/2020/1244.pdf
     title: Taming the many EdDSAs
@@ -272,6 +271,68 @@ informative:
   W3C_DID:
     target: https://w3c-ccg.github.io/did-spec/
     title: "W3C Decentralized Identifiers (DIDs) v1.0"
+
+  PKI:
+    target: https://en.wikipedia.org/wiki/Public-key_cryptography
+    title: Public-key Cryptography
+
+  SCPK:
+    target: https://link.springer.com/content/pdf/10.1007%2F3-540-46416-6_42.pdf
+    title: Self-certified public keys
+    seriesinfo: "EUROCRYPT 1991: Advances in Cryptology, pp. 490-497, 1991"
+    author:
+      ins: M. Girault
+      name: Marc Girault
+
+  SCURL:
+    target: https://pdos.csail.mit.edu/~kaminsky/sfs-http.ps
+    title: "SFS-HTTP: Securing the Web with Self-Certifying URLs"
+    seriesinfo: "Whitepaper, MIT, 1999"
+    author:
+      -
+        ins: M. Kaminsky
+        name: M. Kaminsky
+      -
+        ins: E. Banks
+        name: E. Banks
+
+  SFS:
+    target: https://pdos.csail.mit.edu/~kaminsky/sfs-http.ps
+    title: "Self-certifying File System"
+    seriesinfo: “MIT Ph.D. Dissertation"
+    date: 2000-06-01
+    author:
+      ins: D. Mazieres
+      name: David Mazieres
+
+  SCPN:
+    target: https://dl.acm.org/doi/pdf/10.1145/319195.319213
+    title: "Escaping the Evils of Centralized Control with self-certifying pathnames"
+    seriesinfo: “MIT Laboratory for Computer Science, 2000"
+    author:
+      -
+        ins: D. Mazieres
+        name: David Mazieres
+      -
+        ins: M. Kaashoek
+        name: M. F. Kaashoek
+
+  DNS:
+    target: https://en.wikipedia.org/wiki/Domain_Name_System
+    title: Domain Name System
+
+  DNSCA:
+    target: https://en.wikipedia.org/wiki/DNS_Certification_Authority_Authorization
+    title: DNS Certification Authority Authorization
+
+  CA:
+    target: https://en.wikipedia.org/wiki/Certificate_authority
+    title: Certificate Authority
+
+  RFC5280:
+    target: https://datatracker.ietf.org/doc/html/rfc5280
+    title: "Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"
+
 
 
 --- abstract

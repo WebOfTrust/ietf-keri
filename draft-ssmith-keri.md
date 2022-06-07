@@ -141,6 +141,68 @@ informative:
       name: Samuel M. Smith
       org: ProSapien LLC
 
+  UIT:
+    target: https://github.com/SmithSamuelM/Papers/blob/master/whitepapers/IdentifierTheory_web.pdf
+    title: Universay Identifier Theory
+    seriesinfo: WhitePaper
+    date: 2020
+    author:
+      ins: S. Smith
+      name: Samuel M. Smith
+
+  DAD:
+    target: https://github.com/SmithSamuelM/Papers/blob/master/whitepapers/DecentralizedAutonomicData.pdf
+    title: "Decentralized Autonomic Data (DAD) and the three R's of Key Management"
+    seriesinfo: WhitePaper
+    date: 2018
+    author:
+      ins: S. Smith
+      name: Samuel M. Smith
+
+  IDSys:
+    target: https://github.com/SmithSamuelM/Papers/blob/master/whitepapers/Identity-System-Essentials.pdf
+    title: Identity System Essentials
+    seriesinfo: WhitePaper
+    date: 2016
+    author:
+      -
+        ins: S. Smith
+        name: Samuel M. Smith
+      -
+        ins: D. Khovratovich
+        name: Dmitry Khovratovich
+
+  HCR:
+    target: https://en.wikipedia.org/wiki/Collision_resistance
+    title: Hash Collision Resistance
+
+  ITPS:
+    target: https://en.wikipedia.org/wiki/Information-theoretic_security
+    title: Information-Theoretic and Perfect Security
+
+  OTP:
+    target: https://en.wikipedia.org/wiki/One-time_pad
+    title: One-Time-Pad
+
+  VCphr:
+    target: https://www.ciphermachinesandcryptology.com/en/onetimepad.htm
+    title: Vernom Cipher (OTP)
+
+  SSplt:
+    target: https://www.ciphermachinesandcryptology.com/en/secretsplitting.htm
+    title: Secret Splitting
+
+  SShr:
+    target: https://en.wikipedia.org/wiki/Secret_sharing
+    title: Secret Sharing
+
+  CSPRNG:
+    target: https://en.wikipedia.org/wiki/Cryptographically-secure_pseudorandom_number_generator
+    title: Cryptographically-secure pseudorandom number generator (CSPRNG)
+
+  IThry:
+    target: https://en.wikipedia.org/wiki/Information_theory
+    title: Information Theory
 
 
 

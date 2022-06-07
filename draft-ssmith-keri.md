@@ -375,21 +375,6 @@ informative:
       ins: G. Stevens
       name: G. Stevens
 
-  BGPC:
-    target: https://petsymposium.org/2017/papers/hotpets/bgp-bogus-tls.pdf
-    title: Using BGP to acquire bogus TLS certificates
-    seriesinfo: "Workshop on Hot Topics in Privacy Enhancing Technologies, no. HotPETs 2017"
-    author:
-      ins: "H. Birge-Lee"
-      name: "H. Birge-Lee"
-
-  BBGP:
-    target: https://www.usenix.org/conference/usenixsecurity18/presentation/birge-lee
-    title: "Bamboozling certificate authorities with BGP"
-    seriesinfo: "vol. 27th USENIX Security Symposium, no. 18, pp. 833-849, 2018"
-    author:
-      ins: "H. Birge-Lee"
-      name: "H. Birge-Lee"
 
 
 --- abstract

@@ -375,50 +375,6 @@ informative:
       ins: G. Stevens
       name: G. Stevens
 
-  BGPC:
-    target: https://petsymposium.org/2017/papers/hotpets/bgp-bogus-tls.pdf
-    title: Using BGP to acquire bogus TLS certificates
-    seriesinfo: "Workshop on Hot Topics in Privacy Enhancing Technologies, no. HotPETs 2017"
-    author:
-      ins: "H. Birge-Lee"
-      name: "H. Birge-Lee"
-
-  BBGP:
-    target: https://www.usenix.org/conference/usenixsecurity18/presentation/birge-lee
-    title: "Bamboozling certificate authorities with BGP"
-    seriesinfo: "vol. 27th USENIX Security Symposium, no. 18, pp. 833-849, 2018"
-    author:
-      ins: "H. Birge-Lee"
-      name: "H. Birge-Lee"
-
-  CT:
-    target: https://queue.acm.org/detail.cfm?id=2668154
-    title: "Certificate Transparency: Public, verifieable, append-only logs"
-    seriesinfo: "ACMQueue, vol. Vol 12, Issue 9"
-    date: 2014-09-08
-    author:
-      ins: B. Laurie
-      name: B. Laurie
-
-  CTE:
-    target: https://certificate.transparency.dev
-    title: Certificate Transparency Ecosystem
-
-  RT:
-    target: https://www.links.org/files/RevocationTransparency.pdf
-    title: Revocation Transparency
-
-  VDS:
-    target: https://github.com/google/trillian/blob/master/docs/papers/VerifiableDataStructures.pdf
-    target: Verifiable Data Structures
-    seriesinfo: "WhitePaper"
-    date:  2015-11-01
-
-  ESMT:
-    target: https://eprint.iacr.org/2016/683.pdf
-    title: Efficient sparse merkle trees
-    seriesinfo: "Nordic Conference on Secure IT Systems, pp. 199-215, 2016"
-
 
 
 --- abstract

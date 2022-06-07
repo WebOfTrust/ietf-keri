@@ -404,20 +404,6 @@ informative:
     target: https://certificate.transparency.dev
     title: Certificate Transparency Ecosystem
 
-  RFC6962:
-    target: https://tools.ietf.org/html/rfc6962
-    title: "RFC6962: Certificate Transparency, IETF, 2013"
-    author:
-      -
-        ins: B. Laurie
-        name: B. Laurie
-      -
-        ins: A. Langley
-        name: A. Langley
-      -
-        ins: E. Kasper
-        name: E. Kasper
-
   RT:
     target: https://www.links.org/files/RevocationTransparency.pdf
     title: Revocation Transparency

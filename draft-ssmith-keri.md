@@ -392,6 +392,22 @@ informative:
       name: "H. Birge-Lee"
 
 
+  RFC6962:
+    target: https://tools.ietf.org/html/rfc6962
+    title: "RFC6962: Certificate Transparency, IETF, 2013"
+    date: 2013
+    author:
+      -
+        ins: B. Laurie
+        name: B. Laurie
+      -
+        ins: A. Langley
+        name: A. Langley
+      -
+        ins: E. Kasper
+        name: E. Kasper
+
+
 
 --- abstract
 

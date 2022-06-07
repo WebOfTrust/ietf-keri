@@ -391,6 +391,49 @@ informative:
       ins: "H. Birge-Lee"
       name: "H. Birge-Lee"
 
+  CT:
+    target: https://queue.acm.org/detail.cfm?id=2668154
+    title: "Certificate Transparency: Public, verifieable, append-only logs"
+    seriesinfo: "ACMQueue, vol. Vol 12, Issue 9"
+    date: 2014-09-08
+    author:
+      ins: B. Laurie
+      name: B. Laurie
+
+  CTE:
+    target: https://certificate.transparency.dev
+    title: Certificate Transparency Ecosystem
+
+  RFC6962:
+    target: https://tools.ietf.org/html/rfc6962
+    title: "RFC6962: Certificate Transparency, IETF, 2013"
+    author:
+      -
+        ins: B. Laurie
+        name: B. Laurie
+      -
+        ins: A. Langley
+        name: A. Langley
+      -
+        ins: E. Kasper
+        name: E. Kasper
+
+  RT:
+    target: https://www.links.org/files/RevocationTransparency.pdf
+    title: Revocation Transparency
+
+  VDS:
+    target: https://github.com/google/trillian/blob/master/docs/papers/VerifiableDataStructures.pdf
+    target: Verifiable Data Structures
+    seriesinfo: "WhitePaper"
+    date:  2015-11-01
+
+  ESMT:
+    target: https://eprint.iacr.org/2016/683.pdf
+    title: Efficient sparse merkle trees
+    seriesinfo: "Nordic Conference on Secure IT Systems, pp. 199-215, 2016"
+
+
 
 --- abstract
 

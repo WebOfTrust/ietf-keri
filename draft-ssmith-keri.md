@@ -422,6 +422,20 @@ informative:
       ins: B. Laurie
       name: B. Laurie
 
+  RT:
+    target: https://www.links.org/files/RevocationTransparency.pdf
+    title: Revocation Transparency
+
+  VDS:
+    target: https://github.com/google/trillian/blob/master/docs/papers/VerifiableDataStructures.pdf
+    title: Verifiable Data Structures
+    seriesinfo: "WhitePaper"
+    date:  2015-11-01
+
+  ESMT:
+    target: https://eprint.iacr.org/2016/683.pdf
+    title: Efficient sparse merkle trees
+    seriesinfo: "Nordic Conference on Secure IT Systems, pp. 199-215, 2016"
 
 
 --- abstract

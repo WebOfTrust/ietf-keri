@@ -408,6 +408,21 @@ informative:
         name: E. Kasper
 
 
+  CTE:
+    target: https://certificate.transparency.dev
+    title: Certificate Transparency Ecosystem
+
+
+  CT:
+    target: https://queue.acm.org/detail.cfm?id=2668154
+    title: "Certificate Transparency: Public, verifieable, append-only logs"
+    seriesinfo: "ACMQueue, vol. Vol 12, Issue 9"
+    date: 2014-09-08
+    author:
+      ins: B. Laurie
+      name: B. Laurie
+
+
 
 --- abstract
 

@@ -449,7 +449,41 @@ The KA2CE approach may be much more performant and scalable than more complex ap
 --- middle
 
 # Introduction
-This is the middle
+
+The main motivation for this work is to provide a secure decentralized foundation of attributional trust for the Internet as a trustable spanning layer in the form of an identifier system security overlay. This identifier system security overlay provides verifiable authorship (authenticity) of any message or data item via secure (cryptographically verifiable) attribution to a *cryptonymous (cryptographic strength pseudonymous)* *self-certifying identifier (SCID)* {{KERI}}{{UIT}}{{SCPK}}{{SFS}}{{SCPN}}{{SCURL}}{{PKI}}.
+
+A major flaw in the original design of the Internet Protocol was that it has no security layer(s) (i.e. Session or Presentation layers) to provide interoperable verifiable authenticity. There was no built-in mechanism for secure attribution to the source of a packet. Specifically, the IP packet header includes a source address field that indicates the IP address of the device that sent the packet. Anyone (including any intermediary) can forge an IP (Internet Protocol) packet. Because the source address of such a packet can be undetectably forged, a recipient may not be able to ascertain when or if the packet was sent by an imposter.  This means that secure attribution mechanisms for the Internet must be overlaid (bolted-on). KERI provides such a security overlay. We describe it as an identifier system security overlay. The KERI identifier system overlay leverages the properties of cryptonymous *self-certifying identifiers* (SCIDs) which are based on asymmetric public-key cryptography (PKI) to provide end-verifiable secure attribution of any message or data item without needing to trust in any intermediary {{PKI}}{{KERI}}{{UIT}}{{SCPK}}{{SFS}}{{SCPN}}{{SCURL}}{{PKI}}.
+
+
+
+## Key Pre-Rotation
+
+An important innovation of KERI is that it solves the key rotation problem of PKI and simple self-certifying identifiers via a novel but elegant mechanism we call key pre-rotation {{DAD}}{{KERI}}. This pre-rotation mechanism enables an entity to persistently maintain or regain control over an identifier in spite of the weakening over time or even the compromise of the current set of signing key pairs due to exposure. This control is re-established by rotating to a one-time use set of unexposed rotation key pairs that then become the current signing key pairs. Each rotation cryptographically commits to a new set of rotation keys without exposing them. Because the pre-rotated key pairs need never be exposed prior to their one-time use, their attack surface may be optimally minimized. The current key state is maintained via an append-only verifiable data structure we call a key event log (KEL). This gives rise to a new class of persistent decentralized identifiers which we call ***autonomic identifiers*** (AIDs). Autonomic means self-governing, self-regulating, or self-managing and is evocative of the self-certifying, self-relying, self-managing properties of this class of identifier.
+
+## Identifier-System Security-Overlay
+
+The function of the identifier-system security-overlay is to establish the authenticity (or authorship) of the message payload in an IP Packet by verifiably attributing it to a cryptonymous identifier via an attached set of one or more asymmetric key-pair-based non-repudiable digital signatures. The current valid set of associated asymmetric key-pair(s) is proven via a verifiable data structure called a key event log (KEL) {{KERI}}{{VDS}}{{ESMT}}{{RT}}. The identifier system provides a mapping between the identifier and the key-pair(s) that control the identifier, namely, the public key(s) from those key-pairs. The private key(s) is secret and is not shared.
+
+An authenticatable (verifiable) internet message (packet) or data item includes the identifier and data in its payload. Attached to the payload is a digital signature(s) made with the private key(s) from the controlling key-pair(s). Given the identifier in a message, any verifier of a message (data item) can use the identifier system mapping to look up the public key(s) belonging to the controlling key-pair(s). The verifier can then verify the attached signature(s) using that public key(s). Because the payload includes the identifier, the signature makes a non-repudiable cryptographic commitment to both the source identifier and the data in the payload.
+
+### Flaws
+
+There are two major flaws in many other PKI-based identifier system security overlays (including the Internet's DNS/CA system) {{PKI}}{{DNS}}{{DNSCA}}{{CA}}{{RFC5280}}.
+
+The first major flaw is that the mapping between the identifier (domain name) and the controlling key-pair(s) is asserted by a trusted entity e.g. certificate authority (CA) via a certificate. Because the mapping is merely asserted, a verifier can not cryptographically verify the mapping between the identifier and the controlling key-pair(s) but must trust the operational processes of the trusted entity (CA) who issued and signed the certificate. Important to note is that signature on the certificate is NOT made with the controlling key pairs of the identifier but made with key pairs controlled by the issuer (CA). The fact that the certificate is signed by the CA does not make the mapping itself verifiable merely that the assertion was made by the CA. The certificate addresses the authenticity of the mapping but not the veracity of the mapping. As is well known, a successful attack upon those operational processes may fool the verifier into trusting an invalid mapping i.e. the certificate {{CEDS}}{{KDDH}}{{DNSH}}{{SFTCA}}{{DNSP}}{{BGPC}}{{BBGP}}.
+
+The second major flaw is that when rotating the valid signing keys there is no cryptographically verifiable way to link the new (rotated in) controlling/signing key(s) to the prior (rotated out) controlling/signing key(s). Key rotation is merely implicitly asserted by a trusted entity (CA) by issuing a new certificate with new controlling/signing keys. Key rotation is necessary because over time the controlling key-pair(s) of an identifier becomes weak due to exposure when used to sign messages and must be replaced. Essentially, rotation by assertion with implicit revocation and replacement is essentially the same as starting over by creating a brand new independent mapping between a given identifier and a controlling key-pair(s). This start-over (independent) style of key rotation may well be one of the main reasons that PGP's web-of-trust failed {{WOT}}. Independence between rotation assertions fosters ambiguity as to the actual valid mapping between the identifier and its controlling key-pair(s) at any point in time. We call the state of the controlling keys for an identifier at any time the key state. Tracking key-state over time is essential to preventing this ambiguity. Without this tracking, the detection of potential ambiguity requires yet another bolt-on security overlay such as the certificate transparency system {{CTE}}{{CT}}{{RFC6962}}{{RT}}{{VDS}}{{ESMT}}.
+
+The KERI protocol fixes both of these flaws using a combination of ***autonomic identifiers***, a novel key ***pre-rotation*** scheme, a ***verifiable data structure*** (VDS) called a KEL as proof of key-state, and ***duplicity-evident*** mechanisms for evaluating and reconciling key state {{KERI}}.
+
+### Binding
+
+Any identifier-system security-overlay binds together identifiers, asymmetric key-pairs, and controllers. By ***identifier*** we mean some string of characters. By ***key-pairs*** we mean a set of asymmetric (public, private) cryptographic key pairs used to create and verify non-repudiable digital signatures. By ***controller*** we mean the entity or entities that each control a private key from the given set of ***key-pairs***.
+
+
+The following diagram shows the basic concept.
+
+
 
 
 # Conventions and Definitions

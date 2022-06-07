@@ -466,9 +466,9 @@ The function of the identifier-system security-overlay is to establish the authe
 
 An authenticatable (verifiable) internet message (packet) or data item includes the identifier and data in its payload. Attached to the payload is a digital signature(s) made with the private key(s) from the controlling key-pair(s). Given the identifier in a message, any verifier of a message (data item) can use the identifier system mapping to look up the public key(s) belonging to the controlling key-pair(s). The verifier can then verify the attached signature(s) using that public key(s). Because the payload includes the identifier, the signature makes a non-repudiable cryptographic commitment to both the source identifier and the data in the payload.
 
-### Flaws
+### Identifier System Security Overlay Flaws
 
-There are two major flaws in many other PKI-based identifier system security overlays (including the Internet's DNS/CA system) {{PKI}}{{DNS}}{{DNSCA}}{{CA}}{{RFC5280}}.
+There are two major flaws in conventional PKI-based identifier system security overlays (including the Internet's DNS/CA system) {{PKI}}{{DNS}}{{DNSCA}}{{CA}}{{RFC5280}}.
 
 The first major flaw is that the mapping between the identifier (domain name) and the controlling key-pair(s) is asserted by a trusted entity e.g. certificate authority (CA) via a certificate. Because the mapping is merely asserted, a verifier can not cryptographically verify the mapping between the identifier and the controlling key-pair(s) but must trust the operational processes of the trusted entity (CA) who issued and signed the certificate. Important to note is that signature on the certificate is NOT made with the controlling key pairs of the identifier but made with key pairs controlled by the issuer (CA). The fact that the certificate is signed by the CA does not make the mapping itself verifiable merely that the assertion was made by the CA. The certificate addresses the authenticity of the mapping but not the veracity of the mapping. As is well known, a successful attack upon those operational processes may fool the verifier into trusting an invalid mapping i.e. the certificate {{CEDS}}{{KDDH}}{{DNSH}}{{SFTCA}}{{DNSP}}{{BGPC}}{{BBGP}}.
 

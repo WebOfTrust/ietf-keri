@@ -333,6 +333,63 @@ informative:
     target: https://datatracker.ietf.org/doc/html/rfc5280
     title: "Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"
 
+  WOT:
+    target: https://en.wikipedia.org/wiki/Web_of_trust
+    title: Web of Trust
+
+  CEDS:
+    target: "https://resources.infosecinstitute.com/cybercrime-exploits-digital-certificates/#gref"
+    title: “How Cybercrime Exploits Digital Certificates”
+    seriesinfo: "InfoSecInstitute"
+    date: 2014-07-28
+
+  KDDH:
+    target: "https://krebsonsecurity.com/2019/02/a-deep-dive-on-the-recent-widespread-dns-hijacking-attacks/"
+    title: A Deep Dive on the Recent Widespread DNS Hijacking Attacks
+    seriesinfo: "KrebsonSecurity"
+    date: 2019-02-19
+
+  DNSH:
+    target: "https://arstechnica.com/information-technology/2019/01/a-dns-hijacking-wave-is-targeting-companies-at-an-almost-unprecedented-scale/"
+    title: A DNS hijacking wave is targeting companies at an almost unprecedented scale
+    seriesinfo: "Ars Technica"
+    date: 2019-01-10
+    author:
+      ins: D. Goodin
+      name: Dan Goodin
+
+  SFTCA:
+    target: https://pdfs.semanticscholar.org/7876/380d71dd718a22546664b7fcc5b413c1fa49.pdf
+    title: "Search for Trust: An Analysis and Comparison of CA System Alternatives and Enhancements"
+    seriesinfo: "Dartmouth Computer Science Technical Report TR2012-716, 2012"
+    author:
+      ins: A. Grant
+      name: A. C. Grant
+
+  DNSP:
+    target: https://www.thesslstore.com/blog/dns-poisoning-attacks-a-guide-for-website-admins/
+    title: "DNS Poisoning Attacks: A Guide for Website Admins"
+    seriesinfo: "HashedOut"
+    date: 2020/01/21
+    author:
+      ins: G. Stevens
+      name: G. Stevens
+
+  BGPC:
+    target: https://petsymposium.org/2017/papers/hotpets/bgp-bogus-tls.pdf
+    title: Using BGP to acquire bogus TLS certificates
+    seriesinfo: "Workshop on Hot Topics in Privacy Enhancing Technologies, no. HotPETs 2017"
+    author:
+      ins: "H. Birge-Lee"
+      name: "H. Birge-Lee"
+
+  BBGP:
+    target: https://www.usenix.org/conference/usenixsecurity18/presentation/birge-lee
+    title: "Bamboozling certificate authorities with BGP"
+    seriesinfo: "vol. 27th USENIX Security Symposium, no. 18, pp. 833-849, 2018"
+    author:
+      ins: "H. Birge-Lee"
+      name: "H. Birge-Lee"
 
 
 --- abstract

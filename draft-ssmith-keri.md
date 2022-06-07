@@ -205,6 +205,74 @@ informative:
     title: Information Theory
 
 
+  QCHC:
+    target: https://cr.yp.to/hash/collisioncost-20090823.pdf
+    title: "Cost analysis of hash collisions: Will quantum computers make SHARCS obsolete?"
+
+  EdSC:
+    target: https://eprint.iacr.org/2020/823
+    title: "The Provable Security of Ed25519: Theory and Practice Report"
+
+  PSEd:
+    target: https://ieeexplore.ieee.org/document/9519456?denied=
+    title: "The Provable Security of Ed25519: Theory and Practice"
+    seriesinfo: "2021 IEEE Symposium on Security and Privacy (SP)"
+    date: 2021-05-24
+    author:
+      -
+        ins: J. Brendel
+        name: Jacqueline Brendel
+      -
+        ins: C. Cremers
+        name: Cas Cremers
+      -
+        ins: D. Jackson
+        name: Dennis Jackson
+      -
+        ins: M. Zhao
+        name: Mang Zhao
+
+
+  TMEd:
+    target: https://eprint.iacr.org/2020/1244.pdf
+    title: Taming the many EdDSAs
+
+  Salt:
+    target: https://medium.com/@fridakahsas/salt-nonces-and-ivs-whats-the-difference-d7a44724a447
+    title: Salts, Nonces, and Initial Values
+
+  RB:
+    target: https://en.wikipedia.org/wiki/Rainbow_table
+    title: Rainbow Table
+
+  DRB:
+    target: https://www.commonlounge.com/discussion/2ee3f431a19e4deabe4aa30b43710aa7
+    title: Dictionary Attacks, Rainbow Table Attacks and how Password Salting defends against them
+
+  BDay:
+    target: https://en.wikipedia.org/wiki/Birthday_attack
+    title: Birthday Attack
+
+  BDC:
+    target: https://auth0.com/blog/birthday-attacks-collisions-and-password-strength/
+    title: Birthday Attacks, Collisions, And Password Strength
+
+  DHKE:
+    target: https://www.infoworld.com/article/3647751/understand-diffie-hellman-key-exchange.html
+    title: "Diffie-Hellman Key Exchange"
+
+  KeyEx:
+    target: https://libsodium.gitbook.io/doc/key_exchange
+    title: Key Exchange
+
+  Hash:
+    target: https://en.wikipedia.org/wiki/Cryptographic_hash_function
+    title: Cryptographic Hash Function
+
+  W3C_DID:
+    target: https://w3c-ccg.github.io/did-spec/
+    title: "W3C Decentralized Identifiers (DIDs) v1.0"
+
 
 --- abstract
 

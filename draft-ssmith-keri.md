@@ -294,6 +294,8 @@ informative:
 
   RFC0791: Internet
 
+  RRC0799: IND
+
   DNS:
     target: https://en.wikipedia.org/wiki/Domain_Name_System
     title: Domain Name System
@@ -377,27 +379,15 @@ informative:
       name: "H. Birge-Lee"
 
 
-  RFC6962:
-    target: https://tools.ietf.org/html/rfc6962
-    title: "RFC6962: Certificate Transparency, IETF, 2013"
-    date: 2013
-    author:
-      -
-        ins: B. Laurie
-        name: B. Laurie
-      -
-        ins: A. Langley
-        name: A. Langley
-      -
-        ins: E. Kasper
-        name: E. Kasper
+  RFC6962: CT
+
 
   CTE:
     target: https://certificate.transparency.dev
     title: Certificate Transparency Ecosystem
 
 
-  CT:
+  CTAOL:
     target: https://queue.acm.org/detail.cfm?id=2668154
     title: "Certificate Transparency: Public, verifiable, append-only logs"
     seriesinfo: "ACMQueue, vol. Vol 12, Issue 9"
@@ -457,15 +447,15 @@ An authenticatable (verifiable) internet message (packet) or data item includes 
 
 ### Security Overlay Flaws
 
-There are two major flaws in conventional PKI-based identifier system security overlays (including the Internet's DNS/CA system) {{PKI}}{{DNS}}{{DNSCA}}{{CA}}{{RFC5280}}.
+There are two major flaws in conventional PKI-based identifier system security overlays (including the Internet's DNS/CA system) {{PKI}}{{DNS}}{{RFC0799}}{{DNSCA}}{{CA}}{{RFC5280}}.
 
 The *first major flaw** is that the mapping between the identifier (domain name) and the controlling key-pair(s) is merely asserted by a trusted entity e.g. certificate authority (CA) via a certificate. Because the mapping is merely asserted, a verifier can not cryptographically verify the mapping between the identifier and the controlling key-pair(s) but must trust the operational processes of the trusted entity making that assertion, i.e. the CA who issued and signed the certificate. As is well known, a successful attack upon those operational processes may fool a verifier into trusting an invalid mapping i.e. the certificate is issued to the wrong key-pair(s) albeit with a verifiable signature from a valid certificate authority. {{CEDS}}{{KDDH}}{{DNSH}}{{SFTCA}}{{DNSP}}{{BGPC}}{{BBGP}}. Noteworthy is that the signature on the certificate is NOT made with the controlling key pairs of the identifier but made with key pairs controlled by the issuer i.e. th CA. The fact that the certificate is signed by the CA means that the mapping itself is not verifiable but merely that the CA asserted the mapping between key-pair(s) and identifier. The certificate merely provides evidence of the authenticity of the assignment of the mapping but not evidence of the veracity of the mapping.
 
 The *second major flaw* is that when rotating the valid signing keys there is no cryptographically verifiable way to link the new (rotated in) controlling/signing key(s) to the prior (rotated out) controlling/signing key(s). Key rotation is merely implicitly asserted by a trusted entity (CA) by issuing a new certificate with new controlling/signing keys.  Key rotation is necessary because over time the controlling key-pair(s) of an identifier becomes weak due to exposure when used to sign messages and must be replaced. An explicit rotation mechanism first revokes the old keys and then replaces them with new keys. Even a certificate revocation list (CRL) as per RFC5280, with an online status protocol (OCSP) registration as per RFC6960, does not provide a cryptographically verifiable connection between the old and new keys, it is merely asserted {{RFC5280}}{{RFC6960}}. The lack of a single universal CRL or registry means that multiple potential replacements may be valid. From a cryptographic verifiability perspective, rotation by assertion with a new certificate that either implicitly or explicitly provides revocation and replacement is essentially the same as starting over by creating a brand new independent mapping between a given identifier and the controlling key-pair(s). This start-over style of key rotation may well be one of the main reasons that PGP's web-of-trust failed {{WOT}}. Without a universally verifiable revocation mechanism, then any rotation (revocation and replacement) assertions either implicity or implicit are mutually independent of each other. This lack of universal cryptographic verifiability of a rotation fosters ambiguity at any point in time as to the actual valid mapping between the identifier and its controlling key-pair(s). In other words, for a given identifier, any or all assertions made by some set of CAs may be potentially valid.
 
-We call the state of the controlling keys for an identifier at any time the key state. Cryptographic verifiability of the key state over time is essential to remove this ambiguity. Without this verifiability, the detection of potential ambiguity requires yet another bolt-on security overlay such as the certificate transparency system {{CTE}}{{CT}}{{RFC6962}}{{RT}}{{VDS}}{{ESMT}}.
+We call the state of the controlling keys for an identifier at any time the key state. Cryptographic verifiability of the key state over time is essential to remove this ambiguity. Without this verifiability, the detection of potential ambiguity requires yet another bolt-on security overlay such as the certificate transparency system {{CTE}}{{CTAOL}}{{RFC6962}}{{RT}}{{VDS}}{{ESMT}}.
 
-The KERI protocol fixes both of these flaws using a combination of ***autonomic identifiers***, ***key pre-rotation***, a ***verifiable data structure*** (VDS) called a KEL as verifiable proof of key-state, and ***duplicity-evident*** mechanisms for evaluating and reconciling key state by validators {{KERI}}. Unlike certificate transparency, KERI enables detection of duplicity in the key state via non-repudiable cryptographic proofs of duplicity not merely the detection of inconsistency in the key state that may or may not be duplicitous {{KERI}}{{CT}}.
+The KERI protocol fixes both of these flaws using a combination of ***autonomic identifiers***, ***key pre-rotation***, a ***verifiable data structure*** (VDS) called a KEL as verifiable proof of key-state, and ***duplicity-evident*** mechanisms for evaluating and reconciling key state by validators {{KERI}}. Unlike certificate transparency, KERI enables detection of duplicity in the key state via non-repudiable cryptographic proofs of duplicity not merely the detection of inconsistency in the key state that may or may not be duplicitous {{KERI}}{{CTAOL}}.
 
 ### Bindings
 

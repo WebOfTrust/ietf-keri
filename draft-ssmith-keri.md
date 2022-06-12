@@ -294,7 +294,7 @@ informative:
 
   RFC0791: Internet
 
-  RRC0799: IND
+  RFC0799: IND
 
   DNS:
     target: https://en.wikipedia.org/wiki/Domain_Name_System

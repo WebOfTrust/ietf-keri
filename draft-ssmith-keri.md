@@ -331,9 +331,7 @@ informative:
     target: https://en.wikipedia.org/wiki/Certificate_authority
     title: Certificate Authority
 
-  RFC5280: CRL
-    target: "https://datatracker.ietf.org/doc/html/rfc5280"
-    title: "Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"
+  RFC5280: ICRL
 
   CRL:
      target: https://en.wikipedia.org/wiki/Certificate_revocation_list

@@ -67,30 +67,17 @@ normative:
       name: Phil Feairheller
       org: GLEIF
 
+  RFC6901: JSONPTR
 
-  RFC6901:
-    target: https://datatracker.ietf.org/doc/html/rfc6901
-    title: JavaScript Object Notation (JSON) Pointer
-    date: 2003
-    author:
-      -
-        name: Paul C. Bryan
-      -
-        name: Kris Zyp
-      -
-        name: Mark Nottingham
-
-  JSON:
+  JSOND:
     target: https://www.json.org/json-en.html
-    title: JavaScript Object Notation Delimeters
+    title: JavaScript Object Notation Delimiters
 
-  RFC8259:
-    target: https://datatracker.ietf.org/doc/html/rfc8259
-    title: JSON (JavaScript Object Notation)
+  RFC8259: JSON
 
-  RFC4627:
-    target: https://datatracker.ietf.org/doc/rfc4627/
-    title: The application/json Media Type for JavaScript Object Notation (JSON)
+
+  RFC4627: JSONMIME
+
 
   JSch:
     target: https://json-schema.org
@@ -100,34 +87,22 @@ normative:
     target: https://json-schema.org/draft/2020-12/release-notes.html
     title: "JSON Schema 2020-12"
 
-  CBOR:
+  CBORC:
     target: https://en.wikipedia.org/wiki/CBOR
     title: CBOR Mapping Object Codes
 
-  RFC8949:
-    target: https://datatracker.ietf.org/doc/rfc8949/
-    title: Concise Binary Object Representation (CBOR)
-    date: 2020-12-04
-    author:
-      -
-        ins: C. Bormann
-        name: Carsten Bormann
-      -
-        ins: P. Hoffman
-        name: Paul Hoffman
+  RFC8949: CBOR
 
 
   MGPK:
     target: https://github.com/msgpack/msgpack/blob/master/spec.md
     title: Msgpack Mapping Object Codes
 
-  RFC3986:
-    target: https://datatracker.ietf.org/doc/html/rfc3986
-    title: "Uniform Resource Identifier (URI): Generic Syntax"
+  RFC3986: URI
 
-  RFC8820:
-    target: https://datatracker.ietf.org/doc/html/rfc8820
-    title: URI Design and Ownership
+
+  RFC8820: URIDesign
+
 
 
 informative:
@@ -424,7 +399,7 @@ informative:
 
   CT:
     target: https://queue.acm.org/detail.cfm?id=2668154
-    title: "Certificate Transparency: Public, verifieable, append-only logs"
+    title: "Certificate Transparency: Public, verifiable, append-only logs"
     seriesinfo: "ACMQueue, vol. Vol 12, Issue 9"
     date: 2014-09-08
     author:

@@ -292,7 +292,7 @@ informative:
         ins: M. Kaashoek
         name: M. F. Kaashoek
 
-  RFC0791: Internet
+  RFC0791: IP
 
   RFC0799: IND
 

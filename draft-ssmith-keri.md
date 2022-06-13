@@ -178,10 +178,17 @@ informative:
     target: https://en.wikipedia.org/wiki/Information_theory
     title: Information Theory
 
-
   QCHC:
     target: https://cr.yp.to/hash/collisioncost-20090823.pdf
     title: "Cost analysis of hash collisions: Will quantum computers make SHARCS obsolete?"
+
+  TMCrypto:
+    target: https://eprint.iacr.org/2019/1492.pdf
+    title: “Too Much Crypto”
+    date: 2021-05-24
+    author:
+        ins: J. Aumasson
+        name: Jean-Philippe Aumasson
 
   EdSC:
     target: https://eprint.iacr.org/2020/823
@@ -429,6 +436,20 @@ informative:
     title: Efficient sparse merkle trees
     seriesinfo: "Nordic Conference on Secure IT Systems, pp. 199-215, 2016"
 
+  BLAKE3:
+    target: ttps://github.com/BLAKE3-team/BLAKE3
+    title: BLAKE3
+
+  BLAKE3Spec:
+    target: https://github.com/BLAKE3-team/BLAKE3-specs/blob/master/blake3.pdf
+    title: BLAKE3 one function, fast everywhere
+
+  BLAKE3Hash:
+    target: https://www.infoq.com/news/2020/01/blake3-fast-crypto-hash/
+    title: “BLAKE3 Is an Extremely Fast, Parallel Cryptographic Hash”
+    seriesinfo: InfoQ
+    date: 2020-01-12
+
 
 --- abstract
 
@@ -446,31 +467,33 @@ The KA2CE approach may be much more performant and scalable than more complex ap
 The main motivation for this work is to provide a secure decentralized foundation of attributional trust for the Internet as a trustable spanning layer in the form of an identifier system security overlay. This identifier system security overlay provides verifiable authorship (authenticity) of any message or data item via secure (cryptographically verifiable) attribution to a *cryptonymous (cryptographic strength pseudonymous)* *self-certifying identifier (SCID)* {{KERI}}{{UIT}}{{SCPK}}{{SFS}}{{SCPN}}{{SCURL}}{{PKI}}.
 
 A major flaw in the original design of the Internet Protocol was that it has no security layer(s) (i.e. Session or Presentation layers) to provide interoperable verifiable authenticity {{RFC0791}}. There was no built-in mechanism for secure attribution to the source of a packet. Specifically, the IP packet header includes a source address field that indicates the IP address of the device that sent the packet. Anyone (including any intermediary) can forge an IP (Internet Protocol) packet. Because the source address of such a packet can be undetectably forged, a recipient may not be able to ascertain when or if the packet was sent by an imposter.  This means that secure attribution mechanisms for the Internet must be overlaid (bolted-on). KERI provides such a security overlay. We describe it as an identifier system security overlay.
+
+## Self-Certifying IDentifier (SCID)
 The KERI identifier system overlay leverages the properties of cryptonymous ***self-certifying identifiers*** (SCIDs) which are based on asymmetric public-key cryptography (PKI) to provide end-verifiable secure attribution of any message or data item without needing to trust in any intermediary {{PKI}}{{KERI}}{{UIT}}{{SCPK}}{{SFS}}{{SCPN}}{{SCURL}}{{PKI}}.  A basic SCID is *ephemeral* and must be abandoned once the controlling private key becomes weakened from exposure. The generalization of SCIDs with enhanced properties such as persistence will be described later.
+
+## Autonomic IDentifier (AID)
+
+A Key Event Log (KEL) gives rise to an enhanced class of SCIDs that are persistent, not ephemeral because their keys may be refreshed or updated via rotation allowing secure control over the identifier in spite of key weakness or even compromise.
+The family of generalized enhanced SCIDs we call ***autonomic identifiers*** (AIDs). *Autonomic* means self-governing, self-regulating, or self-managing and is evocative of the self-certifying, self-managing properties of this class of identifier.
+
+## Key Pre-Rotation Basics
+
+An important innovation of KERI is that it solves the key rotation problem of PKI (including that of simple self-certifying identifiers) via a novel but elegant mechanism we call ***key pre-rotation*** {{DAD}}{{KERI}}. This *pre-rotation* mechanism enables an entity to persistently maintain or regain control over an identifier in spite of the exposure-related weakening over time or even compromise of the current set of controlling (signing) key pairs. With key pre-rotation, control over the identifier can be re-established by rotating to a one-time use set of unexposed but pre-committed rotation key pairs that then become the current signing key pairs. Each rotation in turn cryptographically commits to a new set of rotation keys but without exposing them. Because the pre-rotated key pairs need never be exposed prior to their one-time use, their attack surface may be optimally minimized. The current key-state is maintained via an append-only ***verifiable data structure*** we call a ***key event log*** (KEL).
 
 ## Cryptographic Primitives
 
 ### CESR
 
-A cryptographic primitive is a serialization used in a cryptographic operation including but not limited to a digest, a salt, a seed, a private key, a public key, or a signature. All cryptocraphic primitives in KERI MUST be expressed using the CESR (Compact Event Streaming Representation) protocol {{CESR_ID}}.  CESR supports round trip lossless conversion between its text, binary, and raw domain representations and lossless composability between its text and binary representations. Composability is ensured between any concatenated group of text primitives and the binary equivalent of that group because all CESR primitives are aligned on 24 bit boundaries. Both the text and binary domain representations are serializations suitable for transmission over the wire. The text domain representation is also suitable as a string value of a field or array element embedded in a field map serilaization such as JSON, CBOR, or MsgPack {{RFC8259}}{{JSOND}}{{RFC8949}}{{CBORC}}{{MGPK}}. The text domain uses the set of characters from the URL-safe variant of Base64 which in turn is a subset of the ASCII characters {{RFC4648}}{{RFC0020}}. For the sake of readability, all examples in this specification will be expressed in CESR's text domain.
+A ***cryptographic primitive ***is a serialization of a value associated with a cryptographic operation including but not limited to a digest (hash), a salt, a seed, a private key, a public key, or a signature. All cryptographic primitives in KERI MUST be expressed using the CESR (Compact Event Streaming Representation) protocol {{CESR_ID}}.  CESR supports round trip lossless conversion between its text, binary, and raw domain representations and lossless composability between its text and binary domain representations. Composability is ensured between any concatenated group of text primitives and the binary equivalent of that group because all CESR primitives are aligned on 24-bit boundaries. Both the text and binary domain representations are serializations suitable for transmission over the wire. The text domain representation is also suitable to be embedded as a string value of a field or array element as part of a field map serialization such as JSON, CBOR, or MsgPack {{RFC8259}}{{JSOND}}{{RFC8949}}{{CBORC}}{{MGPK}}. The text domain uses the set of characters from the URL-safe variant of Base64 which in turn is a subset of the ASCII character set {{RFC4648}}{{RFC0020}}. For the sake of readability, all examples in this specification will be expressed in CESR's text-domain.
 
 ### Fully Qualified
 
-When *fully qualified*, a cryptographic primitive includes a prepended derivation code that indicates the cryptographic algorithm or suite used for that derivation. Any cryptographic primitive expressed in either text or binary CESR is *fully qualified*. CESR supports several differnt types of encodings for the derivation codes. These include very compact codes. For example, a 256 bit (32 byte) digest using the Blake3 digest algorithm, i.e. Blake3-256, when expressed in the CESR text domain is 44 Base64 characters long and begins with the the one character derivation code `E`, such as, `EL1L56LyoKrIofnn0oPChS4EyzMHEEk75INJohDS_Bug`. The equivalent fully qualified binary domain representation is 33 bytes long.
-Unless otherwise indicated, all cryptographic primities in this specifiction will appear as *fully qualified* primitives using text domain CESR.
-
-## Key Pre-Rotation Basics
-
-An important innovation of KERI is that it solves the key rotation problem of PKI and simple self-certifying identifiers via a novel but elegant mechanism we call ***key pre-rotation*** {{DAD}}{{KERI}}. This pre-rotation mechanism enables an entity to persistently maintain or regain control over an identifier in spite of the weakening over time or even the compromise of the current set of signing key pairs due to exposure. This control is re-established by rotating to a one-time use set of unexposed rotation key pairs that then become the current signing key pairs. Each rotation cryptographically commits to a new set of rotation keys without exposing them. Because the pre-rotated key pairs need never be exposed prior to their one-time use, their attack surface may be optimally minimized. The current key state is maintained via an append-only ***verifiable data structure*** we call a key event log (KEL).
-
-## Autonomic IDentifiers (AIDs)
-
-A Key Event Log (KEL) gives rise to an enhanced class of SCIDs that are persistent, not ephemeral because their keys may be refreshed or updated via rotation allowing secure control over the identifier in spite of key weakness or even compromise.
-The family of generalized enhanced SCIDs we call ***autonomic identifiers*** (AIDs). Autonomic means self-governing, self-regulating, or self-managing and is evocative of the self-certifying, self-relying, self-managing properties of this class of identifier.
+When *fully qualified*, a cryptographic primitive includes a prepended derivation code that indicates the cryptographic algorithm or suite used for that derivation. This simplifies and compactifies essential information needed by a verifier of that cryptographic primitive. Any cryptographic primitive expressed in either text or binary CESR is *fully qualified*. THis is an essential property of CESR. The CESR protocol supports several different types of encoding tables for different types of derivation codes. These tables include very compact codes. For example, a 256-bit (32-byte) digest using the BLAKE3 digest algorithm, i.e. Blake3-256, when expressed in text-domain CESR is 44 Base64 characters long and begins with the one character derivation code `E`, such as, `EL1L56LyoKrIofnn0oPChS4EyzMHEEk75INJohDS_Bug` {{BLAKE3}}{{BLAKE3Spec}}{{BLAKE3Hash}}. The equivalent fully qualified binary domain representation is 33 bytes long.
+Unless otherwise indicated, all cryptographic primitives in this specification will appear as *fully qualified* primitives using text-domain CESR.
 
 ## Identifier-System Security-Overlay
 
-The function of the identifier-system security-overlay is to establish the authenticity (or authorship) of the message payload in an IP Packet by verifiably attributing it to a cryptonymous identifier via an attached set of one or more asymmetric key-pair-based non-repudiable digital signatures. The current valid set of associated asymmetric key-pair(s) is proven via a verifiable data structure called a key event log (KEL) {{KERI}}{{VDS}}{{ESMT}}{{RT}}. The identifier system provides a mapping between the identifier and the key-pair(s) that control the identifier, namely, the public key(s) from those key-pairs. The private key(s) is secret and is not shared.
+The function of KERI's identifier-system security-overlay is to establish the authenticity (or authorship) of the message payload in an IP Packet by verifiably attributing it to a cryptonymous self-certifying identifier (AID) via an attached set of one or more asymmetric key-pair-based non-repudiable digital signatures. The current valid set of associated asymmetric key-pair(s) is proven via a verifiable data structure called a ***key event log*** (KEL) {{KERI}}{{VDS}}{{ESMT}}{{RT}}. The identifier system provides a mapping between the identifier and the key-pair(s) that control the identifier, namely, the public key(s) from those key-pairs. The private key(s) is secret and is not shared.
 
 An authenticatable (verifiable) internet message (packet) or data item includes the identifier and data in its payload. Attached to the payload is a digital signature(s) made with the private key(s) from the controlling key-pair(s). Given the identifier in a message, any verifier of a message (data item) can use the identifier system mapping to look up the public key(s) belonging to the controlling key-pair(s). The verifier can then verify the attached signature(s) using that public key(s). Because the payload includes the identifier, the signature makes a non-repudiable cryptographic commitment to both the source identifier and the data in the payload.
 
@@ -485,7 +508,6 @@ The *second major flaw* is that when rotating the valid signing keys there is no
 We call the state of the controlling keys for an identifier at any time the key state. Cryptographic verifiability of the key state over time is essential to remove this ambiguity. Without this verifiability, the detection of potential ambiguity requires yet another bolt-on security overlay such as the certificate transparency system {{CTE}}{{CTAOL}}{{RFC6962}}{{RT}}{{VDS}}{{ESMT}}.
 
 The KERI protocol fixes both of these flaws using a combination of ***autonomic identifiers***, ***key pre-rotation***, a ***verifiable data structure*** (VDS) called a KEL as verifiable proof of key-state, and ***duplicity-evident*** mechanisms for evaluating and reconciling key state by validators {{KERI}}. Unlike certificate transparency, KERI enables the detection of duplicity in the key state via non-repudiable cryptographic proofs of duplicity not merely the detection of inconsistency in the key state that may or may not be duplicitous {{KERI}}{{CTAOL}}.
-
 
 
 ### Bindings
@@ -1241,7 +1263,7 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
 
 ## Cryptographic Strength
 
-For crypto-systems with *perfect-security*, the critical design parameter is the number of bits of entropy needed to resist any practical brute force attack. In other words, when a large random or pseudo-random number from a cryptographic strength pseudo-random number generator (CSPRNG) {{CSPRNG}} expressed as a string of characters is used as a seed or private key to a cryptosystem with *perfect-security*, the critical design parameter is determined by the amount of random entropy in that string needed to withstand a brute force attack. Any subsequent cryptographic operations must preserve that minimum level of cryptographic strength. In information theory {{IThry}}{{ITPS}} the entropy of a message or string of characters is measured in bits. Another way of saying this is that the degree of randomness of a string of characters can be measured by the number of bits of entropy in that string.  Assuming conventional non-quantum computers, the convention wisdom is that, for systems with information-theoretic or perfect security, the seed/key needs to have on the order of 128 bits (16 bytes, 32 hex characters) of entropy to practically withstand any brute force attack. A cryptographic quality random or pseudo-random number expressed as a string of characters will have essentially as many bits of entropy as the number of bits in the number. For other crypto-systems such as digital signatures that do not have perfect security, the size of the seed/key may need to be much larger than 128 bits in order to maintain 128 bits of cryptographic strength.
+For crypto-systems with *perfect-security*, the critical design parameter is the number of bits of entropy needed to resist any practical brute force attack. In other words, when a large random or pseudo-random number from a cryptographic strength pseudo-random number generator (CSPRNG) {{CSPRNG}} expressed as a string of characters is used as a seed or private key to a cryptosystem with *perfect-security*, the critical design parameter is determined by the amount of random entropy in that string needed to withstand a brute force attack. Any subsequent cryptographic operations must preserve that minimum level of cryptographic strength. In information theory {{IThry}}{{ITPS}} the entropy of a message or string of characters is measured in bits. Another way of saying this is that the degree of randomness of a string of characters can be measured by the number of bits of entropy in that string.  Assuming conventional non-quantum computers, the convention wisdom is that, for systems with information-theoretic or perfect security, the seed/key needs to have on the order of 128 bits (16 bytes, 32 hex characters) of entropy to practically withstand any brute force attack {{TMCrypto}}{{QCHC}}. A cryptographic quality random or pseudo-random number expressed as a string of characters will have essentially as many bits of entropy as the number of bits in the number. For other crypto-systems such as digital signatures that do not have perfect security, the size of the seed/key may need to be much larger than 128 bits in order to maintain 128 bits of cryptographic strength.
 
 An N-bit long base-2 random number has 2<sup>N</sup> different possible values. Given that no other information is available to an attacker with perfect security, the attacker may need to try every possible value before finding the correct one. Thus the number of attempts that the attacker would have to try maybe as much as 2<sup>N-1</sup>.  Given available computing power, one can easily show that 128 is a large enough N to make brute force attack computationally infeasible.
 

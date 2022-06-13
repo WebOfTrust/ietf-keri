@@ -220,7 +220,7 @@ informative:
 
   HDKC:
     target: https://github.com/WebOfTrustInfo/rwot1-sf/blob/master/topics-and-advance-readings/hierarchical-deterministic-keys--bip32-and-beyond.md
-    title: Hierarchical Deterministic Keys: BIP32 & Beyond
+    title: "Hierarchical Deterministic Keys: BIP32 & Beyond"
     author:
       -
         ins: C. Allen

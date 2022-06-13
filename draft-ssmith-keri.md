@@ -67,42 +67,21 @@ normative:
       name: Phil Feairheller
       org: GLEIF
 
-  RFC6901: JSONPTR
+  RFC8259: JSON
 
   JSOND:
     target: https://www.json.org/json-en.html
     title: JavaScript Object Notation Delimiters
 
-  RFC8259: JSON
-
-
-  RFC4627: JSONMIME
-
-
-  JSch:
-    target: https://json-schema.org
-    title: JSON Schema
-
-  JSch_202012:
-    target: https://json-schema.org/draft/2020-12/release-notes.html
-    title: "JSON Schema 2020-12"
+  RFC8949: CBOR
 
   CBORC:
     target: https://en.wikipedia.org/wiki/CBOR
     title: CBOR Mapping Object Codes
 
-  RFC8949: CBOR
-
-
   MGPK:
     target: https://github.com/msgpack/msgpack/blob/master/spec.md
     title: Msgpack Mapping Object Codes
-
-  RFC3986: URI
-
-
-  RFC8820: URIDesign
-
 
 
 informative:
@@ -146,6 +125,26 @@ informative:
       -
         ins: D. Khovratovich
         name: Dmitry Khovratovich
+
+  RFC4648: Base64
+
+  RFC0020: ASCII
+
+  RFC3986: URI
+
+  RFC8820: URIDesign
+
+  RFC4627: JSONMIME
+
+  JSch:
+    target: https://json-schema.org
+    title: JSON Schema
+
+  JSch_202012:
+    target: https://json-schema.org/draft/2020-12/release-notes.html
+    title: "JSON Schema 2020-12"
+
+  RFC6901: JSONPTR
 
   HCR:
     target: https://en.wikipedia.org/wiki/Collision_resistance
@@ -214,6 +213,25 @@ informative:
   Salt:
     target: https://medium.com/@fridakahsas/salt-nonces-and-ivs-whats-the-difference-d7a44724a447
     title: Salts, Nonces, and Initial Values
+
+  Stretch:
+    target: https://en.wikipedia.org/wiki/Key_stretching
+    title: Key stretching
+
+  HDKC:
+    target: https://github.com/WebOfTrustInfo/rwot1-sf/blob/master/topics-and-advance-readings/hierarchical-deterministic-keys--bip32-and-beyond.md
+    title: "Hierarchical Deterministic Keys: BIP32 & Beyond"
+    author:
+      -
+        ins: C. Allen
+        name: Christopher Allen
+      -
+        ins: S. Applecline
+        name: Shannon Applecline
+
+  OWF:
+    target: https://en.wikipedia.org/wiki/One-way_function
+    title: One-way_function
 
   RB:
     target: https://en.wikipedia.org/wiki/Rainbow_table
@@ -300,7 +318,7 @@ informative:
     target: https://en.wikipedia.org/wiki/Domain_Name_System
     title: Domain Name System
 
-  DNSCA:
+  CAA:
     target: https://en.wikipedia.org/wiki/DNS_Certification_Authority_Authorization
     title: DNS Certification Authority Authorization
 
@@ -316,7 +334,7 @@ informative:
 
   RFC6960: OCSP
 
-  OSCP:
+  OCSPW:
      target: https://en.wikipedia.org/wiki/Online_Certificate_Status_Protocol
      title: Online Certificate Status Protocol
 
@@ -430,6 +448,17 @@ The main motivation for this work is to provide a secure decentralized foundatio
 A major flaw in the original design of the Internet Protocol was that it has no security layer(s) (i.e. Session or Presentation layers) to provide interoperable verifiable authenticity {{RFC0791}}. There was no built-in mechanism for secure attribution to the source of a packet. Specifically, the IP packet header includes a source address field that indicates the IP address of the device that sent the packet. Anyone (including any intermediary) can forge an IP (Internet Protocol) packet. Because the source address of such a packet can be undetectably forged, a recipient may not be able to ascertain when or if the packet was sent by an imposter.  This means that secure attribution mechanisms for the Internet must be overlaid (bolted-on). KERI provides such a security overlay. We describe it as an identifier system security overlay.
 The KERI identifier system overlay leverages the properties of cryptonymous ***self-certifying identifiers*** (SCIDs) which are based on asymmetric public-key cryptography (PKI) to provide end-verifiable secure attribution of any message or data item without needing to trust in any intermediary {{PKI}}{{KERI}}{{UIT}}{{SCPK}}{{SFS}}{{SCPN}}{{SCURL}}{{PKI}}.  A basic SCID is *ephemeral* and must be abandoned once the controlling private key becomes weakened from exposure. The generalization of SCIDs with enhanced properties such as persistence will be described later.
 
+## Cryptographic Primitives
+
+### CESR
+
+A cryptographic primitive is a serialization used in a cryptographic operation including but not limited to a digest, a salt, a seed, a private key, a public key, or a signature. All cryptocraphic primitives in KERI MUST be expressed using the CESR (Compact Event Streaming Representation) protocol {{CESR_ID}}.  CESR supports round trip lossless conversion between its text, binary, and raw domain representations and lossless composability between its text and binary representations. Composability is ensured between any concatenated group of text primitives and the binary equivalent of that group because all CESR primitives are aligned on 24 bit boundaries. Both the text and binary domain representations are serializations suitable for transmission over the wire. The text domain representation is also suitable as a string value of a field or array element embedded in a field map serilaization such as JSON, CBOR, or MsgPack {{RFC8259}}{{JSOND}}{{RFC8949}}{{CBORC}}{{MGPK}}. The text domain uses the set of characters from the URL-safe variant of Base64 which in turn is a subset of the ASCII characters {{RFC4648}}{{RFC0020}}. For the sake of readability, all examples in this specification will be expressed in CESR's text domain.
+
+### Fully Qualified
+
+When *fully qualified*, a cryptographic primitive includes a prepended derivation code that indicates the cryptographic algorithm or suite used for that derivation. Any cryptographic primitive expressed in either text or binary CESR is *fully qualified*. CESR supports several differnt types of encodings for the derivation codes. These include very compact codes. For example, a 256 bit (32 byte) digest using the Blake3 digest algorithm, i.e. Blake3-256, when expressed in the CESR text domain is 44 Base64 characters long and begins with the the one character derivation code `E`, such as, `EL1L56LyoKrIofnn0oPChS4EyzMHEEk75INJohDS_Bug`. The equivalent fully qualified binary domain representation is 33 bytes long.
+Unless otherwise indicated, all cryptographic primities in this specifiction will appear as *fully qualified* primitives using text domain CESR.
+
 ## Key Pre-Rotation Basics
 
 An important innovation of KERI is that it solves the key rotation problem of PKI and simple self-certifying identifiers via a novel but elegant mechanism we call ***key pre-rotation*** {{DAD}}{{KERI}}. This pre-rotation mechanism enables an entity to persistently maintain or regain control over an identifier in spite of the weakening over time or even the compromise of the current set of signing key pairs due to exposure. This control is re-established by rotating to a one-time use set of unexposed rotation key pairs that then become the current signing key pairs. Each rotation cryptographically commits to a new set of rotation keys without exposing them. Because the pre-rotated key pairs need never be exposed prior to their one-time use, their attack surface may be optimally minimized. The current key state is maintained via an append-only ***verifiable data structure*** we call a key event log (KEL).
@@ -447,24 +476,32 @@ An authenticatable (verifiable) internet message (packet) or data item includes 
 
 ### Security Overlay Flaws
 
-There are two major flaws in conventional PKI-based identifier system security overlays (including the Internet's DNS/CA system) {{PKI}}{{DNS}}{{RFC0799}}{{DNSCA}}{{CA}}{{RFC5280}}.
+There are two major flaws in conventional PKI-based identifier system security overlays (including the Internet's DNS/CA system) {{PKI}}{{DNS}}{{RFC0799}}{{CAA}}{{CA}}{{RFC5280}}.
 
 The *first major flaw** is that the mapping between the identifier (domain name) and the controlling key-pair(s) is merely asserted by a trusted entity e.g. certificate authority (CA) via a certificate. Because the mapping is merely asserted, a verifier can not cryptographically verify the mapping between the identifier and the controlling key-pair(s) but must trust the operational processes of the trusted entity making that assertion, i.e. the CA who issued and signed the certificate. As is well known, a successful attack upon those operational processes may fool a verifier into trusting an invalid mapping i.e. the certificate is issued to the wrong key-pair(s) albeit with a verifiable signature from a valid certificate authority. {{CEDS}}{{KDDH}}{{DNSH}}{{SFTCA}}{{DNSP}}{{BGPC}}{{BBGP}}. Noteworthy is that the signature on the certificate is NOT made with the controlling key pairs of the identifier but made with key pairs controlled by the issuer i.e. th CA. The fact that the certificate is signed by the CA means that the mapping itself is not verifiable but merely that the CA asserted the mapping between key-pair(s) and identifier. The certificate merely provides evidence of the authenticity of the assignment of the mapping but not evidence of the veracity of the mapping.
 
-The *second major flaw* is that when rotating the valid signing keys there is no cryptographically verifiable way to link the new (rotated in) controlling/signing key(s) to the prior (rotated out) controlling/signing key(s). Key rotation is merely implicitly asserted by a trusted entity (CA) by issuing a new certificate with new controlling/signing keys.  Key rotation is necessary because over time the controlling key-pair(s) of an identifier becomes weak due to exposure when used to sign messages and must be replaced. An explicit rotation mechanism first revokes the old keys and then replaces them with new keys. Even a certificate revocation list (CRL) as per RFC5280, with an online status protocol (OCSP) registration as per RFC6960, does not provide a cryptographically verifiable connection between the old and new keys, it is merely asserted {{RFC5280}}{{RFC6960}}. The lack of a single universal CRL or registry means that multiple potential replacements may be valid. From a cryptographic verifiability perspective, rotation by assertion with a new certificate that either implicitly or explicitly provides revocation and replacement is essentially the same as starting over by creating a brand new independent mapping between a given identifier and the controlling key-pair(s). This start-over style of key rotation may well be one of the main reasons that PGP's web-of-trust failed {{WOT}}. Without a universally verifiable revocation mechanism, then any rotation (revocation and replacement) assertions either implicity or implicit are mutually independent of each other. This lack of universal cryptographic verifiability of a rotation fosters ambiguity at any point in time as to the actual valid mapping between the identifier and its controlling key-pair(s). In other words, for a given identifier, any or all assertions made by some set of CAs may be potentially valid.
+The *second major flaw* is that when rotating the valid signing keys there is no cryptographically verifiable way to link the new (rotated in) controlling/signing key(s) to the prior (rotated out) controlling/signing key(s). Key rotation is merely implicitly asserted by a trusted entity (CA) by issuing a new certificate with new controlling/signing keys.  Key rotation is necessary because over time the controlling key-pair(s) of an identifier becomes weak due to exposure when used to sign messages and must be replaced. An explicit rotation mechanism first revokes the old keys and then replaces them with new keys. Even a certificate revocation list (CRL) as per RFC5280, with an online status protocol (OCSP) registration as per RFC6960, does not provide a cryptographically verifiable connection between the old and new keys, it is merely asserted {{RFC5280}}{{RFC6960}}{{OCSPW}}. The lack of a single universal CRL or registry means that multiple potential replacements may be valid. From a cryptographic verifiability perspective, rotation by assertion with a new certificate that either implicitly or explicitly provides revocation and replacement is essentially the same as starting over by creating a brand new independent mapping between a given identifier and the controlling key-pair(s). This start-over style of key rotation may well be one of the main reasons that PGP's web-of-trust failed {{WOT}}. Without a universally verifiable revocation mechanism, then any rotation (revocation and replacement) assertions either implicity or implicit are mutually independent of each other. This lack of universal cryptographic verifiability of a rotation fosters ambiguity at any point in time as to the actual valid mapping between the identifier and its controlling key-pair(s). In other words, for a given identifier, any or all assertions made by some set of CAs may be potentially valid.
 
 We call the state of the controlling keys for an identifier at any time the key state. Cryptographic verifiability of the key state over time is essential to remove this ambiguity. Without this verifiability, the detection of potential ambiguity requires yet another bolt-on security overlay such as the certificate transparency system {{CTE}}{{CTAOL}}{{RFC6962}}{{RT}}{{VDS}}{{ESMT}}.
 
 The KERI protocol fixes both of these flaws using a combination of ***autonomic identifiers***, ***key pre-rotation***, a ***verifiable data structure*** (VDS) called a KEL as verifiable proof of key-state, and ***duplicity-evident*** mechanisms for evaluating and reconciling key state by validators {{KERI}}. Unlike certificate transparency, KERI enables the detection of duplicity in the key state via non-repudiable cryptographic proofs of duplicity not merely the detection of inconsistency in the key state that may or may not be duplicitous {{KERI}}{{CTAOL}}.
 
+
+
 ### Bindings
 
 Any identifier-system security-overlay binds together an ***identifier***, ***key-pairs***, and ***controllers***. By ***identifier*** we mean some string of characters. By ***key-pairs*** we mean a set of asymmetric (public, private) cryptographic key pairs used to create and verify non-repudiable digital signatures. By ***controllers*** we mean the set of entities whose members each control a private key from the given set of ***key-pairs***. When those bindings are strong then the overlay is highly *invulnerable* to attack.  In contrast, when those bindings are weak then the overlay is highly *vulnerable* to attack. The bindings for a given identifier form a *triad* that binds together the set of *controllers*, the set of *key-pairs*, and the *identifier*. To reiterate, the set of controllers is bound to the set of key-pairs, the set of key-pairs is bound to the identifier, and the identifier is bound to the set of controllers. This binding triad can be diagrammed as a triangle where each side is a binding and the three vertices are the *identifier*, the set of *controllers*, and the set of *key-pairs*.
 
-With KERI all the bindings of the triad are strong because they are cryptographically verifiable with a minimum cryptographic strength or level of approximately 128 bits. See the Appendix on cryptographic strength for more detail on its meaning. The bound triad is created as follows\:
-* Each controller of each key-pair creates a private key or seed of sufficient cryptographic strength.
+With KERI all the bindings of the triad are strong because they are cryptographically verifiable with a minimum cryptographic strength or level of approximately 128 bits. See the Appendix on cryptographic strength for more detail on its meaning.
 
-from a cryptographic strength pseudo-random number generator (CSPRNG) {{CSPRNG}}.
+
+
+The bound triad is created as follows\:
+
+* Each controller in the set of controllers creates an asymmetric `(pubic, private)` key-pair. The public key is derived from the private key or seed using a one-way derivation that MUST have a minimum cryptographic strength of approximately 128 bits. Depending on the crypto-suite used to derive a key-pair the private key or seed may itself have a length larger than 128 bits. A controller may use a cryptographic strength pseudo-random number generator (CSPRNG) {{CSPRNG}} to create the private key or seed material. Because the private key material must be kept secret, typically in a secure data store, the management of those secrets may be an important consideration. One approach to minimize the size of secrets is to create private keys or seeds from a secret salt. The salt MUST have an entropy of approximately 128 bits. The salt may then be stretched to meet the length requirements for the crypto suite's private key size {{Salt}}{{Stretch}}. In addition, a hierarchical deterministic derivation function may be used to further minimize storage requirements by leveraging a single salt for a set or sequence of private keys {{HDKC}}. Because each controller is the only entity in control (custody) of the private key, and the public key is universally uniquely derived from the private key using a cryptographic strength one-way function, then the binding between each controller and their key-pair is as strong as the ability of the controller to keep that key private {{OWF}}. The degree of protection is up to each controller to determine. For example, a controller could choose to store their private key in a safe, at the bottom of a coal mine, air-gapped from any network, with an ex-special forces team of guards. Or the controller could choose to store it in an encrypted data store (key chain) on a secure boot mobile device with a biometric lock or simply write it on a piece of paper and store it in a safe place. The important point is that the strength of the binding between controller and key-pair and does not need to be dependent on any trusted entity.
+
+* The identifier is universally uniquely derived from the set of public keys using a one-way derivation function. In the usual case this is a *fully qualified* cryptographic digest of the inception event. The inception event includes of list of the set of public keys. TheWhen the set of public keys has more
+
 
 
 The following diagram shows the basic concept.

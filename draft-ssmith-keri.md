@@ -540,7 +540,7 @@ Because the signatures on each event are non-repudiable, the existence of an alt
 
 At inception the KEL may be even more strongly bound to its tetrad by deriving the identifier from a digest of the *inception event*. Thereby even one change in not only the original controlling keys pairs but also the pre-rotated key pairs or any other incepting information included in the *inception event* will result in a different identifier.
 
-The essense of the KERI protocol is a strongly bound tetrad of identifier, key-pairs, controllers, and key event log that forms the basis of its identifier system security overlay. The full detailed exposition of the protocol is provided in the following sections.
+The essense of the KERI protocol is a strongly bound tetrad of identifier, key-pairs, controllers, and key event log that forms the basis of its identifier system security overlay. The KERI protocol introduces the concept of duplicity evident programming via duplicity evident verifiable data structures. The full detailed exposition of the protocol is provided in the following sections.
 
 # Basic Terminology
 

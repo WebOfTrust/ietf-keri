@@ -550,8 +550,8 @@ The essense of the KERI protocol is a strongly bound tetrad of identifier, key-p
 
 Several new terms were introduced above. These along with other terms helpful to describing KERI are defined below.
 
-AID:
-  Autonomic IDentifier. A member of a class of self-managing identifiers that MUST be self-certifying and MUST be encoded in CESR as qualified cryptographic primitives with an included derivation code as proem and MAY exhibit other self-managing properties such as transferable control using key pre-rotation.
+AID
+: Autonomic IDentifier. A member of a class of self-managing identifiers that MUST be self-certifying and MUST be encoded in CESR as qualified cryptographic primitives with an included derivation code as proem and MAY exhibit other self-managing properties such as transferable control using key pre-rotation.
 
 
 

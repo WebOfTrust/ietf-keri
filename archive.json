@@ -1,0 +1,223 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2021-12-12T01:17:02.855291+00:00",
+  "repo": "WebOfTrust/ietf-keri",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOGNIG6M4tFTEp",
+      "title": "Update and rename draft-todo-yourname-protocol.md to draft-ssmith-ker\u2026",
+      "url": "https://github.com/WebOfTrust/ietf-keri/pull/1",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "\u2026i.md",
+      "createdAt": "2021-10-12T16:42:45Z",
+      "updatedAt": "2021-10-12T16:43:20Z",
+      "baseRepository": "WebOfTrust/ietf-keri",
+      "baseRefName": "main",
+      "baseRefOid": "3652f8bb8b075dd8cdcb71c2b2f0247801ba1e76",
+      "headRepository": "WebOfTrust/ietf-keri",
+      "headRefName": "SmithSamuelM-patch-1",
+      "headRefOid": "25b72d4aca3c3d0f6f048414602bb5f49ad40e0b",
+      "closedAt": "2021-10-12T16:43:20Z",
+      "mergedAt": "2021-10-12T16:43:20Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "6567264e80bdcb9eb02f660a7cf4d34e7ff69703"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOGNIG6M4tFTxn",
+      "title": "Create LICENSE",
+      "url": "https://github.com/WebOfTrust/ietf-keri/pull/2",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-12T16:46:44Z",
+      "updatedAt": "2021-10-12T16:48:34Z",
+      "baseRepository": "WebOfTrust/ietf-keri",
+      "baseRefName": "main",
+      "baseRefOid": "883416f1bf8ea7bea89424f52a6f1ef983398210",
+      "headRepository": "WebOfTrust/ietf-keri",
+      "headRefName": "add-license-1",
+      "headRefOid": "f3a7647f85c33fc12def4a0c9c27f656a2b4faf2",
+      "closedAt": "2021-10-12T16:48:34Z",
+      "mergedAt": "2021-10-12T16:48:34Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "b8191026ba7724cdfee6f92adfdc9128626350f8"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOGNIG6M4tFUbk",
+      "title": "Update LICENSE.md",
+      "url": "https://github.com/WebOfTrust/ietf-keri/pull/3",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-12T16:50:18Z",
+      "updatedAt": "2021-10-12T16:50:38Z",
+      "baseRepository": "WebOfTrust/ietf-keri",
+      "baseRefName": "main",
+      "baseRefOid": "b8191026ba7724cdfee6f92adfdc9128626350f8",
+      "headRepository": "WebOfTrust/ietf-keri",
+      "headRefName": "SmithSamuelM-patch-2",
+      "headRefOid": "4624c7e795126fa0f771ab0742b0d82764754643",
+      "closedAt": "2021-10-12T16:50:38Z",
+      "mergedAt": "2021-10-12T16:50:38Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "9210043e609af19df86a43f577556e853f0a4e38"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDOGNIG6M4tFU6F",
+      "title": "Update CONTRIBUTING.md",
+      "url": "https://github.com/WebOfTrust/ietf-keri/pull/4",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-12T16:52:55Z",
+      "updatedAt": "2021-10-12T16:53:02Z",
+      "baseRepository": "WebOfTrust/ietf-keri",
+      "baseRefName": "main",
+      "baseRefOid": "9210043e609af19df86a43f577556e853f0a4e38",
+      "headRepository": "WebOfTrust/ietf-keri",
+      "headRefName": "SmithSamuelM-patch-3",
+      "headRefOid": "1cf875e0173f45a222948513552218a348987c1b",
+      "closedAt": "2021-10-12T16:53:02Z",
+      "mergedAt": "2021-10-12T16:53:02Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "c03c4b5e00de7df2840ef89c50258f1a8594808c"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 5,
+      "id": "PR_kwDOGNIG6M4tFWXc",
+      "title": "Update draft-ssmith-keri.md",
+      "url": "https://github.com/WebOfTrust/ietf-keri/pull/5",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-12T17:01:06Z",
+      "updatedAt": "2021-10-12T17:01:48Z",
+      "baseRepository": "WebOfTrust/ietf-keri",
+      "baseRefName": "main",
+      "baseRefOid": "c03c4b5e00de7df2840ef89c50258f1a8594808c",
+      "headRepository": "WebOfTrust/ietf-keri",
+      "headRefName": "SmithSamuelM-patch-4",
+      "headRefOid": "3457018427df2829da432443aa107fe39b8efea4",
+      "closedAt": "2021-10-12T17:01:48Z",
+      "mergedAt": "2021-10-12T17:01:48Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "103b4bfd1d4d5aafbbe66a4e72d402c84c183ad0"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDOGNIG6M4tFq6W",
+      "title": "Update CONTRIBUTING.md",
+      "url": "https://github.com/WebOfTrust/ietf-keri/pull/6",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-12T18:39:16Z",
+      "updatedAt": "2021-10-12T18:39:20Z",
+      "baseRepository": "WebOfTrust/ietf-keri",
+      "baseRefName": "main",
+      "baseRefOid": "103b4bfd1d4d5aafbbe66a4e72d402c84c183ad0",
+      "headRepository": "WebOfTrust/ietf-keri",
+      "headRefName": "SmithSamuelM-patch-5",
+      "headRefOid": "efcbff6c5b76f10dbe8a51dc531164dbb6290df2",
+      "closedAt": "2021-10-12T18:39:20Z",
+      "mergedAt": "2021-10-12T18:39:20Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "3210c7252f26ea8c01cc1a0e9dfb80c263c5d86e"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}

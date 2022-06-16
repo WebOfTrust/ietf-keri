@@ -240,6 +240,11 @@ informative:
     target: https://en.wikipedia.org/wiki/One-way_function
     title: One-way_function
 
+  COWF:
+    target: http://www.crypto-it.net/eng/theory/one-way-function.html
+    title: One-way Function
+    seriesinfo: Crypto-IT
+
   RB:
     target: https://en.wikipedia.org/wiki/Rainbow_table
     title: Rainbow Table
@@ -267,6 +272,7 @@ informative:
   Hash:
     target: https://en.wikipedia.org/wiki/Cryptographic_hash_function
     title: Cryptographic Hash Function
+
 
   W3C_DID:
     target: https://w3c-ccg.github.io/did-spec/
@@ -469,12 +475,13 @@ The main motivation for this work is to provide a secure decentralized foundatio
 A major flaw in the original design of the Internet Protocol was that it has no security layer(s) (i.e. Session or Presentation layers) to provide interoperable verifiable authenticity {{RFC0791}}. There was no built-in mechanism for secure attribution to the source of a packet. Specifically, the IP packet header includes a source address field that indicates the IP address of the device that sent the packet. Anyone (including any intermediary) can forge an IP (Internet Protocol) packet. Because the source address of such a packet can be undetectably forged, a recipient may not be able to ascertain when or if the packet was sent by an imposter.  This means that secure attribution mechanisms for the Internet must be overlaid (bolted-on). KERI provides such a security overlay. We describe it as an identifier system security overlay.
 
 ## Self-Certifying IDentifier (SCID)
-The KERI identifier system overlay leverages the properties of cryptonymous ***self-certifying identifiers*** (SCIDs) which are based on asymmetric public-key cryptography (PKI) to provide end-verifiable secure attribution of any message or data item without needing to trust in any intermediary {{PKI}}{{KERI}}{{UIT}}{{SCPK}}{{SFS}}{{SCPN}}{{SCURL}}{{PKI}}.  A basic SCID is *ephemeral* and must be abandoned once the controlling private key becomes weakened from exposure. The generalization of SCIDs with enhanced properties such as persistence will be described later.
+
+The KERI identifier system overlay leverages the properties of cryptonymous ***self-certifying identifiers*** (SCIDs) which are based on asymmetric public-key cryptography (PKI) to provide end-verifiable secure attribution of any message or data item without needing to trust in any intermediary {{PKI}}{{KERI}}{{UIT}}{{SCPK}}{{SFS}}{{SCPN}}{{SCURL}}. A self-certifying identifier (SCID) is uniquely cryptographically derived from the public key of an asymmetric key-pair, `(public, private)`. It is self-certifying in the sense that does not rely on a trusted entity. Any non-repudiable signature made with the private key may be verified by extracting the public-key from either the identifier itself or incepting information uniquely associated with the cryptographic derivation process for the identifier. In a basic SCID, the mapping between identifier and controlling public key is self-contained in the identifier itself. A basic SCID is *ephemeral* i.e. it does not support rotation of its key-pairs in the event of key weakness or compromise and therefore must be abandoned once the controlling private key becomes weakened or compromised from exposure. The generalization of SCIDs with enhanced properties such as persistence are called *autonomic identifiers* (AIDs).
 
 ## Autonomic IDentifier (AID)
 
 A Key Event Log (KEL) gives rise to an enhanced class of SCIDs that are persistent, not ephemeral because their keys may be refreshed or updated via rotation allowing secure control over the identifier in spite of key weakness or even compromise.
-The family of generalized enhanced SCIDs we call ***autonomic identifiers*** (AIDs). *Autonomic* means self-governing, self-regulating, or self-managing and is evocative of the self-certifying, self-managing properties of this class of identifier.
+This family of generalized enhanced SCIDs we call ***autonomic identifiers*** (AIDs). *Autonomic* means self-governing, self-regulating, or self-managing and is evocative of the self-certifying, self-managing properties of this class of identifier.
 
 ## Key Pre-Rotation Basics
 
@@ -490,7 +497,7 @@ A ***cryptographic primitive ***is a serialization of a value associated with a 
 
 ### Qualified Cryptographic Primitive
 
-When *qualified*, a cryptographic primitive includes a prepended derivation code (as a proem) that indicates the cryptographic algorithm or suite used for that derivation. This simplifies and compactifies the essential information needed to use that cryptographic primitive. All cryptographic primitives expressed in either text or binary CESR are *qualified* by definition. Qualification is an essential property of CESR. The CESR protocol supports several different types of encoding tables for different types of derivation codes. These tables include very compact codes. For example, a 256-bit (32-byte) digest using the BLAKE3 digest algorithm, i.e. Blake3-256, when expressed in text-domain CESR is 44 Base64 characters long and begins with the one character derivation code `E`, such as, `EL1L56LyoKrIofnn0oPChS4EyzMHEEk75INJohDS_Bug` {{BLAKE3}}{{BLAKE3Spec}}{{BLAKE3Hash}}. The equivalent *qualified* binary domain representation is 33 bytes long.
+When *qualified*, a cryptographic primitive includes a prepended derivation code (as a proem) that indicates the cryptographic algorithm or suite used for that derivation. This simplifies and compactifies the essential information needed to use that cryptographic primitive. All cryptographic primitives expressed in either text or binary CESR are *qualified* by definition. Qualification is an essential property of CESR {{CESR_ID}}. The CESR protocol supports several different types of encoding tables for different types of derivation codes. These tables include very compact codes. For example, a 256-bit (32-byte) digest using the BLAKE3 digest algorithm, i.e. Blake3-256, when expressed in text-domain CESR is 44 Base64 characters long and begins with the one character derivation code `E`, such as, `EL1L56LyoKrIofnn0oPChS4EyzMHEEk75INJohDS_Bug` {{BLAKE3}}{{BLAKE3Spec}}{{BLAKE3Hash}}. The equivalent *qualified* binary domain representation is 33 bytes long.
 Unless otherwise indicated, all cryptographic primitives in this specification will appear as *qualified* primitives using text-domain CESR.
 
 ## Identifier System Security Overlay
@@ -520,11 +527,11 @@ With KERI all the bindings of the triad are strong because they are cryptographi
 
 The bound triad is created as follows\:
 
-* Each controller in the set of controllers creates an asymmetric `(pubic, private)` key-pair. The public key is derived from the private key or seed using a one-way derivation that MUST have a minimum cryptographic strength of approximately 128 bits. Depending on the crypto-suite used to derive a key-pair the private key or seed may itself have a length larger than 128 bits. A controller may use a cryptographic strength pseudo-random number generator (CSPRNG) {{CSPRNG}} to create the private key or seed material. Because the private key material must be kept secret, typically in a secure data store, the management of those secrets may be an important consideration. One approach to minimize the size of secrets is to create private keys or seeds from a secret salt. The salt MUST have an entropy of approximately 128 bits. The salt may then be stretched to meet the length requirements for the crypto suite's private key size {{Salt}}{{Stretch}}. In addition, a hierarchical deterministic derivation function may be used to further minimize storage requirements by leveraging a single salt for a set or sequence of private keys {{HDKC}}. Because each controller is the only entity in control (custody) of the private key, and the public key is universally uniquely derived from the private key using a cryptographic strength one-way function, then the binding between each controller and their key-pair is as strong as the ability of the controller to keep that key private {{OWF}}. The degree of protection is up to each controller to determine. For example, a controller could choose to store their private key in a safe, at the bottom of a coal mine, air-gapped from any network, with an ex-special forces team of guards. Or the controller could choose to store it in an encrypted data store (key chain) on a secure boot mobile device with a biometric lock or simply write it on a piece of paper and store it in a safe place. The important point is that the strength of the binding between controller and key-pair and does not need to be dependent on any trusted entity.
+* Each controller in the set of controllers creates an asymmetric `(pubic, private)` key-pair. The public key is derived from the private key or seed using a one-way derivation that MUST have a minimum cryptographic strength of approximately 128 bits {{OWF}}{{COWF}}. Depending on the crypto-suite used to derive a key-pair the private key or seed may itself have a length larger than 128 bits. A controller may use a cryptographic strength pseudo-random number generator (CSPRNG) {{CSPRNG}} to create the private key or seed material. Because the private key material must be kept secret, typically in a secure data store, the management of those secrets may be an important consideration. One approach to minimize the size of secrets is to create private keys or seeds from a secret salt. The salt MUST have an entropy of approximately 128 bits. The salt may then be stretched to meet the length requirements for the crypto suite's private key size {{Salt}}{{Stretch}}. In addition, a hierarchical deterministic derivation function may be used to further minimize storage requirements by leveraging a single salt for a set or sequence of private keys {{HDKC}}. Because each controller is the only entity in control (custody) of the private key, and the public key is universally uniquely derived from the private key using a cryptographic strength one-way function, then the binding between each controller and their key-pair is as strong as the ability of the controller to keep that key private {{OWF}}{{COWF}}. The degree of protection is up to each controller to determine. For example, a controller could choose to store their private key in a safe, at the bottom of a coal mine, air-gapped from any network, with an ex-special forces team of guards. Or the controller could choose to store it in an encrypted data store (key chain) on a secure boot mobile device with a biometric lock or simply write it on a piece of paper and store it in a safe place. The important point is that the strength of the binding between controller and key-pair and does not need to be dependent on any trusted entity.
 
-* The identifier is universally uniquely derived from the set of public keys using a one-way derivation function. It is therefore an AID (qualified SCID). Associated with each identifier (AID) is incepting information that MUST include a list of the set of *qualified* public keys from the controlling key-pairs. In the usual case, the identifier is a *qualified* cryptographic digest of the serialization of all the incepting information for the identifier. Any change to even one bit of the incepting information changes the digest and hence changes the derived identifier. This includes any change to any one of the qualified public keys including its qualifying derivation code. To clarify, a *qualified* digest as identifier includes a derivation code as proem that indicates the cryptographic algorithm used for the digest. Thus a different digest algorithm results in a different identifier. In this usual case, the identifier is strongly cryptographically bound to not only the public keys but also any other incepting information from which the digest was generated.
+* The identifier is universally uniquely derived from the set of public keys using a one-way derivation function {{OWF}}{{COWF}}. It is therefore an AID (qualified SCID). Associated with each identifier (AID) is incepting information that MUST include a list of the set of *qualified* public keys from the controlling key-pairs. In the usual case, the identifier is a *qualified* cryptographic digest of the serialization of all the incepting information for the identifier. Any change to even one bit of the incepting information changes the digest and hence changes the derived identifier. This includes any change to any one of the qualified public keys including its qualifying derivation code. To clarify, a *qualified* digest as identifier includes a derivation code as proem that indicates the cryptographic algorithm used for the digest. Thus a different digest algorithm results in a different identifier. In this usual case, the identifier is strongly cryptographically bound to not only the public keys but also any other incepting information from which the digest was generated.
 
-  A special case may arise when the set of public keys has only one member, i.e. there is only one controlling key-pair. In this case, the controller of the identifier may choose to use only the *qualified* public key as the identifier instead of a *qualified* digest of the incepting information. In this case, the identifier is still strongly bound to the public key but is not so strongly bound to any other incepting information.  A variant of this single key-pair special case is an identifier that can not be rotated. Another way of describing an identifier that cannot be rotated is that it is a *non-transferable* identifier because control over the identifier cannot be transferred to a different set of controlling key-pairs. Whereas a rotatable key-pair is *transferable* because control may be transfered via rotation to a new set of key-pairs. Essentially, when non-transferable, the identifier's lifespan is *ephemeral*, not *persistent*, because any weakening or compromise of the controlling key-pair means that the identifier must be abandoned. Nonetheless, there are important use cases for an *ephemeral* self-certifying identifier. In all cases, the derivation code in the identifier indicates the type of identifier, whether it be a digest of the incepting information (multiple or single key-pair) or a single member special case derived from only the public key (both ephemeral or persistent).
+A special case may arise when the set of public keys has only one member, i.e. there is only one controlling key-pair. In this case, the controller of the identifier may choose to use only the *qualified* public key as the identifier instead of a *qualified* digest of the incepting information. In this case, the identifier is still strongly bound to the public key but is not so strongly bound to any other incepting information.  A variant of this single key-pair special case is an identifier that can not be rotated. Another way of describing an identifier that cannot be rotated is that it is a *non-transferable* identifier because control over the identifier cannot be transferred to a different set of controlling key-pairs. Whereas a rotatable key-pair is *transferable* because control may be transfered via rotation to a new set of key-pairs. Essentially, when non-transferable, the identifier's lifespan is *ephemeral*, not *persistent*, because any weakening or compromise of the controlling key-pair means that the identifier must be abandoned. Nonetheless, there are important use cases for an *ephemeral* self-certifying identifier. In all cases, the derivation code in the identifier indicates the type of identifier, whether it be a digest of the incepting information (multiple or single key-pair) or a single member special case derived from only the public key (both ephemeral or persistent).
 
 * Each controller in a set of controllers is may prove its contribution to the control over the identifier in either an interactive or non-interactive fashion. One form of interactive proof is to satisfy a challenge of that control. The challenger creates a unique challenge message. The controller responds by non-repudiably signing that challenge with the private key from the key-pair under its control. The challenger can then cryptographically verify the signature using the public key from the controller's key-pair. One form of non-interactive proof is to periodically contribute to a monotonically increasing sequence of non-repudiably signed updates of some data item. Each update includes a monotonically increasing sequence number or date-time stamp. Any observer can then cryptographically verify the signature using the public key from the controller's key-pair and verify that the update was made by the controller.  In general, only members of the set of controllers can create verifiable non-repudiable signatures using their key-pairs. Consequently, the identifier is strongly bound to the set of controllers via provable control over the key-pairs.
 
@@ -550,12 +557,82 @@ The essense of the KERI protocol is a strongly bound tetrad of identifier, key-p
 
 Several new terms were introduced above. These along with other terms helpful to describing KERI are defined below.
 
+Primitive
+: A serialization of a unitary value. A *cryptographic primitive* is the serialization of a value associated with a cryptographic operation including but not limited to a digest (hash), a salt, a seed, a private key, a public key, or a signature. All *primitives* in KERI MUST be expressed in CESR (Compact Event Streaming Representation) {{CESR_ID}}.
+
+Qualified
+: When *qualified*, a *cryptographic primitive* includes a prepended derivation code (as a proem) that indicates the cryptographic algorithm or suite used for that derivation. This simplifies and compactifies the essential information needed to use that *cryptographic primitive*. All *cryptographic primitives* expressed in either text or binary CESR are *qualified* by definition {{CESR_ID}}. Qualification is an essential property of CESR {{CESR_ID}}.
+
+Cryptonym
+: A cryptographic pseudonymous identifier represented by a string of characters derived from a random or pseudo-random secret seed or salt via a one-way cryptogrphic function with a sufficiently high degree of cryptographic strength (e.g. 128 bits, see appendix on cryptographic strength) {{OWF}}{{COWF}}{{TMCrypto}}{{QCHC}}. A *cryptonym* is a type of *primitive*. Due the enctropy in its derivation, a *cryptonym* is a universally unique identifier and only the controller of the secret salt or seed from which the *cryptonym* is derived may prove control over the *cryptonym*. Therefore the derivation function MUST be associated with the *cryptonym* and MAY be encoded as part of the *cryptonym* itself.
+
+SCID
+: Self-Certifying IDentifier.  A self-certifying identifier (SCID) is a type of cryptonym  that is uniquely cryptographically derived from the public key of an asymmetric non-repudiable signing key-pair, `(public, private)`. It is self-certifying or more precisely self-authenticating because it does does not rely on a trusted entity. The authenticity of a non-repudiable signature made with the private key may be verified by extracting the public-key from either the identifier itself or incepting information uniquely associated with the cryptographic derivation process for the identifier. In a basic SCID, the mapping between identifier and controlling public key is self-contained in the identifier itself. A basic SCID is *ephemeral* i.e. it does not support rotation of its key-pairs in the event of key weakness or compromise and therefore must be abandoned once the controlling private key becomes weakened or compromised from exposure {{PKI}}{{KERI}}{{UIT}}{{SCPK}}{{SFS}}{{SCPN}}{{SCURL}}{{PKI}}.
+
 AID
-: Autonomic IDentifier. A member of a class of self-managing identifiers that MUST be self-certifying and MUST be encoded in CESR as qualified cryptographic primitives with an included derivation code as proem and MAY exhibit other self-managing properties such as transferable control using key pre-rotation.
+: Autonomic IDentifier. A self-managing *crytonymous* identifier that MUST be self-certifying (self-authenticating) and MUST be encoded in CESR as a *qualified* cryptographic primitive. An AID MAY exhibit other self-managing properties such as transferable control using key *pre-rotation* which enables control over such an AID to persist in spite of key weakness or compromise due to exposure. Authoritative control over the identifier persists in spite of the evolution of key-state.
+
+Key-State
+: Includes the set of currently authoritative key-pairs for an AID and any other information necessary to secure or establish control over an AID.
+
+Key Event
+: Concretely, the serialized data structure that forms an entry in the key event log for an AID. Abstractly, the data structure itself. Key events come in different types and are used primarily to establish or change the authoritative set of key-pairs and/or anchor other data to the authoritative set of key-pairs at the point in the key event log actualized by a particular entry.
+
+Establishment Event
+: Key Event that establishes or changes the key-state which includes the current set of authoritative key-pairs (key-state) for an AID.
+
+Non-establishment Event
+: Key Event that does not change the current key-state for an AID. Typically the purpose of a non-establishment event is to anchor external data to a given key state as established by the most recent prior establishment event for an AID.
+
+Inception Event
+: Establishment Event that provides the incepting information needed to derive an AID and establish its initial key-state.
+
+Inception
+: The operation of creating an AID by binding it to the initial set of authoritative key-pairs and any other associated information. This operation is made verifiable and duplicity evident upon acceptance as the *inception event* that begins the AID's KEL.
+
+Rotation Event
+: Establishement Event that provides the information needed to change the key-state which includes a change to the set of authoritative key pairs for an AID.
+
+Rotation
+: The operation of revoking and replacing the set of authoritative key-pairs for an AID. This operation is made verifiable and duplicity evident upon acceptance as a *rotation event* that is appended to the AID's KEL.
+
+Interaction Event
+: Non-establishment Event that anchors external data to the key-state as established by the most recent prior establishment event.
+
+KEL
+:  Key Event Log. A verifiable data structure that is a backward and forward chained, signed, append-only log of key events for an AID. The first entry in a KEL MUST be the one and only Inception Event of that AID.
+
+Version
+: More that one version of a KEL for an AID exists when for any two instances of a KEL at least one event is unique between the two instances.
+
+Verifiable
+: A KEL is verifiable means all content in a KEL including the digests and the signatures on that content are verifiably compliant with respect to the KERI protocol. In other words, the KEL is internally consistent and has integrity vis-a-vis its backward and forward chaining digests and authenticity vis-a-vis its nonrepudiable signatures. As a verifiable data structure the KEL satisfies the KERI protocol defined rules for that verifiability. This includes the cryptographic verification of any digests or signatures to against the contents so digested or signed.
+
+Duplicity
+: Means the existence of more than one version of a verifiable KEL for a given AID. Because every event in a KEL must be signed with non-repudiable signatures any inconsistency between any two instances of the KEL for a given AID is provable evidence of duplicity on the part of the signers with respect to either or both the key-state of that AID and/or any anchored data at a given key-state.  A shorter KEL that does not differ in any of its events with respect to another but longer KEL is not duplicitous but merely incomplete.  To clarify, duplicity evident means that duplicity is provable via the presentation of a set of two or more mutually inconsistent but independently verifiable instances of a KEL.
+
+
+Validator
+: Any entity that evaluates one more more  AID's KEL in order to determine if it can rely on (trust) the key-state provided by that KEL. A necessary but insufficient condition for a valid KEL is it is verifiable i.e. is internally inconsistent with respect to compliance with the KERI protocol. An invalid KEL from the perspective a Validator may be either un-verifiable or it may be verifiable but duplicitous with respect to another verifiable version of that KEL.  Detected duplicity by a given validator means that the validator has seen more than one verifiable version of a KEL for a given AID. Reconciliable duplicity means that one and only one version of a KEL as seen by a validator is accepted as the authoritative version for that validator. Irreconcilable duplicity means that none of the versions of a KEL as seen by a validator are accepted as the authoritative one for that validator. The conditions for reconcialable duplicity are described later.
+
+
+Message
+: Consists of a serialized data structure that comprises its body and a set of serialized data structures that are its attachments. Attachments may include but are not limited to signatures on the body.
+
+Key Event Message
+: Message whose body is a key event and whose attachments may include signatures on its body.
+
+Key Event Receipt
+: Message whose body references a key event and whose attachments MUST include one or more signatures on that key event.
 
 
 
-# KERI Messages and Seals
+
+
+
+
+
+# Messages and Seals
 
 Because adding the `d` field SAID to every key event message type will break all the explicit test vectors. Its no additional pain to normalize the field ordering across all message types and seals.
 Originally all messages included an `i` field but that is not true anymore. So the changed field ordering is to put the fields that are common to all message types first in order followed by fields that are not common. The common fields are `v`, `t`, `d`.

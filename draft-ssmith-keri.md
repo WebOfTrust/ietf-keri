@@ -640,7 +640,7 @@ the former case, where only one index is needed because `i = j`, let the indexed
 
 In the latter case, where both indices are needed because `i ≠ j`, let the indexed keypair for AID, `A`, be tdenoted by *A<sup>i,j</sup>* or in tuple form by *(A<sup>i,j</sup>, a<sup>i,j</sup>)* where the keypair so indexed appears in the *i<sup>th</sup>* key state and uses the *j<sup>th</sup>* keypair from the sequence of all keypairs. Suppose, for example, that each key state uses three keypairs, then the sequence of the first two key states that consume the first six keypairs is given by the following list, *[A<sup>0,0</sup>, A<sup>0,1</sup>, A<sup>0,2</sup>, A<sup>1,3</sup>,  A<sup>1,4</sup>,  A<sup>1,5</sup>]*.
 
-With pre-rotation, each public key from the set of pre-rotated keypairs may be hidden as a qualified cryptographic digest of that public key. Once way to represent the digest is to use functionl notation with the letter `H()` for hash or digest. A more concise representation used here is to represent a cryptographic digest by underlining the public key label. For example, the digest of public key *A* is denoted by *<u>A</u>*. When singly indexed, the digest of *A<sup>j</sup>* is denoted by *<u>A</u><sup>j</sup>* and when doubly indexed the digest of *A<sup>i,j</sup>* is denoted by *<u>A</u><sup>i,j</sup>*.
+
 
 
 # Key Pre-rotation Details

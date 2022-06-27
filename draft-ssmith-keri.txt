@@ -778,7 +778,7 @@ Table of Contents
    controlling keypairs is non-transferable then no indexes are needed
    because the key state never changes.
 
-   Recall that, a keypair is a two tuple, (public, private), of the
+   Recall that, a keypair is a two tuple, _(public, private)_, of the
    respective public and private keys in the keypair.  For a given AID,
    the labeling convention uses an uppercase letter label to represent
    that AID.  When the key state is dynamic, a superscripted index on
@@ -793,34 +793,35 @@ Table of Contents
    keypair or keypairs at a given key state for that AID.  In addition,
    when expressed in tuple form the uppercase letter also represents the
    public key and the lowercase letter represents the private key for a
-   given keypair.  For example, let A denote and AID, then let A also
-   denote a keypair which may be also expressed in tuple form as (A, a).
-   Therefore, when referring to the keypair itself as a pair and not the
-   individual members of the pair, either the uppercase label, A, or the
-   tuple, (A, a), may be used to refer to the keypair itself.  When
-   referring to the individual members of the keypair then the uppercase
-   letter, A, refers to the public key, and the lowercase letter, a,
-   refers to the private key.
+   given keypair.  For example, let _A_ denote and AID, then let* A*
+   also denote a keypair which may be also expressed in tuple form as
+   _(A, a)_. Therefore, when referring to the keypair itself as a pair
+   and not the individual members of the pair, either the uppercase
+   label, _A_, or the tuple, _(A, a)_, may be used to refer to the
+   keypair itself.  When referring to the individual members of the
+   keypair then the uppercase letter, _A_, refers to the public key, and
+   the lowercase letter, _a_, refers to the private key.
 
    As described above, an establishment key event may change the key
    state.  Let the sequence of establishment events be indexed by the
    zero-based integer-valued variable i.  Let the sequence of keypairs
    used to control an AID be indexed by the zero-based integer-valued
    variable j.  When the set of controlling keypairs used at any time
-   for a given key state includes only one member, then i = j for every
-   keypair, and only one index is needed.  But when the set of keypairs
-   used at any time for a given key state includes more than one member,
-   then i &#8800; j for every keypair, and both indices are needed.
+   for a given key state includes only one member, then _i = j_ for
+   every keypair, and only one index is needed.  But when the set of
+   keypairs used at any time for a given key state includes more than
+   one member, then _i != j_ for every keypair, and both indices are
+   needed.
 
-   the former case, where only one index is needed because i = j, let
-   the indexed keypair for AID, A, be denoted by _A^j_ or in tuple form
-   by _(A^j, a^j)_ where the keypair so indexed uses the j^th keypair
-   from the sequence of all keypairs.  The keypair sequence may be
-   expressed as the list, _[A^0, A^1, A^2, ...]_. The zero element in
-   this sequence is denoted by A^0 or in tuple form by _(A^0, a^0)_.
+   the former case, where only one index is needed because _i = j_, let
+   the indexed keypair for AID, _A_, be denoted by _A^j_ or in tuple
+   form by _(A^j, a^j)_ where the keypair so indexed uses the j^th
+   keypair from the sequence of all keypairs.  The keypair sequence may
+   be expressed as the list, _[A^0, A^1, A^2, ...]_. The zero element in
+   this sequence is denoted by _A^0_ or in tuple form by _(A^0, a^0)_.
 
-   In the latter case, where both indices are needed because i &#8800;
-   j, let the indexed keypair for AID, A, be tdenoted by _A^(i,j)_ or in
+   In the latter case, where both indices are needed because _i != j_,
+   let the indexed keypair for AID, _A_, be denoted by _A^(i,j)_ or in
    tuple form by _(A^(i,j), a^(i,j))_ where the keypair so indexed
    appears in the _i^th_ key state and uses the _j^th_ keypair from the
    sequence of all keypairs.  Suppose, for example, that each key state
@@ -828,7 +829,12 @@ Table of Contents
    that consume the first six keypairs is given by the following list,
    _[A^(0,0), A^(0,1), A^(0,2), A^(1,3), A^(1,4), A^(1,5)]_.
 
-   A&#772;
+   With pre-rotation, each public key from the set of pre-rotated
+   keypairs may be hidden as a qualified cryptographic digest of that
+   public key.  The digest of public key _A_ is represented using the
+   function notation _H(A)_ for hash or digest.  When singly indexed,
+   the digest of _A^j_ is denoted by _H(A</u>^j)_ and when doubly
+   indexed the digest of _A^(i,j)_ is denoted by _H(A^(i,j)}_.
 
 4.  Key Pre-rotation Details
 

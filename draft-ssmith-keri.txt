@@ -828,6 +828,8 @@ Table of Contents
    that consume the first six keypairs is given by the following list,
    _[A^(0,0), A^(0,1), A^(0,2), A^(1,3), A^(1,4), A^(1,5)]_.
 
+   A&#772;
+
 4.  Key Pre-rotation Details
 
    ToDo describe the pre-rotated sequence of key sets (exposed and

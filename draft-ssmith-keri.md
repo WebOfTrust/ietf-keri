@@ -22,7 +22,7 @@ author:
 
 normative:
 
-  KERI_ID:
+  KERI-ID:
     target: https://github.com/WebOfTrust/ietf-keri
     title: IETF KERI (Key Event Receipt Infrastructure) Internet Draft
     date: 2022
@@ -31,7 +31,7 @@ normative:
       name: Samuel M. Smith
       org: ProSapien LLC
 
-  CESR_ID:
+  CESR-ID:
     target: https://github.com/WebOfTrust/ietf-cesr
     title: IETF CESR (Composable Event Streaming Representation) Internet Draft
     date: 2022
@@ -40,7 +40,7 @@ normative:
       name: Samuel M. Smith
       org: ProSapien LLC
 
-  SAID_ID:
+  SAID-ID:
     target: https://github.com/WebOfTrust/ietf-said
     title: IETF SAID (Self-Addressing IDentifier) Internet Draft
     date: 2022
@@ -50,7 +50,7 @@ normative:
       org: ProSapien LLC
     date: 2022
 
-  OOBI_ID:
+  OOBI-ID:
     target: https://github.com/WebOfTrust/ietf-oobi
     title: IETF OOBI (Out-Of-Band-Introduction) Internet Draft
     author:
@@ -59,7 +59,7 @@ normative:
       org: ProSapien LLC
     date: 2022
 
-  DIDK_ID:
+  DIDK-ID:
     target: https://github.com/WebOfTrust/ietf-did-keri
     title: IETF DID-KERI Internet Draft
     author:
@@ -459,9 +459,9 @@ informative:
 
 --- abstract
 
-An identity system-based secure overlay for the Internet is presented. This is based on a Key Event Receipt Infrastructure (KERI) or the KERI protocol {{KERI}}{{KERI_ID}}{{RFC0791}}. This includes a primary root-of-trust in self-certifying identifiers (SCIDs) {{UIT}}{{SCPK}}{{SFS}}{{SCPN}}{{SCURL}}. It presents a formalism for Autonomic Identifiers (AIDs) and Autonomic Namespaces (ANs). They are part of an Autonomic Identity System (AIS). This system uses the design principle of minimally sufficient means to provide a candidate trust spanning layer for the internet. Associated with this system is a decentralized key management infrastructure (DKMI). The primary root-of-trust are self-certifying identifiers that are strongly bound at issuance to a cryptographic signing (public, private) keypair. These are self-contained until/unless control needs to be transferred to a new keypair. In that event, an append-only chained key-event log of signed transfer statements provides end verifiable control provenance. This makes intervening operational infrastructure replaceable because the event logs may be served up by any infrastructure including ambient infrastructure. End verifiable logs on ambient infrastructure enable ambient verifiability (verifiable by anyone, anywhere, at any time).
+An identity system-based secure overlay for the Internet is presented. This is based on a Key Event Receipt Infrastructure (KERI) or the KERI protocol {{KERI}}{{KERI-ID}}{{RFC0791}}. This includes a primary root-of-trust in self-certifying identifiers (SCIDs) {{UIT}}{{SCPK}}{{SFS}}{{SCPN}}{{SCURL}}. It presents a formalism for Autonomic Identifiers (AIDs) and Autonomic Namespaces (ANs). They are part of an Autonomic Identity System (AIS). This system uses the design principle of minimally sufficient means to provide a candidate trust spanning layer for the internet. Associated with this system is a decentralized key management infrastructure (DKMI). The primary root-of-trust are self-certifying identifiers that are strongly bound at issuance to a cryptographic signing (public, private) keypair. These are self-contained until/unless control needs to be transferred to a new keypair. In that event, an append-only chained key-event log of signed transfer statements provides end verifiable control provenance. This makes intervening operational infrastructure replaceable because the event logs may be served up by any infrastructure including ambient infrastructure. End verifiable logs on ambient infrastructure enable ambient verifiability (verifiable by anyone, anywhere, at any time).
 The primary key management operation is key rotation (transference) via a novel key pre-rotation scheme {{DAD}}{{KERI}}. Two primary trust modalities motivated the design, these are a direct (one-to-one) mode and an indirect (one-to-any) mode. The indirect mode depends on witnessed key event receipt logs (KERL) as a secondary root-of-trust for validating events. This gives rise to the acronym KERI for key event receipt infrastructure. In the direct mode, the identity controller establishes control via verified signatures of the controlling keypair. The indirect mode extends that trust basis with witnessed key event receipt logs (KERL) for validating events. The security and accountability guarantees of indirect mode are provided by KA2CE or KERI’s Agreement Algorithm for Control Establishment among a set of witnesses.
-The KA2CE approach may be much more performant and scalable than more complex approaches that depend on a total ordering distributed consensus ledger. Nevertheless, KERI may employ a distributed consensus ledger when other considerations make it the best choice. The KERI approach to DKMI allows for more granular composition. Moreover, because KERI is event streamed it enables DKMI that operates in-stride with data events streaming applications such as web 3.0, IoT, and others where performance and scalability are more important. The core KERI engine is identifier namespace independent. This makes KERI a candidate for a universal portable DKMI {{KERI}}{{KERI_ID}}{{UIT}}.
+The KA2CE approach may be much more performant and scalable than more complex approaches that depend on a total ordering distributed consensus ledger. Nevertheless, KERI may employ a distributed consensus ledger when other considerations make it the best choice. The KERI approach to DKMI allows for more granular composition. Moreover, because KERI is event streamed it enables DKMI that operates in-stride with data events streaming applications such as web 3.0, IoT, and others where performance and scalability are more important. The core KERI engine is identifier namespace independent. This makes KERI a candidate for a universal portable DKMI {{KERI}}{{KERI-ID}}{{UIT}}.
 
 
 
@@ -492,11 +492,11 @@ An important innovation of KERI is that it solves the key rotation problem of PK
 
 ### CESR
 
-A ***cryptographic primitive ***is a serialization of a value associated with a cryptographic operation including but not limited to a digest (hash), a salt, a seed, a private key, a public key, or a signature. All cryptographic primitives in KERI MUST be expressed using the CESR (Compact Event Streaming Representation) protocol {{CESR_ID}}.  CESR supports round trip lossless conversion between its text, binary, and raw domain representations and lossless composability between its text and binary domain representations. Composability is ensured between any concatenated group of text primitives and the binary equivalent of that group because all CESR primitives are aligned on 24-bit boundaries. Both the text and binary domain representations are serializations suitable for transmission over the wire. The text domain representation is also suitable to be embedded as a string value of a field or array element as part of a field map serialization such as JSON, CBOR, or MsgPack {{RFC8259}}{{JSOND}}{{RFC8949}}{{CBORC}}{{MGPK}}. The text domain uses the set of characters from the URL-safe variant of Base64 which in turn is a subset of the ASCII character set {{RFC4648}}{{RFC0020}}. For the sake of readability, all examples in this specification will be expressed in CESR's text-domain.
+A ***cryptographic primitive ***is a serialization of a value associated with a cryptographic operation including but not limited to a digest (hash), a salt, a seed, a private key, a public key, or a signature. All cryptographic primitives in KERI MUST be expressed using the CESR (Compact Event Streaming Representation) protocol {{CESR-ID}}.  CESR supports round trip lossless conversion between its text, binary, and raw domain representations and lossless composability between its text and binary domain representations. Composability is ensured between any concatenated group of text primitives and the binary equivalent of that group because all CESR primitives are aligned on 24-bit boundaries. Both the text and binary domain representations are serializations suitable for transmission over the wire. The text domain representation is also suitable to be embedded as a string value of a field or array element as part of a field map serialization such as JSON, CBOR, or MsgPack {{RFC8259}}{{JSOND}}{{RFC8949}}{{CBORC}}{{MGPK}}. The text domain uses the set of characters from the URL-safe variant of Base64 which in turn is a subset of the ASCII character set {{RFC4648}}{{RFC0020}}. For the sake of readability, all examples in this specification will be expressed in CESR's text-domain.
 
 ### Qualified Cryptographic Primitive
 
-When *qualified*, a cryptographic primitive includes a prepended derivation code (as a proem) that indicates the cryptographic algorithm or suite used for that derivation. This simplifies and compactifies the essential information needed to use that cryptographic primitive. All cryptographic primitives expressed in either text or binary CESR are *qualified* by definition. Qualification is an essential property of CESR {{CESR_ID}}. The CESR protocol supports several different types of encoding tables for different types of derivation codes. These tables include very compact codes. For example, a 256-bit (32-byte) digest using the BLAKE3 digest algorithm, i.e. Blake3-256, when expressed in text-domain CESR is 44 Base64 characters long and begins with the one character derivation code `E`, such as, `EL1L56LyoKrIofnn0oPChS4EyzMHEEk75INJohDS_Bug` {{BLAKE3}}{{BLAKE3Spec}}{{BLAKE3Hash}}. The equivalent *qualified* binary domain representation is 33 bytes long.
+When *qualified*, a cryptographic primitive includes a prepended derivation code (as a proem) that indicates the cryptographic algorithm or suite used for that derivation. This simplifies and compactifies the essential information needed to use that cryptographic primitive. All cryptographic primitives expressed in either text or binary CESR are *qualified* by definition. Qualification is an essential property of CESR {{CESR-ID}}. The CESR protocol supports several different types of encoding tables for different types of derivation codes. These tables include very compact codes. For example, a 256-bit (32-byte) digest using the BLAKE3 digest algorithm, i.e. Blake3-256, when expressed in text-domain CESR is 44 Base64 characters long and begins with the one character derivation code `E`, such as, `EL1L56LyoKrIofnn0oPChS4EyzMHEEk75INJohDS_Bug` {{BLAKE3}}{{BLAKE3Spec}}{{BLAKE3Hash}}. The equivalent *qualified* binary domain representation is 33 bytes long.
 Unless otherwise indicated, all cryptographic primitives in this specification will appear as *qualified* primitives using text-domain CESR.
 
 ## Identifier System Security Overlay
@@ -557,10 +557,10 @@ The essense of the KERI protocol is a strongly bound tetrad of identifier, key-p
 Several new terms were introduced above. These along with other terms helpful to describing KERI are defined below.
 
 Primitive
-: A serialization of a unitary value. A *cryptographic primitive* is the serialization of a value associated with a cryptographic operation including but not limited to a digest (hash), a salt, a seed, a private key, a public key, or a signature. All *primitives* in KERI MUST be expressed in CESR (Compact Event Streaming Representation) {{CESR_ID}}.
+: A serialization of a unitary value. A *cryptographic primitive* is the serialization of a value associated with a cryptographic operation including but not limited to a digest (hash), a salt, a seed, a private key, a public key, or a signature. All *primitives* in KERI MUST be expressed in CESR (Compact Event Streaming Representation) {{CESR-ID}}.
 
 Qualified
-: When *qualified*, a *cryptographic primitive* includes a prepended derivation code (as a proem) that indicates the cryptographic algorithm or suite used for that derivation. This simplifies and compactifies the essential information needed to use that *cryptographic primitive*. All *cryptographic primitives* expressed in either text or binary CESR are *qualified* by definition {{CESR_ID}}. Qualification is an essential property of CESR {{CESR_ID}}.
+: When *qualified*, a *cryptographic primitive* includes a prepended derivation code (as a proem) that indicates the cryptographic algorithm or suite used for that derivation. This simplifies and compactifies the essential information needed to use that *cryptographic primitive*. All *cryptographic primitives* expressed in either text or binary CESR are *qualified* by definition {{CESR-ID}}. Qualification is an essential property of CESR {{CESR-ID}}.
 
 Cryptonym
 : A cryptographic pseudonymous identifier represented by a string of characters derived from a random or pseudo-random secret seed or salt via a one-way cryptogrphic function with a sufficiently high degree of cryptographic strength (e.g. 128 bits, see appendix on cryptographic strength) {{OWF}}{{COWF}}{{TMCrypto}}{{QCHC}}. A *cryptonym* is a type of *primitive*. Due the enctropy in its derivation, a *cryptonym* is a universally unique identifier and only the controller of the secret salt or seed from which the *cryptonym* is derived may prove control over the *cryptonym*. Therefore the derivation function MUST be associated with the *cryptonym* and MAY be encoded as part of the *cryptonym* itself.

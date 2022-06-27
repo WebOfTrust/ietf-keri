@@ -7,8 +7,8 @@
 <title>Key Event Receipt Infrastructure (KERI)</title>
 <meta content="S. Smith" name="author">
 <meta content="
-       An identity system-based secure overlay for the Internet is presented. This is based on a Key Event Receipt Infrastructure (KERI) or the KERI protocol  . This includes a primary root-of-trust in self-certifying identifiers (SCIDs)  . It presents a formalism for Autonomic Identifiers (AIDs) and Autonomic Namespaces (ANs). They are part of an Autonomic Identity System (AIS). This system uses the design principle of minimally sufficient means to provide a candidate trust spanning layer for the internet. Associated with this system is a decentralized key management infrastructure (DKMI). The primary root-of-trust are self-certifying identifiers that are strongly bound at issuance to a cryptographic signing (public, private) key-pair. These are self-contained until/unless control needs to be transferred to a new key-pair. In that event an append-only chained key-event log of signed transfer statements provides end verifiable control provenance. This makes intervening operational infrastructure replaceable because the event logs may be served up by any infrastructure including ambient infrastructure. End verifiable logs on ambient infrastructure enable ambient verifiability (verifiable by anyone, anywhere, at anytime).
-The primary key management operation is key rotation (transference) via a novel key pre-rotation scheme  . Two primary trust modalities motivated the design, these are a direct (one-to-one) mode and an indirect (one-to-any) mode. The indirect mode depends on witnessed key event receipt logs (KERL) as a secondary root-of-trust for validating events. This gives rise to the acronym KERI for key event receipt infrastructure. In the direct mode, the identity controller establishes control via verified signatures of the controlling key-pair. The indirect mode extends that trust basis with witnessed key event receipt logs (KERL) for validating events. The security and accountability guarantees of indirect mode are provided by KA2CE or KERI's Agreement Algorithm for Control Establishment among a set of witnesses.
+       An identity system-based secure overlay for the Internet is presented. This is based on a Key Event Receipt Infrastructure (KERI) or the KERI protocol  . This includes a primary root-of-trust in self-certifying identifiers (SCIDs)  . It presents a formalism for Autonomic Identifiers (AIDs) and Autonomic Namespaces (ANs). They are part of an Autonomic Identity System (AIS). This system uses the design principle of minimally sufficient means to provide a candidate trust spanning layer for the internet. Associated with this system is a decentralized key management infrastructure (DKMI). The primary root-of-trust are self-certifying identifiers that are strongly bound at issuance to a cryptographic signing (public, private) keypair. These are self-contained until/unless control needs to be transferred to a new keypair. In that event, an append-only chained key-event log of signed transfer statements provides end verifiable control provenance. This makes intervening operational infrastructure replaceable because the event logs may be served up by any infrastructure including ambient infrastructure. End verifiable logs on ambient infrastructure enable ambient verifiability (verifiable by anyone, anywhere, at any time).
+The primary key management operation is key rotation (transference) via a novel key pre-rotation scheme  . Two primary trust modalities motivated the design, these are a direct (one-to-one) mode and an indirect (one-to-any) mode. The indirect mode depends on witnessed key event receipt logs (KERL) as a secondary root-of-trust for validating events. This gives rise to the acronym KERI for key event receipt infrastructure. In the direct mode, the identity controller establishes control via verified signatures of the controlling keypair. The indirect mode extends that trust basis with witnessed key event receipt logs (KERL) for validating events. The security and accountability guarantees of indirect mode are provided by KA2CE or KERI's Agreement Algorithm for Control Establishment among a set of witnesses.
 The KA2CE approach may be much more performant and scalable than more complex approaches that depend on a total ordering distributed consensus ledger. Nevertheless, KERI may employ a distributed consensus ledger when other considerations make it the best choice. The KERI approach to DKMI allows for more granular composition. Moreover, because KERI is event streamed it enables DKMI that operates in-stride with data events streaming applications such as web 3.0, IoT, and others where performance and scalability are more important. The core KERI engine is identifier namespace independent. This makes KERI a candidate for a universal portable DKMI  . 
     " name="description">
 <meta content="xml2rfc 3.12.10" name="generator">
@@ -1032,7 +1032,7 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Smith</td>
-<td class="center">Expires 18 December 2022</td>
+<td class="center">Expires 29 December 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1045,12 +1045,12 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ssmith-keri-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-06-16" class="published">16 June 2022</time>
+<time datetime="2022-06-27" class="published">27 June 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-12-18">18 December 2022</time></dd>
+<dd class="expires"><time datetime="2022-12-29">29 December 2022</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1063,9 +1063,9 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <h1 id="title">Key Event Receipt Infrastructure (KERI)</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">An identity system-based secure overlay for the Internet is presented. This is based on a Key Event Receipt Infrastructure (KERI) or the KERI protocol <span>[<a href="#KERI" class="xref">KERI</a>]</span><span>[<a href="#KERI_ID" class="xref">KERI_ID</a>]</span><span>[<a href="#RFC0791" class="xref">RFC0791</a>]</span>. This includes a primary root-of-trust in self-certifying identifiers (SCIDs) <span>[<a href="#UIT" class="xref">UIT</a>]</span><span>[<a href="#SCPK" class="xref">SCPK</a>]</span><span>[<a href="#SFS" class="xref">SFS</a>]</span><span>[<a href="#SCPN" class="xref">SCPN</a>]</span><span>[<a href="#SCURL" class="xref">SCURL</a>]</span>. It presents a formalism for Autonomic Identifiers (AIDs) and Autonomic Namespaces (ANs). They are part of an Autonomic Identity System (AIS). This system uses the design principle of minimally sufficient means to provide a candidate trust spanning layer for the internet. Associated with this system is a decentralized key management infrastructure (DKMI). The primary root-of-trust are self-certifying identifiers that are strongly bound at issuance to a cryptographic signing (public, private) key-pair. These are self-contained until/unless control needs to be transferred to a new key-pair. In that event an append-only chained key-event log of signed transfer statements provides end verifiable control provenance. This makes intervening operational infrastructure replaceable because the event logs may be served up by any infrastructure including ambient infrastructure. End verifiable logs on ambient infrastructure enable ambient verifiability (verifiable by anyone, anywhere, at anytime).
-The primary key management operation is key rotation (transference) via a novel key pre-rotation scheme <span>[<a href="#DAD" class="xref">DAD</a>]</span><span>[<a href="#KERI" class="xref">KERI</a>]</span>. Two primary trust modalities motivated the design, these are a direct (one-to-one) mode and an indirect (one-to-any) mode. The indirect mode depends on witnessed key event receipt logs (KERL) as a secondary root-of-trust for validating events. This gives rise to the acronym KERI for key event receipt infrastructure. In the direct mode, the identity controller establishes control via verified signatures of the controlling key-pair. The indirect mode extends that trust basis with witnessed key event receipt logs (KERL) for validating events. The security and accountability guarantees of indirect mode are provided by KA2CE or KERI's Agreement Algorithm for Control Establishment among a set of witnesses.
-The KA2CE approach may be much more performant and scalable than more complex approaches that depend on a total ordering distributed consensus ledger. Nevertheless, KERI may employ a distributed consensus ledger when other considerations make it the best choice. The KERI approach to DKMI allows for more granular composition. Moreover, because KERI is event streamed it enables DKMI that operates in-stride with data events streaming applications such as web 3.0, IoT, and others where performance and scalability are more important. The core KERI engine is identifier namespace independent. This makes KERI a candidate for a universal portable DKMI <span>[<a href="#KERI" class="xref">KERI</a>]</span><span>[<a href="#KERI_ID" class="xref">KERI_ID</a>]</span><span>[<a href="#UIT" class="xref">UIT</a>]</span>.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">An identity system-based secure overlay for the Internet is presented. This is based on a Key Event Receipt Infrastructure (KERI) or the KERI protocol <span>[<a href="#KERI" class="xref">KERI</a>]</span><span>[<a href="#KERI-ID" class="xref">KERI-ID</a>]</span><span>[<a href="#RFC0791" class="xref">RFC0791</a>]</span>. This includes a primary root-of-trust in self-certifying identifiers (SCIDs) <span>[<a href="#UIT" class="xref">UIT</a>]</span><span>[<a href="#SCPK" class="xref">SCPK</a>]</span><span>[<a href="#SFS" class="xref">SFS</a>]</span><span>[<a href="#SCPN" class="xref">SCPN</a>]</span><span>[<a href="#SCURL" class="xref">SCURL</a>]</span>. It presents a formalism for Autonomic Identifiers (AIDs) and Autonomic Namespaces (ANs). They are part of an Autonomic Identity System (AIS). This system uses the design principle of minimally sufficient means to provide a candidate trust spanning layer for the internet. Associated with this system is a decentralized key management infrastructure (DKMI). The primary root-of-trust are self-certifying identifiers that are strongly bound at issuance to a cryptographic signing (public, private) keypair. These are self-contained until/unless control needs to be transferred to a new keypair. In that event, an append-only chained key-event log of signed transfer statements provides end verifiable control provenance. This makes intervening operational infrastructure replaceable because the event logs may be served up by any infrastructure including ambient infrastructure. End verifiable logs on ambient infrastructure enable ambient verifiability (verifiable by anyone, anywhere, at any time).
+The primary key management operation is key rotation (transference) via a novel key pre-rotation scheme <span>[<a href="#DAD" class="xref">DAD</a>]</span><span>[<a href="#KERI" class="xref">KERI</a>]</span>. Two primary trust modalities motivated the design, these are a direct (one-to-one) mode and an indirect (one-to-any) mode. The indirect mode depends on witnessed key event receipt logs (KERL) as a secondary root-of-trust for validating events. This gives rise to the acronym KERI for key event receipt infrastructure. In the direct mode, the identity controller establishes control via verified signatures of the controlling keypair. The indirect mode extends that trust basis with witnessed key event receipt logs (KERL) for validating events. The security and accountability guarantees of indirect mode are provided by KA2CE or KERI's Agreement Algorithm for Control Establishment among a set of witnesses.
+The KA2CE approach may be much more performant and scalable than more complex approaches that depend on a total ordering distributed consensus ledger. Nevertheless, KERI may employ a distributed consensus ledger when other considerations make it the best choice. The KERI approach to DKMI allows for more granular composition. Moreover, because KERI is event streamed it enables DKMI that operates in-stride with data events streaming applications such as web 3.0, IoT, and others where performance and scalability are more important. The core KERI engine is identifier namespace independent. This makes KERI a candidate for a universal portable DKMI <span>[<a href="#KERI" class="xref">KERI</a>]</span><span>[<a href="#KERI-ID" class="xref">KERI-ID</a>]</span><span>[<a href="#UIT" class="xref">UIT</a>]</span>.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-discussion-venues">
@@ -1094,7 +1094,7 @@ The KA2CE approach may be much more performant and scalable than more complex ap
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 18 December 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 29 December 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1133,7 +1133,7 @@ The KA2CE approach may be much more performant and scalable than more complex ap
                 <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="xref">1.2</a>.  <a href="#name-autonomic-identifier-aid" class="xref">Autonomic IDentifier (AID)</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3">
-                <p id="section-toc.1-1.1.2.3.1" class="keepWithNext"><a href="#section-1.3" class="xref">1.3</a>.  <a href="#name-key-pre-rotation-basics" class="xref">Key Pre-Rotation Basics</a></p>
+                <p id="section-toc.1-1.1.2.3.1" class="keepWithNext"><a href="#section-1.3" class="xref">1.3</a>.  <a href="#name-key-pre-rotation-basics" class="xref">Key Pre-rotation Basics</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.4">
                 <p id="section-toc.1-1.1.2.4.1"><a href="#section-1.4" class="xref">1.4</a>.  <a href="#name-cryptographic-primitives" class="xref">Cryptographic Primitives</a></p>
@@ -1163,183 +1163,192 @@ The KA2CE approach may be much more performant and scalable than more complex ap
             <p id="section-toc.1-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-basic-terminology" class="xref">Basic Terminology</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-messages-and-seals" class="xref">Messages and Seals</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-message-field-labels" class="xref">Message Field Labels</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.1">
-                    <p id="section-toc.1-1.3.2.1.2.1.1"><a href="#section-3.1.1" class="xref">3.1.1</a>.  <a href="#name-saids-and-keri-label-conven" class="xref">SAIDs and KERI Label Convention Normalization</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.2">
-                    <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="xref">3.1.2</a>.  <a href="#name-special-label-ordering-requ" class="xref">Special Label Ordering Requirements</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.3">
-                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="xref">3.1.3</a>.  <a href="#name-keri-message-defined-elemen" class="xref">KERI Message Defined Element Labels</a></p>
-</li>
-                </ul>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-common-normalized-acdc-labe" class="xref">Common Normalized ACDC Labels</a></p>
-</li>
-            </ul>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-keypair-labeling-convention" class="xref">Keypair Labeling Convention</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-event-messages" class="xref">Event Messages</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
-                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="xref">4.1</a>.  <a href="#name-rotation" class="xref">Rotation</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1.2.1">
-                    <p id="section-toc.1-1.4.2.1.2.1.1"><a href="#section-4.1.1" class="xref">4.1.1</a>.  <a href="#name-partial-participation-in-ro" class="xref">Partial Participation in Rotation</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1.2.2">
-                    <p id="section-toc.1-1.4.2.1.2.2.1"><a href="#section-4.1.2" class="xref">4.1.2</a>.  <a href="#name-inception-event" class="xref">Inception Event</a></p>
-</li>
-                </ul>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
-                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="xref">4.2</a>.  <a href="#name-inception-event-message" class="xref">Inception Event Message</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.1">
-                    <p id="section-toc.1-1.4.2.2.2.1.1"><a href="#section-4.2.1" class="xref">4.2.1</a>.  <a href="#name-event-message-body" class="xref">Event Message Body</a></p>
-</li>
-                </ul>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
-                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="xref">4.3</a>.  <a href="#name-rotation-event-message" class="xref">Rotation Event Message</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3.2.1">
-                    <p id="section-toc.1-1.4.2.3.2.1.1"><a href="#section-4.3.1" class="xref">4.3.1</a>.  <a href="#name-interaction-event-also-dele" class="xref">Interaction Event  (Also delegating Interaction)</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3.2.2">
-                    <p id="section-toc.1-1.4.2.3.2.2.1"><a href="#section-4.3.2" class="xref">4.3.2</a>.  <a href="#name-delegated-inception-event" class="xref">Delegated Inception Event</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3.2.3">
-                    <p id="section-toc.1-1.4.2.3.2.3.1"><a href="#section-4.3.3" class="xref">4.3.3</a>.  <a href="#name-delegated-rotation-event" class="xref">Delegated Rotation Event</a></p>
-</li>
-                </ul>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.4">
-                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="xref">4.4</a>.  <a href="#name-receipts" class="xref">Receipts</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.4.2.1">
-                    <p id="section-toc.1-1.4.2.4.2.1.1"><a href="#section-4.4.1" class="xref">4.4.1</a>.  <a href="#name-transferable-prefix-signer-" class="xref">Transferable Prefix Signer Receipt</a></p>
-</li>
-                </ul>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5">
-                <p id="section-toc.1-1.4.2.5.1"><a href="#section-4.5" class="xref">4.5</a>.  <a href="#name-seals" class="xref">Seals</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5.2.1">
-                    <p id="section-toc.1-1.4.2.5.2.1.1"><a href="#section-4.5.1" class="xref">4.5.1</a>.  <a href="#name-digest-seal" class="xref">Digest Seal</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5.2.2">
-                    <p id="section-toc.1-1.4.2.5.2.2.1"><a href="#section-4.5.2" class="xref">4.5.2</a>.  <a href="#name-merkle-tree-root-digest-sea" class="xref">Merkle Tree Root Digest Seal</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5.2.3">
-                    <p id="section-toc.1-1.4.2.5.2.3.1"><a href="#section-4.5.3" class="xref">4.5.3</a>.  <a href="#name-backer-seal" class="xref">Backer Seal</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5.2.4">
-                    <p id="section-toc.1-1.4.2.5.2.4.1"><a href="#section-4.5.4" class="xref">4.5.4</a>.  <a href="#name-event-seal" class="xref">Event Seal</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5.2.5">
-                    <p id="section-toc.1-1.4.2.5.2.5.1"><a href="#section-4.5.5" class="xref">4.5.5</a>.  <a href="#name-last-establishment-event-se" class="xref">Last Establishment Event Seal</a></p>
-</li>
-                </ul>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.6">
-                <p id="section-toc.1-1.4.2.6.1"><a href="#section-4.6" class="xref">4.6</a>.  <a href="#name-other-messages" class="xref">Other Messages</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.6.2.1">
-                    <p id="section-toc.1-1.4.2.6.2.1.1"><a href="#section-4.6.1" class="xref">4.6.1</a>.  <a href="#name-query-message" class="xref">Query Message</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.6.2.2">
-                    <p id="section-toc.1-1.4.2.6.2.2.1"><a href="#section-4.6.2" class="xref">4.6.2</a>.  <a href="#name-reply-message" class="xref">Reply Message</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.6.2.3">
-                    <p id="section-toc.1-1.4.2.6.2.3.1"><a href="#section-4.6.3" class="xref">4.6.3</a>.  <a href="#name-bare-message" class="xref">Bare Message</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.6.2.4">
-                    <p id="section-toc.1-1.4.2.6.2.4.1"><a href="#section-4.6.4" class="xref">4.6.4</a>.  <a href="#name-prod-message" class="xref">Prod Message</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.6.2.5">
-                    <p id="section-toc.1-1.4.2.6.2.5.1"><a href="#section-4.6.5" class="xref">4.6.5</a>.  <a href="#name-exchange-message-exchange" class="xref">Exchange Message (exchange)</a></p>
-</li>
-                </ul>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.7">
-                <p id="section-toc.1-1.4.2.7.1"><a href="#section-4.7" class="xref">4.7</a>.  <a href="#name-notices-embedded-in-reply-m" class="xref">Notices Embedded in Reply Messages</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.7.2.1">
-                    <p id="section-toc.1-1.4.2.7.2.1.1"><a href="#section-4.7.1" class="xref">4.7.1</a>.  <a href="#name-key-state-notice-ksn" class="xref">Key State Notice (KSN)</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.7.2.2">
-                    <p id="section-toc.1-1.4.2.7.2.2.1"><a href="#section-4.7.2" class="xref">4.7.2</a>.  <a href="#name-transaction-state-notice-ts" class="xref">Transaction State Notice (TSN)</a></p>
-</li>
-                </ul>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.8">
-                <p id="section-toc.1-1.4.2.8.1"><a href="#section-4.8" class="xref">4.8</a>.  <a href="#name-transaction-event-log-messa" class="xref">Transaction Event Log Messages</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.8.2.1">
-                    <p id="section-toc.1-1.4.2.8.2.1.1"><a href="#section-4.8.1" class="xref">4.8.1</a>.  <a href="#name-registry-inception-event" class="xref">Registry Inception Event</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.8.2.2">
-                    <p id="section-toc.1-1.4.2.8.2.2.1"><a href="#section-4.8.2" class="xref">4.8.2</a>.  <a href="#name-registry-rotation-event" class="xref">Registry Rotation Event</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.8.2.3">
-                    <p id="section-toc.1-1.4.2.8.2.3.1"><a href="#section-4.8.3" class="xref">4.8.3</a>.  <a href="#name-backerless-credential-issua" class="xref">Backerless Credential Issuance</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.8.2.4">
-                    <p id="section-toc.1-1.4.2.8.2.4.1"><a href="#section-4.8.4" class="xref">4.8.4</a>.  <a href="#name-backerless-credential-revoc" class="xref">Backerless Credential Revocation</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.8.2.5">
-                    <p id="section-toc.1-1.4.2.8.2.5.1"><a href="#section-4.8.5" class="xref">4.8.5</a>.  <a href="#name-backer-credential-issuance" class="xref">Backer Credential Issuance</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.8.2.6">
-                    <p id="section-toc.1-1.4.2.8.2.6.1"><a href="#section-4.8.6" class="xref">4.8.6</a>.  <a href="#name-backer-credential-revocatio" class="xref">Backer Credential Revocation</a></p>
-</li>
-                </ul>
-</li>
-            </ul>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-key-pre-rotation-details" class="xref">Key Pre-rotation Details</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-appendix-cryptographic-stre" class="xref">Appendix: Cryptographic Strength and Security</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-messages-and-seals" class="xref">Messages and Seals</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-cryptographic-strength" class="xref">Cryptographic Strength</a></p>
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-message-field-labels" class="xref">Message Field Labels</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.1">
+                    <p id="section-toc.1-1.5.2.1.2.1.1"><a href="#section-5.1.1" class="xref">5.1.1</a>.  <a href="#name-saids-and-keri-label-conven" class="xref">SAIDs and KERI Label Convention Normalization</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.2">
+                    <p id="section-toc.1-1.5.2.1.2.2.1"><a href="#section-5.1.2" class="xref">5.1.2</a>.  <a href="#name-special-label-ordering-requ" class="xref">Special Label Ordering Requirements</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.3">
+                    <p id="section-toc.1-1.5.2.1.2.3.1"><a href="#section-5.1.3" class="xref">5.1.3</a>.  <a href="#name-keri-message-defined-elemen" class="xref">KERI Message Defined Element Labels</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-information-theoretic-secur" class="xref">Information Theoretic Security and Perfect Security</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-common-normalized-acdc-labe" class="xref">Common Normalized ACDC Labels</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="xref">5.3</a>.  <a href="#name-version-string-field" class="xref">Version String Field</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-conventions-and-definitions" class="xref">Conventions and Definitions</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-references" class="xref">References</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-event-messages" class="xref">Event Messages</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
-                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="xref">9.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="xref">6.1</a>.  <a href="#name-rotation" class="xref">Rotation</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.1">
+                    <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="xref">6.1.1</a>.  <a href="#name-partial-participation-in-ro" class="xref">Partial Participation in Rotation</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
-                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="xref">9.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.2">
+                    <p id="section-toc.1-1.6.2.1.2.2.1"><a href="#section-6.1.2" class="xref">6.1.2</a>.  <a href="#name-inception-event" class="xref">Inception Event</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="xref">6.2</a>.  <a href="#name-inception-event-message" class="xref">Inception Event Message</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2.2.1">
+                    <p id="section-toc.1-1.6.2.2.2.1.1"><a href="#section-6.2.1" class="xref">6.2.1</a>.  <a href="#name-event-message-body" class="xref">Event Message Body</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3">
+                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="xref">6.3</a>.  <a href="#name-rotation-event-message" class="xref">Rotation Event Message</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3.2.1">
+                    <p id="section-toc.1-1.6.2.3.2.1.1"><a href="#section-6.3.1" class="xref">6.3.1</a>.  <a href="#name-interaction-event-also-dele" class="xref">Interaction Event  (Also delegating Interaction)</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3.2.2">
+                    <p id="section-toc.1-1.6.2.3.2.2.1"><a href="#section-6.3.2" class="xref">6.3.2</a>.  <a href="#name-delegated-inception-event" class="xref">Delegated Inception Event</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3.2.3">
+                    <p id="section-toc.1-1.6.2.3.2.3.1"><a href="#section-6.3.3" class="xref">6.3.3</a>.  <a href="#name-delegated-rotation-event" class="xref">Delegated Rotation Event</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4">
+                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="xref">6.4</a>.  <a href="#name-receipts" class="xref">Receipts</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4.2.1">
+                    <p id="section-toc.1-1.6.2.4.2.1.1"><a href="#section-6.4.1" class="xref">6.4.1</a>.  <a href="#name-transferable-prefix-signer-" class="xref">Transferable Prefix Signer Receipt</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.5">
+                <p id="section-toc.1-1.6.2.5.1"><a href="#section-6.5" class="xref">6.5</a>.  <a href="#name-seals" class="xref">Seals</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.5.2.1">
+                    <p id="section-toc.1-1.6.2.5.2.1.1"><a href="#section-6.5.1" class="xref">6.5.1</a>.  <a href="#name-digest-seal" class="xref">Digest Seal</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.5.2.2">
+                    <p id="section-toc.1-1.6.2.5.2.2.1"><a href="#section-6.5.2" class="xref">6.5.2</a>.  <a href="#name-merkle-tree-root-digest-sea" class="xref">Merkle Tree Root Digest Seal</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.5.2.3">
+                    <p id="section-toc.1-1.6.2.5.2.3.1"><a href="#section-6.5.3" class="xref">6.5.3</a>.  <a href="#name-backer-seal" class="xref">Backer Seal</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.5.2.4">
+                    <p id="section-toc.1-1.6.2.5.2.4.1"><a href="#section-6.5.4" class="xref">6.5.4</a>.  <a href="#name-event-seal" class="xref">Event Seal</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.5.2.5">
+                    <p id="section-toc.1-1.6.2.5.2.5.1"><a href="#section-6.5.5" class="xref">6.5.5</a>.  <a href="#name-last-establishment-event-se" class="xref">Last Establishment Event Seal</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.6">
+                <p id="section-toc.1-1.6.2.6.1"><a href="#section-6.6" class="xref">6.6</a>.  <a href="#name-other-messages" class="xref">Other Messages</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.6.2.1">
+                    <p id="section-toc.1-1.6.2.6.2.1.1"><a href="#section-6.6.1" class="xref">6.6.1</a>.  <a href="#name-query-message" class="xref">Query Message</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.6.2.2">
+                    <p id="section-toc.1-1.6.2.6.2.2.1"><a href="#section-6.6.2" class="xref">6.6.2</a>.  <a href="#name-reply-message" class="xref">Reply Message</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.6.2.3">
+                    <p id="section-toc.1-1.6.2.6.2.3.1"><a href="#section-6.6.3" class="xref">6.6.3</a>.  <a href="#name-bare-message" class="xref">Bare Message</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.6.2.4">
+                    <p id="section-toc.1-1.6.2.6.2.4.1"><a href="#section-6.6.4" class="xref">6.6.4</a>.  <a href="#name-prod-message" class="xref">Prod Message</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.6.2.5">
+                    <p id="section-toc.1-1.6.2.6.2.5.1"><a href="#section-6.6.5" class="xref">6.6.5</a>.  <a href="#name-exchange-message-exchange" class="xref">Exchange Message (exchange)</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.7">
+                <p id="section-toc.1-1.6.2.7.1"><a href="#section-6.7" class="xref">6.7</a>.  <a href="#name-notices-embedded-in-reply-m" class="xref">Notices Embedded in Reply Messages</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.7.2.1">
+                    <p id="section-toc.1-1.6.2.7.2.1.1"><a href="#section-6.7.1" class="xref">6.7.1</a>.  <a href="#name-key-state-notice-ksn" class="xref">Key State Notice (KSN)</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.7.2.2">
+                    <p id="section-toc.1-1.6.2.7.2.2.1"><a href="#section-6.7.2" class="xref">6.7.2</a>.  <a href="#name-transaction-state-notice-ts" class="xref">Transaction State Notice (TSN)</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.8">
+                <p id="section-toc.1-1.6.2.8.1"><a href="#section-6.8" class="xref">6.8</a>.  <a href="#name-transaction-event-log-messa" class="xref">Transaction Event Log Messages</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.8.2.1">
+                    <p id="section-toc.1-1.6.2.8.2.1.1"><a href="#section-6.8.1" class="xref">6.8.1</a>.  <a href="#name-registry-inception-event" class="xref">Registry Inception Event</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.8.2.2">
+                    <p id="section-toc.1-1.6.2.8.2.2.1"><a href="#section-6.8.2" class="xref">6.8.2</a>.  <a href="#name-registry-rotation-event" class="xref">Registry Rotation Event</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.8.2.3">
+                    <p id="section-toc.1-1.6.2.8.2.3.1"><a href="#section-6.8.3" class="xref">6.8.3</a>.  <a href="#name-backerless-credential-issua" class="xref">Backerless Credential Issuance</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.8.2.4">
+                    <p id="section-toc.1-1.6.2.8.2.4.1"><a href="#section-6.8.4" class="xref">6.8.4</a>.  <a href="#name-backerless-credential-revoc" class="xref">Backerless Credential Revocation</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.8.2.5">
+                    <p id="section-toc.1-1.6.2.8.2.5.1"><a href="#section-6.8.5" class="xref">6.8.5</a>.  <a href="#name-backer-credential-issuance" class="xref">Backer Credential Issuance</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.8.2.6">
+                    <p id="section-toc.1-1.6.2.8.2.6.1"><a href="#section-6.8.6" class="xref">6.8.6</a>.  <a href="#name-backer-credential-revocatio" class="xref">Backer Credential Revocation</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-appendix-cryptographic-stre" class="xref">Appendix: Cryptographic Strength and Security</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="xref">7.1</a>.  <a href="#name-cryptographic-strength" class="xref">Cryptographic Strength</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="xref">7.2</a>.  <a href="#name-information-theoretic-secur" class="xref">Information Theoretic Security and Perfect Security</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-conventions-and-definitions" class="xref">Conventions and Definitions</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a></p>
+</li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#appendix-A" class="xref"></a><a href="#name-acknowledgments" class="xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="xref">10</a>. <a href="#name-iana-considerations" class="xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#appendix-B" class="xref"></a><a href="#name-authors-address" class="xref">Author's Address</a></p>
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="xref">11</a>. <a href="#name-references" class="xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
+                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="xref">11.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
+                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="xref">11.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#appendix-A" class="xref"></a><a href="#name-acknowledgments" class="xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
+            <p id="section-toc.1-1.13.1"><a href="#appendix-B" class="xref"></a><a href="#name-authors-address" class="xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1357,7 +1366,7 @@ The KA2CE approach may be much more performant and scalable than more complex ap
         <h3 id="name-self-certifying-identifier-">
 <a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-self-certifying-identifier-" class="section-name selfRef">Self-Certifying IDentifier (SCID)</a>
         </h3>
-<p id="section-1.1-1">The KERI identifier system overlay leverages the properties of cryptonymous <strong><em>self-certifying identifiers</em></strong> (SCIDs) which are based on asymmetric public-key cryptography (PKI) to provide end-verifiable secure attribution of any message or data item without needing to trust in any intermediary <span>[<a href="#PKI" class="xref">PKI</a>]</span><span>[<a href="#KERI" class="xref">KERI</a>]</span><span>[<a href="#UIT" class="xref">UIT</a>]</span><span>[<a href="#SCPK" class="xref">SCPK</a>]</span><span>[<a href="#SFS" class="xref">SFS</a>]</span><span>[<a href="#SCPN" class="xref">SCPN</a>]</span><span>[<a href="#SCURL" class="xref">SCURL</a>]</span>. A self-certifying identifier (SCID) is uniquely cryptographically derived from the public key of an asymmetric key-pair, <code>(public, private)</code>. It is self-certifying in the sense that does not rely on a trusted entity. Any non-repudiable signature made with the private key may be verified by extracting the public-key from either the identifier itself or incepting information uniquely associated with the cryptographic derivation process for the identifier. In a basic SCID, the mapping between identifier and controlling public key is self-contained in the identifier itself. A basic SCID is <em>ephemeral</em> i.e. it does not support rotation of its key-pairs in the event of key weakness or compromise and therefore must be abandoned once the controlling private key becomes weakened or compromised from exposure. The generalization of SCIDs with enhanced properties such as persistence are called <em>autonomic identifiers</em> (AIDs).<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-1">The KERI identifier system overlay leverages the properties of cryptonymous <strong><em>self-certifying identifiers</em></strong> (SCIDs) which are based on asymmetric public-key cryptography (PKI) to provide end-verifiable secure attribution of any message or data item without needing to trust in any intermediary <span>[<a href="#PKI" class="xref">PKI</a>]</span><span>[<a href="#KERI" class="xref">KERI</a>]</span><span>[<a href="#UIT" class="xref">UIT</a>]</span><span>[<a href="#SCPK" class="xref">SCPK</a>]</span><span>[<a href="#SFS" class="xref">SFS</a>]</span><span>[<a href="#SCPN" class="xref">SCPN</a>]</span><span>[<a href="#SCURL" class="xref">SCURL</a>]</span>. A self-certifying identifier (SCID) is uniquely cryptographically derived from the public key of an asymmetric keypair, <code>(public, private)</code>. It is self-certifying in the sense that does not rely on a trusted entity. Any non-repudiable signature made with the private key may be verified by extracting the public key from either the identifier itself or incepting information uniquely associated with the cryptographic derivation process for the identifier. In a basic SCID, the mapping between an identifier and its controlling public key is self-contained in the identifier itself. A basic SCID is <em>ephemeral</em> i.e. it does not support rotation of its keypairs in the event of key weakness or compromise and therefore must be abandoned once the controlling private key becomes weakened or compromised from exposure. The class of identifiers that generalize SCIDs with enhanced properties such as persistence is called <em>autonomic identifiers</em> (AIDs).<a href="#section-1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="autonomic-identifier-aid">
@@ -1365,17 +1374,16 @@ The KA2CE approach may be much more performant and scalable than more complex ap
         <h3 id="name-autonomic-identifier-aid">
 <a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-autonomic-identifier-aid" class="section-name selfRef">Autonomic IDentifier (AID)</a>
         </h3>
-<p id="section-1.2-1">A Key Event Log (KEL) gives rise to an enhanced class of SCIDs that are persistent, not ephemeral because their keys may be refreshed or updated via rotation allowing secure control over the identifier in spite of key weakness or even compromise.
+<p id="section-1.2-1">A Key Event Log (KEL) gives rise to an enhanced class of SCIDs that are persistent, not ephemeral, because their keys may be refreshed or updated via rotation allowing secure control over the identifier in spite of key weakness or even compromise.
 This family of generalized enhanced SCIDs we call <strong><em>autonomic identifiers</em></strong> (AIDs). <em>Autonomic</em> means self-governing, self-regulating, or self-managing and is evocative of the self-certifying, self-managing properties of this class of identifier.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="key-pre-rotation-basics">
 <section id="section-1.3">
         <h3 id="name-key-pre-rotation-basics">
-<a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-key-pre-rotation-basics" class="section-name selfRef">Key Pre-Rotation Basics</a>
+<a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-key-pre-rotation-basics" class="section-name selfRef">Key Pre-rotation Basics</a>
         </h3>
-<p id="section-1.3-1">An important innovation of KERI is that it solves the key rotation problem of PKI (including that of simple self-certifying identifiers) via a novel but elegant mechanism we call <strong><em>key pre-rotation</em></strong> <span>[<a href="#DAD" class="xref">DAD</a>]</span><span>[<a href="#KERI" class="xref">KERI</a>]</span>. This <em>pre-rotation</em> mechanism enables an entity to persistently maintain or regain control over an identifier in spite of the exposure-related weakening over time or even compromise of the current set of controlling (signing) key pairs. With key pre-rotation, control over the identifier can be re-established by rotating to a one-time use set of unexposed but pre-committed rotation key pairs that then become the current signing key pairs. Each rotation in turn cryptographically commits to a new set of rotation keys but without exposing them. Because the pre-rotated key pairs need never be exposed prior to their one-time use, their attack surface may be optimally minimized. The current key-state is maintained via an append-only <strong><em>verifiable data structure</em></strong> we call a <strong><em>key event log</em></strong> (KEL).<a href="#section-1.3-1" class="pilcrow">¶</a></p>
-<p id="section-1.3-2">ToDo describe pre-rotated sequence of key sets (exposed and unexposed)<a href="#section-1.3-2" class="pilcrow">¶</a></p>
+<p id="section-1.3-1">An important innovation of KERI is that it solves the key rotation problem of PKI (including that of simple self-certifying identifiers) via a novel but elegant mechanism we call <strong><em>key pre-rotation</em></strong> <span>[<a href="#DAD" class="xref">DAD</a>]</span><span>[<a href="#KERI" class="xref">KERI</a>]</span>. This <em>pre-rotation</em> mechanism enables an entity to persistently maintain or regain control over an identifier in spite of the exposure-related weakening over time or even compromise of the current set of controlling (signing) keypairs. With key pre-rotation, control over the identifier can be re-established by rotating to a one-time use set of unexposed but pre-committed rotation keypairs that then become the current signing keypairs. Each rotation in turn cryptographically commits to a new set of rotation keys but without exposing them. Because the pre-rotated keypairs need never be exposed prior to their one-time use, their attack surface may be optimally minimized. The current key-state is maintained via an append-only <strong><em>verifiable data structure</em></strong> we call a <strong><em>key event log</em></strong> (KEL).<a href="#section-1.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="cryptographic-primitives">
@@ -1388,7 +1396,7 @@ This family of generalized enhanced SCIDs we call <strong><em>autonomic identifi
           <h4 id="name-cesr">
 <a href="#section-1.4.1" class="section-number selfRef">1.4.1. </a><a href="#name-cesr" class="section-name selfRef">CESR</a>
           </h4>
-<p id="section-1.4.1-1">A <em>**cryptographic primitive **</em>is a serialization of a value associated with a cryptographic operation including but not limited to a digest (hash), a salt, a seed, a private key, a public key, or a signature. All cryptographic primitives in KERI <span class="bcp14">MUST</span> be expressed using the CESR (Compact Event Streaming Representation) protocol <span>[<a href="#CESR_ID" class="xref">CESR_ID</a>]</span>.  CESR supports round trip lossless conversion between its text, binary, and raw domain representations and lossless composability between its text and binary domain representations. Composability is ensured between any concatenated group of text primitives and the binary equivalent of that group because all CESR primitives are aligned on 24-bit boundaries. Both the text and binary domain representations are serializations suitable for transmission over the wire. The text domain representation is also suitable to be embedded as a string value of a field or array element as part of a field map serialization such as JSON, CBOR, or MsgPack <span>[<a href="#RFC8259" class="xref">RFC8259</a>]</span><span>[<a href="#JSOND" class="xref">JSOND</a>]</span><span>[<a href="#RFC8949" class="xref">RFC8949</a>]</span><span>[<a href="#CBORC" class="xref">CBORC</a>]</span><span>[<a href="#MGPK" class="xref">MGPK</a>]</span>. The text domain uses the set of characters from the URL-safe variant of Base64 which in turn is a subset of the ASCII character set <span>[<a href="#RFC4648" class="xref">RFC4648</a>]</span><span>[<a href="#RFC0020" class="xref">RFC0020</a>]</span>. For the sake of readability, all examples in this specification will be expressed in CESR's text-domain.<a href="#section-1.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.4.1-1">A <em>**cryptographic primitive **</em>is a serialization of a value associated with a cryptographic operation including but not limited to a digest (hash), a salt, a seed, a private key, a public key, or a signature. All cryptographic primitives in KERI <span class="bcp14">MUST</span> be expressed using the CESR (Compact Event Streaming Representation) protocol <span>[<a href="#CESR-ID" class="xref">CESR-ID</a>]</span>.  CESR supports round trip lossless conversion between its text, binary, and raw domain representations and lossless composability between its text and binary domain representations. Composability is ensured between any concatenated group of text primitives and the binary equivalent of that group because all CESR primitives are aligned on 24-bit boundaries. Both the text and binary domain representations are serializations suitable for transmission over the wire. The text domain representation is also suitable to be embedded as a string value of a field or array element as part of a field map serialization such as JSON, CBOR, or MsgPack <span>[<a href="#RFC8259" class="xref">RFC8259</a>]</span><span>[<a href="#JSOND" class="xref">JSOND</a>]</span><span>[<a href="#RFC8949" class="xref">RFC8949</a>]</span><span>[<a href="#CBORC" class="xref">CBORC</a>]</span><span>[<a href="#MGPK" class="xref">MGPK</a>]</span>. The text domain uses the set of characters from the URL-safe variant of Base64 which in turn is a subset of the ASCII character set <span>[<a href="#RFC4648" class="xref">RFC4648</a>]</span><span>[<a href="#RFC0020" class="xref">RFC0020</a>]</span>. For the sake of readability, all examples in this specification will be expressed in CESR's text-domain.<a href="#section-1.4.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="qualified-cryptographic-primitive">
@@ -1396,7 +1404,7 @@ This family of generalized enhanced SCIDs we call <strong><em>autonomic identifi
           <h4 id="name-qualified-cryptographic-pri">
 <a href="#section-1.4.2" class="section-number selfRef">1.4.2. </a><a href="#name-qualified-cryptographic-pri" class="section-name selfRef">Qualified Cryptographic Primitive</a>
           </h4>
-<p id="section-1.4.2-1">When <em>qualified</em>, a cryptographic primitive includes a prepended derivation code (as a proem) that indicates the cryptographic algorithm or suite used for that derivation. This simplifies and compactifies the essential information needed to use that cryptographic primitive. All cryptographic primitives expressed in either text or binary CESR are <em>qualified</em> by definition. Qualification is an essential property of CESR <span>[<a href="#CESR_ID" class="xref">CESR_ID</a>]</span>. The CESR protocol supports several different types of encoding tables for different types of derivation codes. These tables include very compact codes. For example, a 256-bit (32-byte) digest using the BLAKE3 digest algorithm, i.e. Blake3-256, when expressed in text-domain CESR is 44 Base64 characters long and begins with the one character derivation code <code>E</code>, such as, <code>EL1L56LyoKrIofnn0oPChS4EyzMHEEk75INJohDS_Bug</code> <span>[<a href="#BLAKE3" class="xref">BLAKE3</a>]</span><span>[<a href="#BLAKE3Spec" class="xref">BLAKE3Spec</a>]</span><span>[<a href="#BLAKE3Hash" class="xref">BLAKE3Hash</a>]</span>. The equivalent <em>qualified</em> binary domain representation is 33 bytes long.
+<p id="section-1.4.2-1">When <em>qualified</em>, a cryptographic primitive includes a prepended derivation code (as a proem) that indicates the cryptographic algorithm or suite used for that derivation. This simplifies and compactifies the essential information needed to use that cryptographic primitive. All cryptographic primitives expressed in either text or binary CESR are <em>qualified</em> by definition. Qualification is an essential property of CESR <span>[<a href="#CESR-ID" class="xref">CESR-ID</a>]</span>. The CESR protocol supports several different types of encoding tables for different types of derivation codes. These tables include very compact codes. For example, a 256-bit (32-byte) digest using the BLAKE3 digest algorithm, i.e. Blake3-256, when expressed in text-domain CESR is 44 Base64 characters long and begins with the one character derivation code <code>E</code>, such as, <code>EL1L56LyoKrIofnn0oPChS4EyzMHEEk75INJohDS_Bug</code> <span>[<a href="#BLAKE3" class="xref">BLAKE3</a>]</span><span>[<a href="#BLAKE3Spec" class="xref">BLAKE3Spec</a>]</span><span>[<a href="#BLAKE3Hash" class="xref">BLAKE3Hash</a>]</span>. The equivalent <em>qualified</em> binary domain representation is 33 bytes long.
 Unless otherwise indicated, all cryptographic primitives in this specification will appear as <em>qualified</em> primitives using text-domain CESR.<a href="#section-1.4.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1407,16 +1415,16 @@ Unless otherwise indicated, all cryptographic primitives in this specification w
         <h3 id="name-identifier-system-security-">
 <a href="#section-1.5" class="section-number selfRef">1.5. </a><a href="#name-identifier-system-security-" class="section-name selfRef">Identifier System Security Overlay</a>
         </h3>
-<p id="section-1.5-1">The function of KERI's identifier-system security-overlay is to establish the authenticity (or authorship) of the message payload in an IP Packet by verifiably attributing it to a cryptonymous self-certifying identifier (AID) via an attached set of one or more asymmetric key-pair-based non-repudiable digital signatures. The current valid set of associated asymmetric key-pair(s) is proven via a verifiable data structure called a <strong><em>key event log</em></strong> (KEL) <span>[<a href="#KERI" class="xref">KERI</a>]</span><span>[<a href="#VDS" class="xref">VDS</a>]</span><span>[<a href="#ESMT" class="xref">ESMT</a>]</span><span>[<a href="#RT" class="xref">RT</a>]</span>. The identifier system provides a mapping between the identifier and the key-pair(s) that control the identifier, namely, the public key(s) from those key-pairs. The private key(s) is secret and is not shared.<a href="#section-1.5-1" class="pilcrow">¶</a></p>
-<p id="section-1.5-2">An authenticatable (verifiable) internet message (packet) or data item includes the identifier and data in its payload. Attached to the payload is a digital signature(s) made with the private key(s) from the controlling key-pair(s). Given the identifier in a message, any verifier of a message (data item) can use the identifier system mapping to look up the public key(s) belonging to the controlling key-pair(s). The verifier can then verify the attached signature(s) using that public key(s). Because the payload includes the identifier, the signature makes a non-repudiable cryptographic commitment to both the source identifier and the data in the payload.<a href="#section-1.5-2" class="pilcrow">¶</a></p>
+<p id="section-1.5-1">The function of KERI's identifier-system security overlay is to establish the authenticity (or authorship) of the message payload in an IP Packet by verifiably attributing it to a cryptonymous self-certifying identifier (AID) via an attached set of one or more asymmetric key-pair-based non-repudiable digital signatures. The current valid set of associated asymmetric keypair(s) is proven via a verifiable data structure called a <strong><em>key event log</em></strong> (KEL) <span>[<a href="#KERI" class="xref">KERI</a>]</span><span>[<a href="#VDS" class="xref">VDS</a>]</span><span>[<a href="#ESMT" class="xref">ESMT</a>]</span><span>[<a href="#RT" class="xref">RT</a>]</span>. The identifier system provides a mapping between the identifier and the keypair(s) that control the identifier, namely, the public key(s) from those keypairs. The private key(s) is secret and is not shared.<a href="#section-1.5-1" class="pilcrow">¶</a></p>
+<p id="section-1.5-2">An authenticatable (verifiable) internet message (packet) or data item includes the identifier and data in its payload. Attached to the payload is a digital signature(s) made with the private key(s) from the controlling keypair(s). Given the identifier in a message, any verifier of a message (data item) can use the identifier system mapping to look up the public key(s) belonging to the controlling key-pair(s). The verifier can then verify the attached signature(s) using that public key(s). Because the payload includes the identifier, the signature makes a non-repudiable cryptographic commitment to both the source identifier and the data in the payload.<a href="#section-1.5-2" class="pilcrow">¶</a></p>
 <div id="security-overlay-flaws">
 <section id="section-1.5.1">
           <h4 id="name-security-overlay-flaws">
 <a href="#section-1.5.1" class="section-number selfRef">1.5.1. </a><a href="#name-security-overlay-flaws" class="section-name selfRef">Security Overlay Flaws</a>
           </h4>
 <p id="section-1.5.1-1">There are two major flaws in conventional PKI-based identifier system security overlays (including the Internet's DNS/CA system) <span>[<a href="#PKI" class="xref">PKI</a>]</span><span>[<a href="#DNS" class="xref">DNS</a>]</span><span>[<a href="#RFC0799" class="xref">RFC0799</a>]</span><span>[<a href="#CAA" class="xref">CAA</a>]</span><span>[<a href="#CA" class="xref">CA</a>]</span><span>[<a href="#RFC5280" class="xref">RFC5280</a>]</span>.<a href="#section-1.5.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.5.1-2">The *first major flaw** is that the mapping between the identifier (domain name) and the controlling key-pair(s) is merely asserted by a trusted entity e.g. certificate authority (CA) via a certificate. Because the mapping is merely asserted, a verifier can not cryptographically verify the mapping between the identifier and the controlling key-pair(s) but must trust the operational processes of the trusted entity making that assertion, i.e. the CA who issued and signed the certificate. As is well known, a successful attack upon those operational processes may fool a verifier into trusting an invalid mapping i.e. the certificate is issued to the wrong key-pair(s) albeit with a verifiable signature from a valid certificate authority. <span>[<a href="#CEDS" class="xref">CEDS</a>]</span><span>[<a href="#KDDH" class="xref">KDDH</a>]</span><span>[<a href="#DNSH" class="xref">DNSH</a>]</span><span>[<a href="#SFTCA" class="xref">SFTCA</a>]</span><span>[<a href="#DNSP" class="xref">DNSP</a>]</span><span>[<a href="#BGPC" class="xref">BGPC</a>]</span><span>[<a href="#BBGP" class="xref">BBGP</a>]</span>. Noteworthy is that the signature on the certificate is NOT made with the controlling key pairs of the identifier but made with key pairs controlled by the issuer i.e. th CA. The fact that the certificate is signed by the CA means that the mapping itself is not verifiable but merely that the CA asserted the mapping between key-pair(s) and identifier. The certificate merely provides evidence of the authenticity of the assignment of the mapping but not evidence of the veracity of the mapping.<a href="#section-1.5.1-2" class="pilcrow">¶</a></p>
-<p id="section-1.5.1-3">The <em>second major flaw</em> is that when rotating the valid signing keys there is no cryptographically verifiable way to link the new (rotated in) controlling/signing key(s) to the prior (rotated out) controlling/signing key(s). Key rotation is merely implicitly asserted by a trusted entity (CA) by issuing a new certificate with new controlling/signing keys.  Key rotation is necessary because over time the controlling key-pair(s) of an identifier becomes weak due to exposure when used to sign messages and must be replaced. An explicit rotation mechanism first revokes the old keys and then replaces them with new keys. Even a certificate revocation list (CRL) as per RFC5280, with an online status protocol (OCSP) registration as per RFC6960, does not provide a cryptographically verifiable connection between the old and new keys, it is merely asserted <span>[<a href="#RFC5280" class="xref">RFC5280</a>]</span><span>[<a href="#RFC6960" class="xref">RFC6960</a>]</span><span>[<a href="#OCSPW" class="xref">OCSPW</a>]</span>. The lack of a single universal CRL or registry means that multiple potential replacements may be valid. From a cryptographic verifiability perspective, rotation by assertion with a new certificate that either implicitly or explicitly provides revocation and replacement is essentially the same as starting over by creating a brand new independent mapping between a given identifier and the controlling key-pair(s). This start-over style of key rotation may well be one of the main reasons that PGP's web-of-trust failed <span>[<a href="#WOT" class="xref">WOT</a>]</span>. Without a universally verifiable revocation mechanism, then any rotation (revocation and replacement) assertions either implicity or implicit are mutually independent of each other. This lack of universal cryptographic verifiability of a rotation fosters ambiguity at any point in time as to the actual valid mapping between the identifier and its controlling key-pair(s). In other words, for a given identifier, any or all assertions made by some set of CAs may be potentially valid.<a href="#section-1.5.1-3" class="pilcrow">¶</a></p>
+<p id="section-1.5.1-2">The *first major flaw** is that the mapping between the identifier (domain name) and the controlling key-pair(s) is merely asserted by a trusted entity e.g. certificate authority (CA) via a certificate. Because the mapping is merely asserted, a verifier can not cryptographically verify the mapping between the identifier and the controlling key-pair(s) but must trust the operational processes of the trusted entity making that assertion, i.e. the CA who issued and signed the certificate. As is well known, a successful attack upon those operational processes may fool a verifier into trusting an invalid mapping i.e. the certificate is issued to the wrong key-pair(s) albeit with a verifiable signature from a valid certificate authority. <span>[<a href="#CEDS" class="xref">CEDS</a>]</span><span>[<a href="#KDDH" class="xref">KDDH</a>]</span><span>[<a href="#DNSH" class="xref">DNSH</a>]</span><span>[<a href="#SFTCA" class="xref">SFTCA</a>]</span><span>[<a href="#DNSP" class="xref">DNSP</a>]</span><span>[<a href="#BGPC" class="xref">BGPC</a>]</span><span>[<a href="#BBGP" class="xref">BBGP</a>]</span>. Noteworthy is that the signature on the certificate is NOT made with the controlling keypairs of the identifier but made with keypairs controlled by the issuer i.e. the CA. The fact that the certificate is signed by the CA means that the mapping itself is not verifiable but merely that the CA asserted the mapping between key-pair(s) and identifier. The certificate merely provides evidence of the authenticity of the assignment of the mapping but not evidence of the veracity of the mapping.<a href="#section-1.5.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.5.1-3">The <em>second major flaw</em> is that when rotating the valid signing keys there is no cryptographically verifiable way to link the new (rotated in) controlling/signing key(s) to the prior (rotated out) controlling/signing key(s). Key rotation is merely implicitly asserted by a trusted entity (CA) by issuing a new certificate with new controlling/signing keys.  Key rotation is necessary because over time the controlling key-pair(s) of an identifier becomes weak due to exposure when used to sign messages and must be replaced. An explicit rotation mechanism first revokes the old keys and then replaces them with new keys. Even a certificate revocation list (CRL) as per RFC5280, with an online status protocol (OCSP) registration as per RFC6960, does not provide a cryptographically verifiable connection between the old and new keys, it is merely asserted <span>[<a href="#RFC5280" class="xref">RFC5280</a>]</span><span>[<a href="#RFC6960" class="xref">RFC6960</a>]</span><span>[<a href="#OCSPW" class="xref">OCSPW</a>]</span>. The lack of a single universal CRL or registry means that multiple potential replacements may be valid. From a cryptographic verifiability perspective, rotation by assertion with a new certificate that either implicitly or explicitly provides revocation and replacement is essentially the same as starting over by creating a brand new independent mapping between a given identifier and the controlling key-pair(s). This start-over style of key rotation may well be one of the main reasons that PGP's web-of-trust failed <span>[<a href="#WOT" class="xref">WOT</a>]</span>. Without a universally verifiable revocation mechanism, then any rotation (revocation and replacement) assertions either explicit or implicit are mutually independent of each other. This lack of universal cryptographic verifiability of a rotation fosters ambiguity at any point in time as to the actual valid mapping between the identifier and its controlling keypair(s). In other words, for a given identifier, any or all assertions made by some set of CAs may be potentially valid.<a href="#section-1.5.1-3" class="pilcrow">¶</a></p>
 <p id="section-1.5.1-4">We call the state of the controlling keys for an identifier at any time the key state. Cryptographic verifiability of the key state over time is essential to remove this ambiguity. Without this verifiability, the detection of potential ambiguity requires yet another bolt-on security overlay such as the certificate transparency system <span>[<a href="#CTE" class="xref">CTE</a>]</span><span>[<a href="#CTAOL" class="xref">CTAOL</a>]</span><span>[<a href="#RFC6962" class="xref">RFC6962</a>]</span><span>[<a href="#RT" class="xref">RT</a>]</span><span>[<a href="#VDS" class="xref">VDS</a>]</span><span>[<a href="#ESMT" class="xref">ESMT</a>]</span>.<a href="#section-1.5.1-4" class="pilcrow">¶</a></p>
 <p id="section-1.5.1-5">The KERI protocol fixes both of these flaws using a combination of <strong><em>autonomic identifiers</em></strong>, <strong><em>key pre-rotation</em></strong>, a <strong><em>verifiable data structure</em></strong> (VDS) called a KEL as verifiable proof of key-state, and <strong><em>duplicity-evident</em></strong> mechanisms for evaluating and reconciling key state by validators <span>[<a href="#KERI" class="xref">KERI</a>]</span>. Unlike certificate transparency, KERI enables the detection of duplicity in the key state via non-repudiable cryptographic proofs of duplicity not merely the detection of inconsistency in the key state that may or may not be duplicitous <span>[<a href="#KERI" class="xref">KERI</a>]</span><span>[<a href="#CTAOL" class="xref">CTAOL</a>]</span>.<a href="#section-1.5.1-5" class="pilcrow">¶</a></p>
 </section>
@@ -1426,11 +1434,11 @@ Unless otherwise indicated, all cryptographic primitives in this specification w
           <h4 id="name-triad-bindings">
 <a href="#section-1.5.2" class="section-number selfRef">1.5.2. </a><a href="#name-triad-bindings" class="section-name selfRef">Triad Bindings</a>
           </h4>
-<p id="section-1.5.2-1">In simple form an identifier-system security-overlay binds together a triad consisting of the <strong><em>identifier</em></strong>, <strong><em>key-pairs</em></strong>, and <strong><em>controllers</em></strong>. By <strong><em>identifier</em></strong> we mean some string of characters. By <strong><em>key-pairs</em></strong> we mean a set of asymmetric (public, private) cryptographic key pairs used to create and verify non-repudiable digital signatures. By <strong><em>controllers</em></strong> we mean the set of entities whose members each control a private key from the given set of <strong><em>key-pairs</em></strong>. When those bindings are strong then the overlay is highly <em>invulnerable</em> to attack.  In contrast, when those bindings are weak then the overlay is highly <em>vulnerable</em> to attack. The bindings for a given identifier form a <em>triad</em> that binds together the set of <em>controllers</em>, the set of <em>key-pairs</em>, and the <em>identifier</em>. To reiterate, the set of controllers is bound to the set of key-pairs, the set of key-pairs is bound to the identifier, and the identifier is bound to the set of controllers. This binding triad can be diagrammed as a triangle where each side is a binding and the three vertices are the <em>identifier</em>, the set of <em>controllers</em>, and the set of <em>key-pairs</em>.<a href="#section-1.5.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.5.2-1">In simple form an identifier-system security-overlay binds together a triad consisting of the <strong><em>identifier</em></strong>, <strong><em>keypairs</em></strong>, and <strong><em>controllers</em></strong>. By <strong><em>identifier</em></strong> we mean some string of characters. By <strong><em>keypairs</em></strong> we mean a set of asymmetric (public, private) cryptographic keypairs used to create and verify non-repudiable digital signatures. By <strong><em>controllers</em></strong> we mean the set of entities whose members each control a private key from the given set of <strong><em>keypairs</em></strong>. When those bindings are strong then the overlay is highly <em>invulnerable</em> to attack.  In contrast, when those bindings are weak then the overlay is highly <em>vulnerable</em> to attack. The bindings for a given identifier form a <em>triad</em> that binds together the set of <em>controllers</em>, the set of <em>key-pairs</em>, and the <em>identifier</em>. To reiterate, the set of controllers is bound to the set of keypairs, the set of keypairs is bound to the identifier, and the identifier is bound to the set of controllers. This binding triad can be diagrammed as a triangle where the sides are the bindings and the vertices are the <em>identifier</em>, the set of <em>controllers</em>, and the set of <em>keypairs</em>.<a href="#section-1.5.2-1" class="pilcrow">¶</a></p>
 <p id="section-1.5.2-2">With KERI all the bindings of the triad are strong because they are cryptographically verifiable with a minimum cryptographic strength or level of approximately 128 bits. See the Appendix on cryptographic strength for more detail.<a href="#section-1.5.2-2" class="pilcrow">¶</a></p>
 <p id="section-1.5.2-3">The bound triad is created as follows:<a href="#section-1.5.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1.5.2-4.1">Each controller in the set of controllers creates an asymmetric <code>(pubic, private)</code> key-pair. The public key is derived from the private key or seed using a one-way derivation that <span class="bcp14">MUST</span> have a minimum cryptographic strength of approximately 128 bits <span>[<a href="#OWF" class="xref">OWF</a>]</span><span>[<a href="#COWF" class="xref">COWF</a>]</span>. Depending on the crypto-suite used to derive a key-pair the private key or seed may itself have a length larger than 128 bits. A controller may use a cryptographic strength pseudo-random number generator (CSPRNG) <span>[<a href="#CSPRNG" class="xref">CSPRNG</a>]</span> to create the private key or seed material. Because the private key material must be kept secret, typically in a secure data store, the management of those secrets may be an important consideration. One approach to minimize the size of secrets is to create private keys or seeds from a secret salt. The salt <span class="bcp14">MUST</span> have an entropy of approximately 128 bits. The salt may then be stretched to meet the length requirements for the crypto suite's private key size <span>[<a href="#Salt" class="xref">Salt</a>]</span><span>[<a href="#Stretch" class="xref">Stretch</a>]</span>. In addition, a hierarchical deterministic derivation function may be used to further minimize storage requirements by leveraging a single salt for a set or sequence of private keys <span>[<a href="#HDKC" class="xref">HDKC</a>]</span>. Because each controller is the only entity in control (custody) of the private key, and the public key is universally uniquely derived from the private key using a cryptographic strength one-way function, then the binding between each controller and their key-pair is as strong as the ability of the controller to keep that key private <span>[<a href="#OWF" class="xref">OWF</a>]</span><span>[<a href="#COWF" class="xref">COWF</a>]</span>. The degree of protection is up to each controller to determine. For example, a controller could choose to store their private key in a safe, at the bottom of a coal mine, air-gapped from any network, with an ex-special forces team of guards. Or the controller could choose to store it in an encrypted data store (key chain) on a secure boot mobile device with a biometric lock or simply write it on a piece of paper and store it in a safe place. The important point is that the strength of the binding between controller and key-pair and does not need to be dependent on any trusted entity.<a href="#section-1.5.2-4.1" class="pilcrow">¶</a>
+<li class="normal" id="section-1.5.2-4.1">Each controller in the set of controllers creates an asymmetric <code>(pubic, private)</code> keypair. The public key is derived from the private key or seed using a one-way derivation that <span class="bcp14">MUST</span> have a minimum cryptographic strength of approximately 128 bits <span>[<a href="#OWF" class="xref">OWF</a>]</span><span>[<a href="#COWF" class="xref">COWF</a>]</span>. Depending on the crypto-suite used to derive a keypair the private key or seed may itself have a length larger than 128 bits. A controller may use a cryptographic strength pseudo-random number generator (CSPRNG) <span>[<a href="#CSPRNG" class="xref">CSPRNG</a>]</span> to create the private key or seed material. Because the private key material must be kept secret, typically in a secure data store, the management of those secrets may be an important consideration. One approach to minimize the size of secrets is to create private keys or seeds from a secret salt. The salt <span class="bcp14">MUST</span> have an entropy of approximately 128 bits. The salt may then be stretched to meet the length requirements for the crypto suite's private key size <span>[<a href="#Salt" class="xref">Salt</a>]</span><span>[<a href="#Stretch" class="xref">Stretch</a>]</span>. In addition, a hierarchical deterministic derivation function may be used to further minimize storage requirements by leveraging a single salt for a set or sequence of private keys <span>[<a href="#HDKC" class="xref">HDKC</a>]</span>. Because each controller is the only entity in control (custody) of the private key, and the public key is universally uniquely derived from the private key using a cryptographic strength one-way function, then the binding between each controller and their key-pair is as strong as the ability of the controller to keep that key private <span>[<a href="#OWF" class="xref">OWF</a>]</span><span>[<a href="#COWF" class="xref">COWF</a>]</span>. The degree of protection is up to each controller to determine. For example, a controller could choose to store their private key in a safe, at the bottom of a coal mine, air-gapped from any network, with an ex-special forces team of guards. Or the controller could choose to store it in an encrypted data store (key chain) on a secure boot mobile device with a biometric lock or simply write it on a piece of paper and store it in a safe place. The important point is that the strength of the binding between controller and key-pair and does not need to be dependent on any trusted entity.<a href="#section-1.5.2-4.1" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-1.5.2-4.2">The identifier is universally uniquely derived from the set of public keys using a one-way derivation function <span>[<a href="#OWF" class="xref">OWF</a>]</span><span>[<a href="#COWF" class="xref">COWF</a>]</span>. It is therefore an AID (qualified SCID). Associated with each identifier (AID) is incepting information that <span class="bcp14">MUST</span> include a list of the set of <em>qualified</em> public keys from the controlling key-pairs. In the usual case, the identifier is a <em>qualified</em> cryptographic digest of the serialization of all the incepting information for the identifier. Any change to even one bit of the incepting information changes the digest and hence changes the derived identifier. This includes any change to any one of the qualified public keys including its qualifying derivation code. To clarify, a <em>qualified</em> digest as identifier includes a derivation code as proem that indicates the cryptographic algorithm used for the digest. Thus a different digest algorithm results in a different identifier. In this usual case, the identifier is strongly cryptographically bound to not only the public keys but also any other incepting information from which the digest was generated.<a href="#section-1.5.2-4.2" class="pilcrow">¶</a>
 </li>
@@ -1445,9 +1453,9 @@ Unless otherwise indicated, all cryptographic primitives in this specification w
 <p id="section-1.5.2-9">For persistent (transferable) identifiers, this additional mechanism may be bound to the triad to form a tetrad consisting of the KEL, the identifier, the set of key-pairs, and the set of controllers. The first entry in the KEL is called the <em>inception event</em> which is a serialization of the incepting information associated with the identifier mentioned previously.<a href="#section-1.5.2-9" class="pilcrow">¶</a></p>
 <p id="section-1.5.2-10">The <em>inception event</em> <span class="bcp14">MUST</span> include the list of controlling public keys. It <span class="bcp14">MUST</span> also include a signature threshold and <span class="bcp14">MUST</span> be signed by a set of private keys from the controlling key-pairs that satisfy that threshold. Additionally, for transferability (persistence across rotation) the <em>inception event</em> <span class="bcp14">MUST</span> also include a list of digests of the set of pre-rotated public keys and a pre-rotated signature threshold that will become the controlling (signing) set of key-pairs and threshold after a rotation.  A non-transferable identifier <span class="bcp14">MAY</span> have a trivial KEL that only includes an <em>inception event</em> but with a null set (empty list) of pre-rotated public keys.<a href="#section-1.5.2-10" class="pilcrow">¶</a></p>
 <p id="section-1.5.2-11">A rotation is performed by appending to the KEL a <em>rotation event</em>. A <em>rotation event</em> <span class="bcp14">MUST</span> include a list of the set of pre-rotated public keys (not their digests) thereby exposing them and <span class="bcp14">MUST</span> be signed by a set of private keys from these newly exposed newly controlling but pre-rotated key-pairs that satisfy the pre-rotated threshold. The rotation event <span class="bcp14">MUST</span> also include a list of the digests of a new set of pre-rotated keys as well as the signature threshold for the set of pre-rotated key-pairs. At any point in time the transferability of an identifier can be removed via a <em>rotation event</em> that rotates to a null set (empty list) of pre-rotated public keys.<a href="#section-1.5.2-11" class="pilcrow">¶</a></p>
-<p id="section-1.5.2-12">Each event in a KEL <span class="bcp14">MUST</span> include an integer sequence number that is one greater than the previous event. Each event after the inception event MUSt also include a cryptographic digest of the previous event. This digest means that a given event is cryptographically bound to the previous event in the sequence. The list of digests or pre-rotated keys in the inception event cryptographically binds the inception event to a subsequent rotation event. Essentially making a forward committment that forward chains together the events. The only valid rotation event that may follow the inception event must include the pre-rotated keys. But only the controller who created those keys and created the digests may verifiably expose them. Each rotation event in turn makes a forward committment (chain) to the following rotation event via its list of pre-rotated key digests.   This makes the KEL a doubly (backward and forward) hash (digest) chained non-repudiably signed append only verifiable data structure.<a href="#section-1.5.2-12" class="pilcrow">¶</a></p>
-<p id="section-1.5.2-13">Because the signatures on each event are non-repudiable, the existence of an alternate but verifiable KEL for an identifier is provable evidence of duplicity. In KERI, there may be at most one valid KEL for any identifier or none at all. Any validator of a KEL may enforce this one valid KEL rule before relying on the KEL as proof of the current key-state for the identifier. This protects the validator. Any unreconcilable evidence of duplicity means the validator does not trust (rely on) any KEL to provide the key-state for the identifier. Rules for handling reconciliable duplicity will be discussed later.  From a validator's perspective, either there is one-and-only-one valid KEL or none at all. This protects the validator. This policy removes any potential ambiguity about key state.  The combination of a verifiable KEL made from non-repudiably signed backward and forward hash chained events together with the only-one-valid KEL rule strongly binds the identifier to its current key-state as given by that one valid KEL or not at all. This in turn binds the identifier to the controllers of the current key-pairs given by the KEL thus completing the tetrad.<a href="#section-1.5.2-13" class="pilcrow">¶</a></p>
-<p id="section-1.5.2-14">At inception the KEL may be even more strongly bound to its tetrad by deriving the identifier from a digest of the <em>inception event</em>. Thereby even one change in not only the original controlling keys pairs but also the pre-rotated key pairs or any other incepting information included in the <em>inception event</em> will result in a different identifier.<a href="#section-1.5.2-14" class="pilcrow">¶</a></p>
+<p id="section-1.5.2-12">Each event in a KEL <span class="bcp14">MUST</span> include an integer sequence number that is one greater than the previous event. Each event after the inception event <span class="bcp14">MUST</span> also include a cryptographic digest of the previous event. This digest means that a given event is cryptographically bound to the previous event in the sequence. The list of digests or pre-rotated keys in the inception event cryptographically binds the inception event to a subsequent rotation event. Essentially making a forward commitment that forward chains together the events. The only valid rotation event that may follow the inception event must include the pre-rotated keys. But only the controller who created those keys and created the digests may verifiably expose them. Each rotation event in turn makes a forward commitment (chain) to the following rotation event via its list of pre-rotated key digests.   This makes the KEL a doubly (backward and forward) hash (digest) chained non-repudiably signed append-only verifiable data structure.<a href="#section-1.5.2-12" class="pilcrow">¶</a></p>
+<p id="section-1.5.2-13">Because the signatures on each event are non-repudiable, the existence of an alternate but verifiable KEL for an identifier is provable evidence of duplicity. In KERI, there may be at most one valid KEL for any identifier or none at all. Any validator of a KEL may enforce this one valid KEL rule before relying on the KEL as proof of the current key state for the identifier. This protects the validator. Any unreconcilable evidence of duplicity means the validator does not trust (rely on) any KEL to provide the key state for the identifier. Rules for handling reconciliable duplicity will be discussed later.  From a validator's perspective, either there is one-and-only-one valid KEL or none at all. This protects the validator. This policy removes any potential ambiguity about key state.  The combination of a verifiable KEL made from non-repudiably signed backward and forward hash chained events together with the only-one-valid KEL rule strongly binds the identifier to its current key-state as given by that one valid KEL or not at all. This in turn binds the identifier to the controllers of the current key-pairs given by the KEL thus completing the tetrad.<a href="#section-1.5.2-13" class="pilcrow">¶</a></p>
+<p id="section-1.5.2-14">At inception, the KEL may be even more strongly bound to its tetrad by deriving the identifier from a digest of the <em>inception event</em>. Thereby even one change in not only the original controlling keys pairs but also the pre-rotated keypairs or any other incepting information included in the <em>inception event</em> will result in a different identifier.<a href="#section-1.5.2-14" class="pilcrow">¶</a></p>
 <p id="section-1.5.2-15">The essense of the KERI protocol is a strongly bound tetrad of identifier, key-pairs, controllers, and key event log that forms the basis of its identifier system security overlay. The KERI protocol introduces the concept of duplicity evident programming via duplicity evident verifiable data structures. The full detailed exposition of the protocol is provided in the following sections.<a href="#section-1.5.2-15" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1464,12 +1472,12 @@ Unless otherwise indicated, all cryptographic primitives in this specification w
 <span class="break"></span><dl class="dlParallel" id="section-2-2">
         <dt id="section-2-2.1">Primitive</dt>
         <dd style="margin-left: 1.5em" id="section-2-2.2">
-          <p id="section-2-2.2.1">A serialization of a unitary value. A <em>cryptographic primitive</em> is the serialization of a value associated with a cryptographic operation including but not limited to a digest (hash), a salt, a seed, a private key, a public key, or a signature. All <em>primitives</em> in KERI <span class="bcp14">MUST</span> be expressed in CESR (Compact Event Streaming Representation) <span>[<a href="#CESR_ID" class="xref">CESR_ID</a>]</span>.<a href="#section-2-2.2.1" class="pilcrow">¶</a></p>
+          <p id="section-2-2.2.1">A serialization of a unitary value. A <em>cryptographic primitive</em> is the serialization of a value associated with a cryptographic operation including but not limited to a digest (hash), a salt, a seed, a private key, a public key, or a signature. All <em>primitives</em> in KERI <span class="bcp14">MUST</span> be expressed in CESR (Compact Event Streaming Representation) <span>[<a href="#CESR-ID" class="xref">CESR-ID</a>]</span>.<a href="#section-2-2.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-2.3">Qualified</dt>
         <dd style="margin-left: 1.5em" id="section-2-2.4">
-          <p id="section-2-2.4.1">When <em>qualified</em>, a <em>cryptographic primitive</em> includes a prepended derivation code (as a proem) that indicates the cryptographic algorithm or suite used for that derivation. This simplifies and compactifies the essential information needed to use that <em>cryptographic primitive</em>. All <em>cryptographic primitives</em> expressed in either text or binary CESR are <em>qualified</em> by definition <span>[<a href="#CESR_ID" class="xref">CESR_ID</a>]</span>. Qualification is an essential property of CESR <span>[<a href="#CESR_ID" class="xref">CESR_ID</a>]</span>.<a href="#section-2-2.4.1" class="pilcrow">¶</a></p>
+          <p id="section-2-2.4.1">When <em>qualified</em>, a <em>cryptographic primitive</em> includes a prepended derivation code (as a proem) that indicates the cryptographic algorithm or suite used for that derivation. This simplifies and compactifies the essential information needed to use that <em>cryptographic primitive</em>. All <em>cryptographic primitives</em> expressed in either text or binary CESR are <em>qualified</em> by definition <span>[<a href="#CESR-ID" class="xref">CESR-ID</a>]</span>. Qualification is an essential property of CESR <span>[<a href="#CESR-ID" class="xref">CESR-ID</a>]</span>.<a href="#section-2-2.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-2.5">Cryptonym</dt>
@@ -1479,27 +1487,27 @@ Unless otherwise indicated, all cryptographic primitives in this specification w
         <dd class="break"></dd>
 <dt id="section-2-2.7">SCID</dt>
         <dd style="margin-left: 1.5em" id="section-2-2.8">
-          <p id="section-2-2.8.1">Self-Certifying IDentifier.  A self-certifying identifier (SCID) is a type of cryptonym  that is uniquely cryptographically derived from the public key of an asymmetric non-repudiable signing key-pair, <code>(public, private)</code>. It is self-certifying or more precisely self-authenticating because it does does not rely on a trusted entity. The authenticity of a non-repudiable signature made with the private key may be verified by extracting the public-key from either the identifier itself or incepting information uniquely associated with the cryptographic derivation process for the identifier. In a basic SCID, the mapping between identifier and controlling public key is self-contained in the identifier itself. A basic SCID is <em>ephemeral</em> i.e. it does not support rotation of its key-pairs in the event of key weakness or compromise and therefore must be abandoned once the controlling private key becomes weakened or compromised from exposure <span>[<a href="#PKI" class="xref">PKI</a>]</span><span>[<a href="#KERI" class="xref">KERI</a>]</span><span>[<a href="#UIT" class="xref">UIT</a>]</span><span>[<a href="#SCPK" class="xref">SCPK</a>]</span><span>[<a href="#SFS" class="xref">SFS</a>]</span><span>[<a href="#SCPN" class="xref">SCPN</a>]</span><span>[<a href="#SCURL" class="xref">SCURL</a>]</span><span>[<a href="#PKI" class="xref">PKI</a>]</span>.<a href="#section-2-2.8.1" class="pilcrow">¶</a></p>
+          <p id="section-2-2.8.1">Self-Certifying IDentifier.  A self-certifying identifier (SCID) is a type of cryptonym that is uniquely cryptographically derived from the public key of an asymmetric non-repudiable signing key-pair, <code>(public, private)</code>. It is self-certifying or more precisely self-authenticating because it does not rely on a trusted entity. The authenticity of a non-repudiable signature made with the private key may be verified by extracting the public key from either the identifier itself or incepting information uniquely associated with the cryptographic derivation process for the identifier. In a basic SCID, the mapping between an identifier and its controlling public key is self-contained in the identifier itself. A basic SCID is <em>ephemeral</em> i.e. it does not support rotation of its keypairs in the event of key weakness or compromise and therefore must be abandoned once the controlling private key becomes weakened or compromised from exposure <span>[<a href="#PKI" class="xref">PKI</a>]</span><span>[<a href="#KERI" class="xref">KERI</a>]</span><span>[<a href="#UIT" class="xref">UIT</a>]</span><span>[<a href="#SCPK" class="xref">SCPK</a>]</span><span>[<a href="#SFS" class="xref">SFS</a>]</span><span>[<a href="#SCPN" class="xref">SCPN</a>]</span><span>[<a href="#SCURL" class="xref">SCURL</a>]</span><span>[<a href="#PKI" class="xref">PKI</a>]</span>.<a href="#section-2-2.8.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-2.9">AID</dt>
         <dd style="margin-left: 1.5em" id="section-2-2.10">
-          <p id="section-2-2.10.1">Autonomic IDentifier. A self-managing <em>crytonymous</em> identifier that <span class="bcp14">MUST</span> be self-certifying (self-authenticating) and <span class="bcp14">MUST</span> be encoded in CESR as a <em>qualified</em> cryptographic primitive. An AID <span class="bcp14">MAY</span> exhibit other self-managing properties such as transferable control using key <em>pre-rotation</em> which enables control over such an AID to persist in spite of key weakness or compromise due to exposure. Authoritative control over the identifier persists in spite of the evolution of key-state.<a href="#section-2-2.10.1" class="pilcrow">¶</a></p>
+          <p id="section-2-2.10.1">Autonomic IDentifier. A self-managing <em>cryptonymous</em> identifier that <span class="bcp14">MUST</span> be self-certifying (self-authenticating) and <span class="bcp14">MUST</span> be encoded in CESR as a <em>qualified</em> cryptographic primitive. An AID <span class="bcp14">MAY</span> exhibit other self-managing properties such as transferable control using key <em>pre-rotation</em> which enables control over such an AID to persist in spite of key weakness or compromise due to exposure. Authoritative control over the identifier persists in spite of the evolution of the key-state.<a href="#section-2-2.10.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-2.11">Key-State</dt>
+<dt id="section-2-2.11">Key State</dt>
         <dd style="margin-left: 1.5em" id="section-2-2.12">
           <p id="section-2-2.12.1">Includes the set of currently authoritative key-pairs for an AID and any other information necessary to secure or establish control over an AID.<a href="#section-2-2.12.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-2.13">Key Event</dt>
         <dd style="margin-left: 1.5em" id="section-2-2.14">
-          <p id="section-2-2.14.1">Concretely, the serialized data structure that forms an entry in the key event log for an AID. Abstractly, the data structure itself. Key events come in different types and are used primarily to establish or change the authoritative set of key-pairs and/or anchor other data to the authoritative set of key-pairs at the point in the key event log actualized by a particular entry.<a href="#section-2-2.14.1" class="pilcrow">¶</a></p>
+          <p id="section-2-2.14.1">Concretely, the serialized data structure of an entry in the key event log for an AID. Abstractly, the data structure itself. Key events come in different types and are used primarily to establish or change the authoritative set of keypairs and/or anchor other data to the authoritative set of keypairs at the point in the key event log actualized by a particular entry.<a href="#section-2-2.14.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-2.15">Establishment Event</dt>
         <dd style="margin-left: 1.5em" id="section-2-2.16">
-          <p id="section-2-2.16.1">Key Event that establishes or changes the key-state which includes the current set of authoritative key-pairs (key-state) for an AID.<a href="#section-2-2.16.1" class="pilcrow">¶</a></p>
+          <p id="section-2-2.16.1">Key Event that establishes or changes the key-state which includes the current set of authoritative keypairs (key-state) for an AID.<a href="#section-2-2.16.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-2.17">Non-establishment Event</dt>
@@ -1519,12 +1527,12 @@ Unless otherwise indicated, all cryptographic primitives in this specification w
         <dd class="break"></dd>
 <dt id="section-2-2.23">Rotation Event</dt>
         <dd style="margin-left: 1.5em" id="section-2-2.24">
-          <p id="section-2-2.24.1">Establishement Event that provides the information needed to change the key-state which includes a change to the set of authoritative key pairs for an AID.<a href="#section-2-2.24.1" class="pilcrow">¶</a></p>
+          <p id="section-2-2.24.1">Establishment Event that provides the information needed to change the key-state which includes a change to the set of authoritative keypairs for an AID.<a href="#section-2-2.24.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-2.25">Rotation</dt>
         <dd style="margin-left: 1.5em" id="section-2-2.26">
-          <p id="section-2-2.26.1">The operation of revoking and replacing the set of authoritative key-pairs for an AID. This operation is made verifiable and duplicity evident upon acceptance as a <em>rotation event</em> that is appended to the AID's KEL.<a href="#section-2-2.26.1" class="pilcrow">¶</a></p>
+          <p id="section-2-2.26.1">The operation of revoking and replacing the set of authoritative keypairs for an AID. This operation is made verifiable and duplicity evident upon acceptance as a <em>rotation event</em> that is appended to the AID's KEL.<a href="#section-2-2.26.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-2.27">Interaction Event</dt>
@@ -1539,12 +1547,12 @@ Unless otherwise indicated, all cryptographic primitives in this specification w
         <dd class="break"></dd>
 <dt id="section-2-2.31">Version</dt>
         <dd style="margin-left: 1.5em" id="section-2-2.32">
-          <p id="section-2-2.32.1">More that one version of a KEL for an AID exists when for any two instances of a KEL at least one event is unique between the two instances.<a href="#section-2-2.32.1" class="pilcrow">¶</a></p>
+          <p id="section-2-2.32.1">More than one version of a KEL for an AID exists when for any two instances of a KEL at least one event is unique between the two instances.<a href="#section-2-2.32.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-2.33">Verifiable</dt>
         <dd style="margin-left: 1.5em" id="section-2-2.34">
-          <p id="section-2-2.34.1">A KEL is verifiable means all content in a KEL including the digests and the signatures on that content are verifiably compliant with respect to the KERI protocol. In other words, the KEL is internally consistent and has integrity vis-a-vis its backward and forward chaining digests and authenticity vis-a-vis its nonrepudiable signatures. As a verifiable data structure the KEL satisfies the KERI protocol defined rules for that verifiability. This includes the cryptographic verification of any digests or signatures to against the contents so digested or signed.<a href="#section-2-2.34.1" class="pilcrow">¶</a></p>
+          <p id="section-2-2.34.1">A KEL is verifiable means all content in a KEL including the digests and the signatures on that content is verifiably compliant with respect to the KERI protocol. In other words, the KEL is internally consistent and has integrity vis-a-vis its backward and forward chaining digests and authenticity vis-a-vis its non-repudiable signatures. As a verifiable data structure, the KEL satisfies the KERI protocol-defined rules for that verifiability. This includes the cryptographic verification of any digests or signatures on the contents so digested or signed.<a href="#section-2-2.34.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-2.35">Duplicity</dt>
@@ -1554,7 +1562,7 @@ Unless otherwise indicated, all cryptographic primitives in this specification w
         <dd class="break"></dd>
 <dt id="section-2-2.37">Validator</dt>
         <dd style="margin-left: 1.5em" id="section-2-2.38">
-          <p id="section-2-2.38.1">Any entity that evaluates one more more  AID's KEL in order to determine if it can rely on (trust) the key-state provided by that KEL. A necessary but insufficient condition for a valid KEL is it is verifiable i.e. is internally inconsistent with respect to compliance with the KERI protocol. An invalid KEL from the perspective a Validator may be either un-verifiable or it may be verifiable but duplicitous with respect to another verifiable version of that KEL.  Detected duplicity by a given validator means that the validator has seen more than one verifiable version of a KEL for a given AID. Reconciliable duplicity means that one and only one version of a KEL as seen by a validator is accepted as the authoritative version for that validator. Irreconcilable duplicity means that none of the versions of a KEL as seen by a validator are accepted as the authoritative one for that validator. The conditions for reconcialable duplicity are described later.<a href="#section-2-2.38.1" class="pilcrow">¶</a></p>
+          <p id="section-2-2.38.1">Any entity that evaluates one more AID's KEL in order to determine if it can rely on (trust) the key-state provided by that KEL. A necessary but insufficient condition for a valid KEL is it is verifiable i.e. is internally inconsistent with respect to compliance with the KERI protocol. An invalid KEL from the perspective of a Validator may be either unverifiable or it may be verifiable but duplicitous with respect to another verifiable version of that KEL.  Detected duplicity by a given validator means that the validator has seen more than one verifiable version of a KEL for a given AID. Reconciliable duplicity means that one and only one version of a KEL as seen by a validator is accepted as the authoritative version for that validator. Irreconcilable duplicity means that none of the versions of a KEL as seen by a validator are accepted as the authoritative one for that validator. The conditions for reconcilable duplicity are described later.<a href="#section-2-2.38.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-2.39">Message</dt>
@@ -1575,42 +1583,63 @@ Unless otherwise indicated, all cryptographic primitives in this specification w
 </dl>
 </section>
 </div>
-<div id="messages-and-seals">
+<div id="keypair-labeling-convention">
 <section id="section-3">
-      <h2 id="name-messages-and-seals">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-messages-and-seals" class="section-name selfRef">Messages and Seals</a>
+      <h2 id="name-keypair-labeling-convention">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-keypair-labeling-convention" class="section-name selfRef">Keypair Labeling Convention</a>
       </h2>
-<p id="section-3-1">Because adding the <code>d</code> field SAID to every key event message type will break all the explicit test vectors. Its no additional pain to normalize the field ordering across all message types and seals.
+<p id="section-3-1">In order to make key event expressions both clearer and more concise, we use a keypair labeling convention. When an AID's key state is dynamic, i.e. the set of controlling keypairs is transferable, then the keypair labels are indexed in order to represent the successive sets of keypairs that constitute the key state at any position in the KEL (key event log). To elaborate, we use indexes on the labels for AIDs that are transferable to indicate which set of keypairs is associated with the AID at any given point in its key state or KEL. In contrast, when the key state is static, i.e. the set of controlling keypairs is non-transferable then no indexes are needed because the key state never changes.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">Recall that, a keypair is a two tuple, <code>(public, private)</code>, of the respective public and private keys in the keypair. For a given AID, the labeling convention uses an uppercase letter label to represent that AID. When the key state is dynamic, a superscripted index on that letter is used to indicate which keypair is used at a given key state. Alternatively, the index may be omitted when the context defines which keypair and which key state, such as, for example, the latest or current key state. To reiterate, when the key state is static no index is needed.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-3">In general, without loss of specificity, we use an uppercase letter label to represent both an AID and when indexed to represent its keypair or keypairs at a given key state for that AID. In addition, when expressed in tuple form the uppercase letter also represents the public key and the lowercase letter represents the private key for a given keypair. For example, let <code>A</code> denote and AID, then let <code>A</code> also denote a keypair which may be also expressed in tuple form as <code>(A, a)</code>. Therefore, when referring to the keypair itself as a pair and not the individual members of the pair, either the uppercase label, <code>A</code>, or the tuple, <code>(A, a)</code>, may be used to refer to the keypair itself. When referring to the individual members of the keypair then the uppercase letter, <code>A</code>, refers to the public key, and the lowercase letter, <code>a</code>, refers to the private key.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-4">As described above, an establishment key event may change the key state. Let the sequence of establishment events be indexed by the zero-based integer-valued variable <code>i</code>. Let the sequence of keypairs used to control an AID be indexed by the zero-based integer-valued variable <code>j</code>. When the set of controlling keypairs used at any time for a given key state includes only one member, then <code>i = j</code> for every keypair, and only one index is needed. But when the set of keypairs used at any time for a given key state includes more than one member, then <code>i &amp;#8800; j</code> for every keypair, and both indices are needed.<a href="#section-3-4" class="pilcrow">¶</a></p>
+<p id="section-3-5">the former case, where only one index is needed because <code>i = j</code>, let the indexed keypair for AID, <code>A</code>, be denoted by <em>A<sup>j</sup></em> or in tuple form by <em>(A<sup>j</sup>, a<sup>j</sup>)</em> where the keypair so indexed uses the j<sup>th</sup> keypair from the sequence of all keypairs.  The keypair sequence may be expressed as the list, <em>[A<sup>0</sup>, A<sup>1</sup>, A<sup>2</sup>, ...]</em>. The zero element in this sequence is denoted by A<sup>0</sup> or in tuple form by <em>(A<sup>0</sup>, a<sup>0</sup>)</em>.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-6">In the latter case, where both indices are needed because <code>i &amp;#8800; j</code>, let the indexed keypair for AID, <code>A</code>, be tdenoted by <em>A<sup>i,j</sup></em> or in tuple form by <em>(A<sup>i,j</sup>, a<sup>i,j</sup>)</em> where the keypair so indexed appears in the <em>i<sup>th</sup></em> key state and uses the <em>j<sup>th</sup></em> keypair from the sequence of all keypairs. Suppose, for example, that each key state uses three keypairs, then the sequence of the first two key states that consume the first six keypairs is given by the following list, <em>[A<sup>0,0</sup>, A<sup>0,1</sup>, A<sup>0,2</sup>, A<sup>1,3</sup>,  A<sup>1,4</sup>,  A<sup>1,5</sup>]</em>.<a href="#section-3-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="key-pre-rotation-details">
+<section id="section-4">
+      <h2 id="name-key-pre-rotation-details">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-key-pre-rotation-details" class="section-name selfRef">Key Pre-rotation Details</a>
+      </h2>
+<p id="section-4-1">ToDo describe the pre-rotated sequence of key sets (exposed and unexposed)<a href="#section-4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="messages-and-seals">
+<section id="section-5">
+      <h2 id="name-messages-and-seals">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-messages-and-seals" class="section-name selfRef">Messages and Seals</a>
+      </h2>
+<p id="section-5-1">Because adding the <code>d</code> field SAID to every key event message type will break all the explicit test vectors. Its no additional pain to normalize the field ordering across all message types and seals.
 Originally all messages included an <code>i</code> field but that is not true anymore. So the changed field ordering is to put the fields that are common to all message types first in order followed by fields that are not common. The common fields are <code>v</code>, <code>t</code>, <code>d</code>.
-The newly revised messages and seals are shown below.<a href="#section-3-1" class="pilcrow">¶</a></p>
+The newly revised messages and seals are shown below.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <div id="message-field-labels">
-<section id="section-3.1">
+<section id="section-5.1">
         <h3 id="name-message-field-labels">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-message-field-labels" class="section-name selfRef">Message Field Labels</a>
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-message-field-labels" class="section-name selfRef">Message Field Labels</a>
         </h3>
 <div id="saids-and-keri-label-convention-normalization">
-<section id="section-3.1.1">
+<section id="section-5.1.1">
           <h4 id="name-saids-and-keri-label-conven">
-<a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-saids-and-keri-label-conven" class="section-name selfRef">SAIDs and KERI Label Convention Normalization</a>
+<a href="#section-5.1.1" class="section-number selfRef">5.1.1. </a><a href="#name-saids-and-keri-label-conven" class="section-name selfRef">SAIDs and KERI Label Convention Normalization</a>
           </h4>
-<p id="section-3.1.1-1">Because the order of appearance of fields is enforced in all KERI messages, where a label appears (in which message or which block in a message) adds the necessary context to fully determine its meaning.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.1-1">Because the order of appearance of fields is enforced in all KERI messages, where a label appears (in which message or which block in a message) adds the necessary context to fully determine its meaning.<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="special-label-ordering-requirements">
-<section id="section-3.1.2">
+<section id="section-5.1.2">
           <h4 id="name-special-label-ordering-requ">
-<a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-special-label-ordering-requ" class="section-name selfRef">Special Label Ordering Requirements</a>
+<a href="#section-5.1.2" class="section-number selfRef">5.1.2. </a><a href="#name-special-label-ordering-requ" class="section-name selfRef">Special Label Ordering Requirements</a>
           </h4>
-<p id="section-3.1.2-1">The version string, <code>v</code>, field <span class="bcp14">MUST</span> be the first field when it appears. This enables a RegEx stream parser to consistently find the version string.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.1.2-2">There are two other identifiers that appear after <code>v</code> when <code>v</code> is present or may appear first
-when <code>v</code> is not present. These are <code>i</code> and <code>d</code>.<a href="#section-3.1.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.1.2-3">In this context, <code>i</code> is short for <code>ai</code>, which is short for the Autonomic IDentifier (AID). The AID given by the <code>i</code> field may also be thought of as a securely attributable identifier, authoritative identifier, authenticatable identifier, authorizing identifier, or authoring identifier. Because AIDs may be namespaced, the essential component of an AID is the cryptographically derived Controller identifier prefix. An AID <span class="bcp14">MUST</span> be self-certifying. An AID may be simply the Controller identifier prefix or may be namespaced as part of a W3C Decentralized IDentifier (DID) <span>[<a href="#W3C_DID" class="xref">W3C_DID</a>]</span>. Another way of thinking about an <code>i</code> field is that it is the identifier of the authoritative entity to which a statement may be securely attributed, thereby making the statement verifiably authentic via a non-repudiable signature made by that authoritative entity as the Controller of the private key(s).<a href="#section-3.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-1">The version string, <code>v</code>, field <span class="bcp14">MUST</span> be the first field when it appears. This enables a RegEx stream parser to consistently find the version string.<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-2">There are two other identifiers that appear after <code>v</code> when <code>v</code> is present or may appear first
+when <code>v</code> is not present. These are <code>i</code> and <code>d</code>.<a href="#section-5.1.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-3">In this context, <code>i</code> is short for <code>ai</code>, which is short for the Autonomic IDentifier (AID). The AID given by the <code>i</code> field may also be thought of as a securely attributable identifier, authoritative identifier, authenticatable identifier, authorizing identifier, or authoring identifier. Because AIDs may be namespaced, the essential component of an AID is the cryptographically derived Controller identifier prefix. An AID <span class="bcp14">MUST</span> be self-certifying. An AID may be simply the Controller identifier prefix or may be namespaced as part of a W3C Decentralized IDentifier (DID) <span>[<a href="#W3C_DID" class="xref">W3C_DID</a>]</span>. Another way of thinking about an <code>i</code> field is that it is the identifier of the authoritative entity to which a statement may be securely attributed, thereby making the statement verifiably authentic via a non-repudiable signature made by that authoritative entity as the Controller of the private key(s).<a href="#section-5.1.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="keri-message-defined-element-labels">
-<section id="section-3.1.3">
+<section id="section-5.1.3">
           <h4 id="name-keri-message-defined-elemen">
-<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-keri-message-defined-elemen" class="section-name selfRef">KERI Message Defined Element Labels</a>
+<a href="#section-5.1.3" class="section-number selfRef">5.1.3. </a><a href="#name-keri-message-defined-elemen" class="section-name selfRef">KERI Message Defined Element Labels</a>
           </h4>
 <table class="center" id="table-1">
             <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
@@ -1757,77 +1786,85 @@ when <code>v</code> is not present. These are <code>i</code> and <code>d</code>.
               </tr>
             </tbody>
           </table>
-<p id="section-3.1.3-2">A label may have different values in different contexts but not a different value <strong><em>type</em></strong>.<a href="#section-3.1.3-2" class="pilcrow">¶</a></p>
+<p id="section-5.1.3-2">A label may have different values in different contexts but not a different value <strong><em>type</em></strong>.<a href="#section-5.1.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="common-normalized-acdc-labels">
-<section id="section-3.2">
+<section id="section-5.2">
         <h3 id="name-common-normalized-acdc-labe">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-common-normalized-acdc-labe" class="section-name selfRef">Common Normalized ACDC Labels</a>
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-common-normalized-acdc-labe" class="section-name selfRef">Common Normalized ACDC Labels</a>
         </h3>
-<p id="section-3.2-1"><code>v</code> is version string
+<p id="section-5.2-1"><code>v</code> is version string
 <code>d</code> is SAID of enclosing block or map
 <code>i</code> is a KERI identifier AID
-<code>a</code> is data attributes or data anchors<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<code>a</code> is data attributes or data anchors<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="version-string-field">
+<section id="section-5.3">
+        <h3 id="name-version-string-field">
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-version-string-field" class="section-name selfRef">Version String Field</a>
+        </h3>
+<p id="section-5.3-1">Get from ACDC<a href="#section-5.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="event-messages">
-<section id="section-4">
+<section id="section-6">
       <h2 id="name-event-messages">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-event-messages" class="section-name selfRef">Event Messages</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-event-messages" class="section-name selfRef">Event Messages</a>
       </h2>
 <div id="rotation">
-<section id="section-4.1">
+<section id="section-6.1">
         <h3 id="name-rotation">
-<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-rotation" class="section-name selfRef">Rotation</a>
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-rotation" class="section-name selfRef">Rotation</a>
         </h3>
 <div id="partial-participation-in-rotation">
-<section id="section-4.1.1">
+<section id="section-6.1.1">
           <h4 id="name-partial-participation-in-ro">
-<a href="#section-4.1.1" class="section-number selfRef">4.1.1. </a><a href="#name-partial-participation-in-ro" class="section-name selfRef">Partial Participation in Rotation</a>
+<a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-partial-participation-in-ro" class="section-name selfRef">Partial Participation in Rotation</a>
           </h4>
-<p id="section-4.1.1-1">The <code>nt</code> field is next threshold for the next establishment event.<a href="#section-4.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-2">With the additional field a validator is able to verify that both the set of signatures on a given rotation event both satisfies the original next threshold of signatures and public keys of that threshold satisficing set of signing public keys were part of the next next digest list committed too by the prior establishment event without revealing the next public keys of those signers that did not participate in the rotation.<a href="#section-4.1.1-2" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-3">Besides providing better fault tolerance to controller availability yet still preserving post-quantum protection, the partial rotation allows unused key pairs from non-participating rotation members to be reused as members of the new next pre-rotation set without exposing the associated public keys. This latter advantage has application to multi-sig thresholds where some of the members are escrow or custodial members where participation in every rotation may be cumbersome. The primary disadvantage of the partial rotation approach is that is is more verbose and consumes more bandwidth. However this is outweighed by the simplicity and increased security and fault tolerance of only one format for next threshold and next key digest list declaration. Moreover every rotation can now be a partial rotation since every establishment event provides a list of next thresholds in order. Order preservation is essential for fractionally weighted thresholds which order was not protected explicitly by the establishment events but had to be ensured out-of-band by the multi-sig members. Putting the ordering in-band allows an additional check by each member of a multi-sig group that indeed the digest for their own individual next public key is included in the next digest list in the proper position before signing. A validator also now can fully evaluate the next key state for degree of security vis-a-vis the type of multi-sig both group size and threshold.<a href="#section-4.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-4">The <code>k</code> field of a partial rotation provides the public keys of the participating signers in their same order of appearance in the previous next <code>n</code> field digest list. Non participating public keys are skipped. The <code>nt</code> field from the previous establishment event provides the satisficing threshold needed to accept the new rotation.
-The <code>kt</code> field is the new signing threshold for the subset of public keys in the <code>k</code> field list. Both thresholds, <code>kt</code> from the current event and <code>nt</code> from the prior establishment event must be satisfied by the signers of any given rotation event.<a href="#section-4.1.1-4" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-5">The validator verifies the rotation against the original next digest list with the following procedure.
+<p id="section-6.1.1-1">The <code>nt</code> field is next threshold for the next establishment event.<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-2">With the additional field a validator is able to verify that both the set of signatures on a given rotation event both satisfies the original next threshold of signatures and public keys of that threshold satisficing set of signing public keys were part of the next next digest list committed too by the prior establishment event without revealing the next public keys of those signers that did not participate in the rotation.<a href="#section-6.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-3">Besides providing better fault tolerance to controller availability yet still preserving post-quantum protection, the partial rotation allows unused key pairs from non-participating rotation members to be reused as members of the new next pre-rotation set without exposing the associated public keys. This latter advantage has application to multi-sig thresholds where some of the members are escrow or custodial members where participation in every rotation may be cumbersome. The primary disadvantage of the partial rotation approach is that is is more verbose and consumes more bandwidth. However this is outweighed by the simplicity and increased security and fault tolerance of only one format for next threshold and next key digest list declaration. Moreover every rotation can now be a partial rotation since every establishment event provides a list of next thresholds in order. Order preservation is essential for fractionally weighted thresholds which order was not protected explicitly by the establishment events but had to be ensured out-of-band by the multi-sig members. Putting the ordering in-band allows an additional check by each member of a multi-sig group that indeed the digest for their own individual next public key is included in the next digest list in the proper position before signing. A validator also now can fully evaluate the next key state for degree of security vis-a-vis the type of multi-sig both group size and threshold.<a href="#section-6.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-4">The <code>k</code> field of a partial rotation provides the public keys of the participating signers in their same order of appearance in the previous next <code>n</code> field digest list. Non participating public keys are skipped. The <code>nt</code> field from the previous establishment event provides the satisficing threshold needed to accept the new rotation.
+The <code>kt</code> field is the new signing threshold for the subset of public keys in the <code>k</code> field list. Both thresholds, <code>kt</code> from the current event and <code>nt</code> from the prior establishment event must be satisfied by the signers of any given rotation event.<a href="#section-6.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-5">The validator verifies the rotation against the original next digest list with the following procedure.
 - the validator ensures that there is a corresponding entry in order in the previous <code>n</code> digest field list for the digest of each of the public keys in the <code>k</code> field list. This may be performed by an ordered search.
 -  Starting with the digest of the first member of the <code>k</code> field and comparing it in turn in order starting with the first member of the previous <code>n</code> field list.
 - When a match is found then the search resumes at the next member of each of the <code>k</code> and <code>n</code> lists until a corresponding match is found. Search resumes by repeating the prior step.
-- the validator ensures that the attached signatures satisfy the original threshold given by the <code>nt</code> field of the prior establishment event where the signers are taken from the <code>k</code> field list of public keys. The attached indexed signature indexes refer to the order of appearance in the. <code>k</code> field, not the previous <code>n</code> field.<a href="#section-4.1.1-5" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-6">To reiterate, the signatures on the rotation event must meet the original next threshold given by the <code>ot</code> field. The new current signing threshold is provided by the <code>kt</code> field and the new current public signing keys are provided by the <code>k</code> field. The new next digest in the <code>n</code> field or <code>n</code> field list may or may not include some of all of the digests from the previous <code>n</code> field list that do not have corresponding entries in the <code>k</code> field list.<a href="#section-4.1.1-6" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-7">This approach allows any threshold satisficing set of signers to rotate to a new current set of signing keys that is a threshold satisficing subset of the previous next threshold without requiring knowledge of all the previous next public signing keys. Those members not represented by the public keys digests in the <code>k</code> field may be part of the new next digest or digest list because the underlying public keys were not disclosed by the rotation. This only may be applied when the previous next field, <code>n</code> is a list of digests not an XORed combination of the digests.<a href="#section-4.1.1-7" class="pilcrow">¶</a></p>
+- the validator ensures that the attached signatures satisfy the original threshold given by the <code>nt</code> field of the prior establishment event where the signers are taken from the <code>k</code> field list of public keys. The attached indexed signature indexes refer to the order of appearance in the. <code>k</code> field, not the previous <code>n</code> field.<a href="#section-6.1.1-5" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-6">To reiterate, the signatures on the rotation event must meet the original next threshold given by the <code>ot</code> field. The new current signing threshold is provided by the <code>kt</code> field and the new current public signing keys are provided by the <code>k</code> field. The new next digest in the <code>n</code> field or <code>n</code> field list may or may not include some of all of the digests from the previous <code>n</code> field list that do not have corresponding entries in the <code>k</code> field list.<a href="#section-6.1.1-6" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-7">This approach allows any threshold satisficing set of signers to rotate to a new current set of signing keys that is a threshold satisficing subset of the previous next threshold without requiring knowledge of all the previous next public signing keys. Those members not represented by the public keys digests in the <code>k</code> field may be part of the new next digest or digest list because the underlying public keys were not disclosed by the rotation. This only may be applied when the previous next field, <code>n</code> is a list of digests not an XORed combination of the digests.<a href="#section-6.1.1-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="inception-event">
-<section id="section-4.1.2">
+<section id="section-6.1.2">
           <h4 id="name-inception-event">
-<a href="#section-4.1.2" class="section-number selfRef">4.1.2. </a><a href="#name-inception-event" class="section-name selfRef">Inception Event</a>
+<a href="#section-6.1.2" class="section-number selfRef">6.1.2. </a><a href="#name-inception-event" class="section-name selfRef">Inception Event</a>
           </h4>
-<p id="section-4.1.2-1">When the AID in the <code>i</code> field is a self-addressing self-certifying AID, the new Inception Event has two
+<p id="section-6.1.2-1">When the AID in the <code>i</code> field is a self-addressing self-certifying AID, the new Inception Event has two
 qualified digest fields. In this case both the <code>d</code> and <code>i</code> fields must have the same value. This means the digest suite's derivation code, used for the <code>i</code> field must be the same for the <code>d</code> field.
-The derivation of the <code>d</code> and <code>i</code> fields is special. Both the <code>d</code> and <code>i</code> fields are replaced with dummy <code>#</code> characters of the length of the digest to be used. The digest of the Inception event is then computed and both the <code>d</code> and <code>i</code> fields are replaced with the qualified digest value. Validation of an inception event requires examining the <code>i</code> field's derivation code and if it is a digest-type then the <code>d</code> field must be identical otherwise the inception event is invalid.<a href="#section-4.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.1.2-2">When the AID is not self-addressing, i.e. the <code>i</code> field derivation code is not a digest. Then the <code>i</code> is given its value and the <code>d</code> field is replaced with dummy characters <code>#</code> of the correct length and then the digest is computed. This is the standard SAID algorithm.<a href="#section-4.1.2-2" class="pilcrow">¶</a></p>
+The derivation of the <code>d</code> and <code>i</code> fields is special. Both the <code>d</code> and <code>i</code> fields are replaced with dummy <code>#</code> characters of the length of the digest to be used. The digest of the Inception event is then computed and both the <code>d</code> and <code>i</code> fields are replaced with the qualified digest value. Validation of an inception event requires examining the <code>i</code> field's derivation code and if it is a digest-type then the <code>d</code> field must be identical otherwise the inception event is invalid.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.2-2">When the AID is not self-addressing, i.e. the <code>i</code> field derivation code is not a digest. Then the <code>i</code> is given its value and the <code>d</code> field is replaced with dummy characters <code>#</code> of the correct length and then the digest is computed. This is the standard SAID algorithm.<a href="#section-6.1.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="inception-event-message">
-<section id="section-4.2">
+<section id="section-6.2">
         <h3 id="name-inception-event-message">
-<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-inception-event-message" class="section-name selfRef">Inception Event Message</a>
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-inception-event-message" class="section-name selfRef">Inception Event Message</a>
         </h3>
 <div id="event-message-body">
-<section id="section-4.2.1">
+<section id="section-6.2.1">
           <h4 id="name-event-message-body">
-<a href="#section-4.2.1" class="section-number selfRef">4.2.1. </a><a href="#name-event-message-body" class="section-name selfRef">Event Message Body</a>
+<a href="#section-6.2.1" class="section-number selfRef">6.2.1. </a><a href="#name-event-message-body" class="section-name selfRef">Event Message Body</a>
           </h4>
-<div id="section-4.2.1-1">
+<div id="section-6.2.1-1">
 <pre class="lang-json sourcecode">
 {
   "v": "KERI10JSON0001ac_",
@@ -1861,18 +1898,18 @@ The derivation of the <code>d</code> and <code>i</code> fields is special. Both 
   "c": [],
   "a": []
 }
-</pre><a href="#section-4.2.1-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.2.1-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 </section>
 </div>
 <div id="rotation-event-message">
-<section id="section-4.3">
+<section id="section-6.3">
         <h3 id="name-rotation-event-message">
-<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-rotation-event-message" class="section-name selfRef">Rotation Event Message</a>
+<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-rotation-event-message" class="section-name selfRef">Rotation Event Message</a>
         </h3>
-<div id="section-4.3-1">
+<div id="section-6.3-1">
 <pre class="lang-json sourcecode">
 {
   "v" : "KERI10JSON00011c_",
@@ -1902,14 +1939,14 @@ The derivation of the <code>d</code> and <code>i</code> fields is special. Both 
   "br": ["DH3ULvaU6JR2nmwyYAfSVPzhzS6bZ-i0d8TNZJZAo5CM"],
   "a" : []
 }
-</pre><a href="#section-4.3-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.3-1" class="pilcrow">¶</a>
 </div>
 <div id="interaction-event-also-delegating-interaction">
-<section id="section-4.3.1">
+<section id="section-6.3.1">
           <h4 id="name-interaction-event-also-dele">
-<a href="#section-4.3.1" class="section-number selfRef">4.3.1. </a><a href="#name-interaction-event-also-dele" class="section-name selfRef">Interaction Event  (Also delegating Interaction)</a>
+<a href="#section-6.3.1" class="section-number selfRef">6.3.1. </a><a href="#name-interaction-event-also-dele" class="section-name selfRef">Interaction Event  (Also delegating Interaction)</a>
           </h4>
-<div id="section-4.3.1-1">
+<div id="section-6.3.1-1">
 <pre class="lang-json sourcecode">
 {
   "v": "KERI10JSON00011c_",
@@ -1927,16 +1964,16 @@ The derivation of the <code>d</code> and <code>i</code> fields is special. Both 
     }
   ]
 }
-</pre><a href="#section-4.3.1-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.3.1-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="delegated-inception-event">
-<section id="section-4.3.2">
+<section id="section-6.3.2">
           <h4 id="name-delegated-inception-event">
-<a href="#section-4.3.2" class="section-number selfRef">4.3.2. </a><a href="#name-delegated-inception-event" class="section-name selfRef">Delegated Inception Event</a>
+<a href="#section-6.3.2" class="section-number selfRef">6.3.2. </a><a href="#name-delegated-inception-event" class="section-name selfRef">Delegated Inception Event</a>
           </h4>
-<div id="section-4.3.2-1">
+<div id="section-6.3.2-1">
 <pre class="lang-json sourcecode">
 {
   "v": "KERI10JSON0001ac_",
@@ -1971,16 +2008,16 @@ The derivation of the <code>d</code> and <code>i</code> fields is special. Both 
   "a": [],
   "di": "EJJR2nmwyYAZAoTNZH3ULvaU6Z-i0d8fSVPzhzS6b5CM"
 }
-</pre><a href="#section-4.3.2-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.3.2-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="delegated-rotation-event">
-<section id="section-4.3.3">
+<section id="section-6.3.3">
           <h4 id="name-delegated-rotation-event">
-<a href="#section-4.3.3" class="section-number selfRef">4.3.3. </a><a href="#name-delegated-rotation-event" class="section-name selfRef">Delegated Rotation Event</a>
+<a href="#section-6.3.3" class="section-number selfRef">6.3.3. </a><a href="#name-delegated-rotation-event" class="section-name selfRef">Delegated Rotation Event</a>
           </h4>
-<div id="section-4.3.3-1">
+<div id="section-6.3.3-1">
 <pre class="lang-json sourcecode">
 {
   "v" : "KERI10JSON00011c_",
@@ -2011,20 +2048,20 @@ The derivation of the <code>d</code> and <code>i</code> fields is special. Both 
   "a" :[]
   "di" : "EJJR2nmwyYAZAoTNZH3ULvaU6Z-i0d8fSVPzhzS6b5CM"
 }
-</pre><a href="#section-4.3.3-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.3.3-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 </section>
 </div>
 <div id="receipts">
-<section id="section-4.4">
+<section id="section-6.4">
         <h3 id="name-receipts">
-<a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-receipts" class="section-name selfRef">Receipts</a>
+<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-receipts" class="section-name selfRef">Receipts</a>
         </h3>
-<p id="section-4.4-1">### Non-Transferable Prefix Signer Receipt
-For receipts, the <code>d</code> field is the SAID of the associated event, not the receipt message itself.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
-<div id="section-4.4-2">
+<p id="section-6.4-1">### Non-Transferable Prefix Signer Receipt
+For receipts, the <code>d</code> field is the SAID of the associated event, not the receipt message itself.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
+<div id="section-6.4-2">
 <pre class="lang-json sourcecode">
 {
   "v": "KERI10JSON00011c_",
@@ -2033,15 +2070,15 @@ For receipts, the <code>d</code> field is the SAID of the associated event, not 
   "i": "AaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM",
   "s": "1"
 }
-</pre><a href="#section-4.4-2" class="pilcrow">¶</a>
+</pre><a href="#section-6.4-2" class="pilcrow">¶</a>
 </div>
 <div id="transferable-prefix-signer-receipt">
-<section id="section-4.4.1">
+<section id="section-6.4.1">
           <h4 id="name-transferable-prefix-signer-">
-<a href="#section-4.4.1" class="section-number selfRef">4.4.1. </a><a href="#name-transferable-prefix-signer-" class="section-name selfRef">Transferable Prefix Signer Receipt</a>
+<a href="#section-6.4.1" class="section-number selfRef">6.4.1. </a><a href="#name-transferable-prefix-signer-" class="section-name selfRef">Transferable Prefix Signer Receipt</a>
           </h4>
-<p id="section-4.4.1-1">For receipts, the <code>d</code> field is the SAID of the associated event, not the receipt message itself.<a href="#section-4.4.1-1" class="pilcrow">¶</a></p>
-<div id="section-4.4.1-2">
+<p id="section-6.4.1-1">For receipts, the <code>d</code> field is the SAID of the associated event, not the receipt message itself.<a href="#section-6.4.1-1" class="pilcrow">¶</a></p>
+<div id="section-6.4.1-2">
 <pre class="lang-json sourcecode">
 {
   "v": "KERI10JSON00011c_",
@@ -2056,67 +2093,67 @@ For receipts, the <code>d</code> field is the SAID of the associated event, not 
       "s": "4"
     }
 }
-</pre><a href="#section-4.4.1-2" class="pilcrow">¶</a>
+</pre><a href="#section-6.4.1-2" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 </section>
 </div>
 <div id="seals">
-<section id="section-4.5">
+<section id="section-6.5">
         <h3 id="name-seals">
-<a href="#section-4.5" class="section-number selfRef">4.5. </a><a href="#name-seals" class="section-name selfRef">Seals</a>
+<a href="#section-6.5" class="section-number selfRef">6.5. </a><a href="#name-seals" class="section-name selfRef">Seals</a>
         </h3>
 <div id="digest-seal">
-<section id="section-4.5.1">
+<section id="section-6.5.1">
           <h4 id="name-digest-seal">
-<a href="#section-4.5.1" class="section-number selfRef">4.5.1. </a><a href="#name-digest-seal" class="section-name selfRef">Digest Seal</a>
+<a href="#section-6.5.1" class="section-number selfRef">6.5.1. </a><a href="#name-digest-seal" class="section-name selfRef">Digest Seal</a>
           </h4>
-<div id="section-4.5.1-1">
+<div id="section-6.5.1-1">
 <pre class="lang-json sourcecode">
 {
   "d": "Eabcde..."
 }
-</pre><a href="#section-4.5.1-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.5.1-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="merkle-tree-root-digest-seal">
-<section id="section-4.5.2">
+<section id="section-6.5.2">
           <h4 id="name-merkle-tree-root-digest-sea">
-<a href="#section-4.5.2" class="section-number selfRef">4.5.2. </a><a href="#name-merkle-tree-root-digest-sea" class="section-name selfRef">Merkle Tree Root Digest Seal</a>
+<a href="#section-6.5.2" class="section-number selfRef">6.5.2. </a><a href="#name-merkle-tree-root-digest-sea" class="section-name selfRef">Merkle Tree Root Digest Seal</a>
           </h4>
-<div id="section-4.5.2-1">
+<div id="section-6.5.2-1">
 <pre class="lang-json sourcecode">
 {
   "rd": "Eabcde8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
 }
-</pre><a href="#section-4.5.2-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.5.2-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="backer-seal">
-<section id="section-4.5.3">
+<section id="section-6.5.3">
           <h4 id="name-backer-seal">
-<a href="#section-4.5.3" class="section-number selfRef">4.5.3. </a><a href="#name-backer-seal" class="section-name selfRef">Backer Seal</a>
+<a href="#section-6.5.3" class="section-number selfRef">6.5.3. </a><a href="#name-backer-seal" class="section-name selfRef">Backer Seal</a>
           </h4>
-<div id="section-4.5.3-1">
+<div id="section-6.5.3-1">
 <pre class="lang-json sourcecode">
 {
   "bi": "BACDEFG8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM",
   "d" : "EFGKDDA8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
 }
 
-</pre><a href="#section-4.5.3-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.5.3-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="event-seal">
-<section id="section-4.5.4">
+<section id="section-6.5.4">
           <h4 id="name-event-seal">
-<a href="#section-4.5.4" class="section-number selfRef">4.5.4. </a><a href="#name-event-seal" class="section-name selfRef">Event Seal</a>
+<a href="#section-6.5.4" class="section-number selfRef">6.5.4. </a><a href="#name-event-seal" class="section-name selfRef">Event Seal</a>
           </h4>
-<div id="section-4.5.4-1">
+<div id="section-6.5.4-1">
 <pre class="lang-json sourcecode">
 {
 
@@ -2124,38 +2161,38 @@ For receipts, the <code>d</code> field is the SAID of the associated event, not 
   "s": "3",
   "d": "Eabcde8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
 }
-</pre><a href="#section-4.5.4-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.5.4-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="last-establishment-event-seal">
-<section id="section-4.5.5">
+<section id="section-6.5.5">
           <h4 id="name-last-establishment-event-se">
-<a href="#section-4.5.5" class="section-number selfRef">4.5.5. </a><a href="#name-last-establishment-event-se" class="section-name selfRef">Last Establishment Event Seal</a>
+<a href="#section-6.5.5" class="section-number selfRef">6.5.5. </a><a href="#name-last-establishment-event-se" class="section-name selfRef">Last Establishment Event Seal</a>
           </h4>
-<div id="section-4.5.5-1">
+<div id="section-6.5.5-1">
 <pre class="lang-json sourcecode">
 {
   "i": "BACDEFG8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM",
 }
 
-</pre><a href="#section-4.5.5-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.5.5-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 </section>
 </div>
 <div id="other-messages">
-<section id="section-4.6">
+<section id="section-6.6">
         <h3 id="name-other-messages">
-<a href="#section-4.6" class="section-number selfRef">4.6. </a><a href="#name-other-messages" class="section-name selfRef">Other Messages</a>
+<a href="#section-6.6" class="section-number selfRef">6.6. </a><a href="#name-other-messages" class="section-name selfRef">Other Messages</a>
         </h3>
 <div id="query-message">
-<section id="section-4.6.1">
+<section id="section-6.6.1">
           <h4 id="name-query-message">
-<a href="#section-4.6.1" class="section-number selfRef">4.6.1. </a><a href="#name-query-message" class="section-name selfRef">Query Message</a>
+<a href="#section-6.6.1" class="section-number selfRef">6.6.1. </a><a href="#name-query-message" class="section-name selfRef">Query Message</a>
           </h4>
-<div id="section-4.6.1-1">
+<div id="section-6.6.1-1">
 <pre class="lang-json sourcecode">
 {
   "v" : "KERI10JSON00011c_",
@@ -2171,9 +2208,9 @@ For receipts, the <code>d</code> field is the SAID of the associated event, not 
     "dt": "2020-08-01T12:20:05.123456+00:00",
   }
 }
-</pre><a href="#section-4.6.1-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.6.1-1" class="pilcrow">¶</a>
 </div>
-<div id="section-4.6.1-2">
+<div id="section-6.6.1-2">
 <pre class="lang-json sourcecode">
 {
   "v" : "KERI10JSON00011c_",
@@ -2190,16 +2227,16 @@ For receipts, the <code>d</code> field is the SAID of the associated event, not 
     "dt": "2020-08-01T12:20:05.123456+00:00",
   }
 }
-</pre><a href="#section-4.6.1-2" class="pilcrow">¶</a>
+</pre><a href="#section-6.6.1-2" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="reply-message">
-<section id="section-4.6.2">
+<section id="section-6.6.2">
           <h4 id="name-reply-message">
-<a href="#section-4.6.2" class="section-number selfRef">4.6.2. </a><a href="#name-reply-message" class="section-name selfRef">Reply Message</a>
+<a href="#section-6.6.2" class="section-number selfRef">6.6.2. </a><a href="#name-reply-message" class="section-name selfRef">Reply Message</a>
           </h4>
-<div id="section-4.6.2-1">
+<div id="section-6.6.2-1">
 <pre class="lang-json sourcecode">
 {
   "v" : "KERI10JSON00011c_",
@@ -2214,9 +2251,9 @@ For receipts, the <code>d</code> field is the SAID of the associated event, not 
     "role": "Founder",
   }
 }
-</pre><a href="#section-4.6.2-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.6.2-1" class="pilcrow">¶</a>
 </div>
-<div id="section-4.6.2-2">
+<div id="section-6.6.2-2">
 <pre class="lang-json sourcecode">
 {
   "v" : "KERI10JSON00011c_",
@@ -2232,18 +2269,18 @@ For receipts, the <code>d</code> field is the SAID of the associated event, not 
     "role": "Founder",
   }
 }
-</pre><a href="#section-4.6.2-2" class="pilcrow">¶</a>
+</pre><a href="#section-6.6.2-2" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="bare-message">
-<section id="section-4.6.3">
+<section id="section-6.6.3">
           <h4 id="name-bare-message">
-<a href="#section-4.6.3" class="section-number selfRef">4.6.3. </a><a href="#name-bare-message" class="section-name selfRef">Bare Message</a>
+<a href="#section-6.6.3" class="section-number selfRef">6.6.3. </a><a href="#name-bare-message" class="section-name selfRef">Bare Message</a>
           </h4>
-<p id="section-4.6.3-1">Reference to the anchoring seal is provided as an attachment to the bare, <code>bre</code> message.
-A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' field.<a href="#section-4.6.3-1" class="pilcrow">¶</a></p>
-<div id="section-4.6.3-2">
+<p id="section-6.6.3-1">Reference to the anchoring seal is provided as an attachment to the bare, <code>bre</code> message.
+A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' field.<a href="#section-6.6.3-1" class="pilcrow">¶</a></p>
+<div id="section-6.6.3-2">
 <pre class="lang-json sourcecode">
 {
   "v": "KERI10JSON00011c_",
@@ -2259,16 +2296,16 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
     "role": "Founder",
   }
 }
-</pre><a href="#section-4.6.3-2" class="pilcrow">¶</a>
+</pre><a href="#section-6.6.3-2" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="prod-message">
-<section id="section-4.6.4">
+<section id="section-6.6.4">
           <h4 id="name-prod-message">
-<a href="#section-4.6.4" class="section-number selfRef">4.6.4. </a><a href="#name-prod-message" class="section-name selfRef">Prod Message</a>
+<a href="#section-6.6.4" class="section-number selfRef">6.6.4. </a><a href="#name-prod-message" class="section-name selfRef">Prod Message</a>
           </h4>
-<div id="section-4.6.4-1">
+<div id="section-6.6.4-1">
 <pre class="lang-json sourcecode">
 {
   "v": "KERI10JSON00011c_",
@@ -2285,16 +2322,16 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
     "dd": "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM"
   }
 }
-</pre><a href="#section-4.6.4-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.6.4-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="exchange-message-exchange">
-<section id="section-4.6.5">
+<section id="section-6.6.5">
           <h4 id="name-exchange-message-exchange">
-<a href="#section-4.6.5" class="section-number selfRef">4.6.5. </a><a href="#name-exchange-message-exchange" class="section-name selfRef">Exchange Message (exchange)</a>
+<a href="#section-6.6.5" class="section-number selfRef">6.6.5. </a><a href="#name-exchange-message-exchange" class="section-name selfRef">Exchange Message (exchange)</a>
           </h4>
-<div id="section-4.6.5-1">
+<div id="section-6.6.5-1">
 <pre class="lang-json sourcecode">
 {
   "v": "KERI10JSON00006a_",
@@ -2307,23 +2344,23 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
     "msg": "test"
   }
 }
-</pre><a href="#section-4.6.5-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.6.5-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 </section>
 </div>
 <div id="notices-embedded-in-reply-messages">
-<section id="section-4.7">
+<section id="section-6.7">
         <h3 id="name-notices-embedded-in-reply-m">
-<a href="#section-4.7" class="section-number selfRef">4.7. </a><a href="#name-notices-embedded-in-reply-m" class="section-name selfRef">Notices Embedded in Reply Messages</a>
+<a href="#section-6.7" class="section-number selfRef">6.7. </a><a href="#name-notices-embedded-in-reply-m" class="section-name selfRef">Notices Embedded in Reply Messages</a>
         </h3>
 <div id="key-state-notice-ksn">
-<section id="section-4.7.1">
+<section id="section-6.7.1">
           <h4 id="name-key-state-notice-ksn">
-<a href="#section-4.7.1" class="section-number selfRef">4.7.1. </a><a href="#name-key-state-notice-ksn" class="section-name selfRef">Key State Notice (KSN)</a>
+<a href="#section-6.7.1" class="section-number selfRef">6.7.1. </a><a href="#name-key-state-notice-ksn" class="section-name selfRef">Key State Notice (KSN)</a>
           </h4>
-<div id="section-4.7.1-1">
+<div id="section-6.7.1-1">
 <pre class="lang-json sourcecode">
 {
   "v": "KERI10JSON0001d9_",
@@ -2352,14 +2389,14 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
   },
   "di": ""
 }
-</pre><a href="#section-4.7.1-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.7.1-1" class="pilcrow">¶</a>
 </div>
 <div id="embedded-in-reply">
-<section id="section-4.7.1.1">
+<section id="section-6.7.1.1">
             <h5 id="name-embedded-in-reply">
-<a href="#section-4.7.1.1" class="section-number selfRef">4.7.1.1. </a><a href="#name-embedded-in-reply" class="section-name selfRef">Embedded in Reply</a>
+<a href="#section-6.7.1.1" class="section-number selfRef">6.7.1.1. </a><a href="#name-embedded-in-reply" class="section-name selfRef">Embedded in Reply</a>
             </h5>
-<div id="section-4.7.1.1-1">
+<div id="section-6.7.1.1-1">
 <pre class="lang-json sourcecode">
 {
   "v" : "KERI10JSON00011c_",
@@ -2396,18 +2433,18 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
       "di": ""
     }
 }
-</pre><a href="#section-4.7.1.1-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.7.1.1-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 </section>
 </div>
 <div id="transaction-state-notice-tsn">
-<section id="section-4.7.2">
+<section id="section-6.7.2">
           <h4 id="name-transaction-state-notice-ts">
-<a href="#section-4.7.2" class="section-number selfRef">4.7.2. </a><a href="#name-transaction-state-notice-ts" class="section-name selfRef">Transaction State Notice (TSN)</a>
+<a href="#section-6.7.2" class="section-number selfRef">6.7.2. </a><a href="#name-transaction-state-notice-ts" class="section-name selfRef">Transaction State Notice (TSN)</a>
           </h4>
-<div id="section-4.7.2-1">
+<div id="section-6.7.2-1">
 <pre class="lang-json sourcecode">
 {
   "v": "KERI10JSON0001b0_",
@@ -2431,14 +2468,14 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
   ],
   "c": []
 }
-</pre><a href="#section-4.7.2-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.7.2-1" class="pilcrow">¶</a>
 </div>
 <div id="embedded-in-reply-1">
-<section id="section-4.7.2.1">
+<section id="section-6.7.2.1">
             <h5 id="name-embedded-in-reply-2">
-<a href="#section-4.7.2.1" class="section-number selfRef">4.7.2.1. </a><a href="#name-embedded-in-reply-2" class="section-name selfRef">Embedded in Reply</a>
+<a href="#section-6.7.2.1" class="section-number selfRef">6.7.2.1. </a><a href="#name-embedded-in-reply-2" class="section-name selfRef">Embedded in Reply</a>
             </h5>
-<div id="section-4.7.2.1-1">
+<div id="section-6.7.2.1-1">
 <pre class="lang-json sourcecode">
 {
   "v" : "KERI10JSON00011c_",
@@ -2470,7 +2507,7 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
       "c": []
     }
 }
-</pre><a href="#section-4.7.2.1-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.7.2.1-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -2479,16 +2516,16 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
 </section>
 </div>
 <div id="transaction-event-log-messages">
-<section id="section-4.8">
+<section id="section-6.8">
         <h3 id="name-transaction-event-log-messa">
-<a href="#section-4.8" class="section-number selfRef">4.8. </a><a href="#name-transaction-event-log-messa" class="section-name selfRef">Transaction Event Log Messages</a>
+<a href="#section-6.8" class="section-number selfRef">6.8. </a><a href="#name-transaction-event-log-messa" class="section-name selfRef">Transaction Event Log Messages</a>
         </h3>
 <div id="registry-inception-event">
-<section id="section-4.8.1">
+<section id="section-6.8.1">
           <h4 id="name-registry-inception-event">
-<a href="#section-4.8.1" class="section-number selfRef">4.8.1. </a><a href="#name-registry-inception-event" class="section-name selfRef">Registry Inception Event</a>
+<a href="#section-6.8.1" class="section-number selfRef">6.8.1. </a><a href="#name-registry-inception-event" class="section-name selfRef">Registry Inception Event</a>
           </h4>
-<div id="section-4.8.1-1">
+<div id="section-6.8.1-1">
 <pre class="lang-json sourcecode">
 {
   "v" : "KERI10JSON00011c_",
@@ -2502,16 +2539,16 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
   "c" : ["NB"]
 }
 
-</pre><a href="#section-4.8.1-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.8.1-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="registry-rotation-event">
-<section id="section-4.8.2">
+<section id="section-6.8.2">
           <h4 id="name-registry-rotation-event">
-<a href="#section-4.8.2" class="section-number selfRef">4.8.2. </a><a href="#name-registry-rotation-event" class="section-name selfRef">Registry Rotation Event</a>
+<a href="#section-6.8.2" class="section-number selfRef">6.8.2. </a><a href="#name-registry-rotation-event" class="section-name selfRef">Registry Rotation Event</a>
           </h4>
-<div id="section-4.8.2-1">
+<div id="section-6.8.2-1">
 <pre class="lang-json sourcecode">
 {
   "v" : "KERI10JSON00011c_",
@@ -2524,16 +2561,16 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
   "br" : ["BbIg_3-11d3PYxSInLN-Q9_T2axD6kkXd3XRgbGZTm6s"],
   "ba" : []
 }
-</pre><a href="#section-4.8.2-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.8.2-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="backerless-credential-issuance">
-<section id="section-4.8.3">
+<section id="section-6.8.3">
           <h4 id="name-backerless-credential-issua">
-<a href="#section-4.8.3" class="section-number selfRef">4.8.3. </a><a href="#name-backerless-credential-issua" class="section-name selfRef">Backerless Credential Issuance</a>
+<a href="#section-6.8.3" class="section-number selfRef">6.8.3. </a><a href="#name-backerless-credential-issua" class="section-name selfRef">Backerless Credential Issuance</a>
           </h4>
-<div id="section-4.8.3-1">
+<div id="section-6.8.3-1">
 <pre class="lang-json sourcecode">
 {
   "v" : "KERI10JSON00011c_",
@@ -2544,16 +2581,16 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
   "ri" : "ELh3eYC2W_Su1izlvm0xxw01n3XK8bdV2Zb09IqlXB7A",
   "dt": "2020-08-01T12:20:05.123456+00:00"
 }
-</pre><a href="#section-4.8.3-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.8.3-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="backerless-credential-revocation">
-<section id="section-4.8.4">
+<section id="section-6.8.4">
           <h4 id="name-backerless-credential-revoc">
-<a href="#section-4.8.4" class="section-number selfRef">4.8.4. </a><a href="#name-backerless-credential-revoc" class="section-name selfRef">Backerless Credential Revocation</a>
+<a href="#section-6.8.4" class="section-number selfRef">6.8.4. </a><a href="#name-backerless-credential-revoc" class="section-name selfRef">Backerless Credential Revocation</a>
           </h4>
-<div id="section-4.8.4-1">
+<div id="section-6.8.4-1">
 <pre class="lang-json sourcecode">
 {
   "v" : "KERI10JSON00011c_",
@@ -2565,16 +2602,16 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
   "ri" : "ELh3eYC2W_Su1izlvm0xxw01n3XK8bdV2Zb09IqlXB7A",
   "dt": "2020-08-01T12:20:05.123456+00:00"
 }
-</pre><a href="#section-4.8.4-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.8.4-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="backer-credential-issuance">
-<section id="section-4.8.5">
+<section id="section-6.8.5">
           <h4 id="name-backer-credential-issuance">
-<a href="#section-4.8.5" class="section-number selfRef">4.8.5. </a><a href="#name-backer-credential-issuance" class="section-name selfRef">Backer Credential Issuance</a>
+<a href="#section-6.8.5" class="section-number selfRef">6.8.5. </a><a href="#name-backer-credential-issuance" class="section-name selfRef">Backer Credential Issuance</a>
           </h4>
-<div id="section-4.8.5-1">
+<div id="section-6.8.5-1">
 <pre class="lang-json sourcecode">
 {
   "v" : "KERI10JSON00011c_",
@@ -2590,16 +2627,16 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
   }
   "dt": "2020-08-01T12:20:05.123456+00:00"
 }
-</pre><a href="#section-4.8.5-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.8.5-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="backer-credential-revocation">
-<section id="section-4.8.6">
+<section id="section-6.8.6">
           <h4 id="name-backer-credential-revocatio">
-<a href="#section-4.8.6" class="section-number selfRef">4.8.6. </a><a href="#name-backer-credential-revocatio" class="section-name selfRef">Backer Credential Revocation</a>
+<a href="#section-6.8.6" class="section-number selfRef">6.8.6. </a><a href="#name-backer-credential-revocatio" class="section-name selfRef">Backer Credential Revocation</a>
           </h4>
-<div id="section-4.8.6-1">
+<div id="section-6.8.6-1">
 <pre class="lang-json sourcecode">
 {
   "v" : "KERI10JSON00011c_",
@@ -2616,7 +2653,7 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
   }
   "dt": "2020-08-01T12:20:05.123456+00:00"
 }
-</pre><a href="#section-4.8.6-1" class="pilcrow">¶</a>
+</pre><a href="#section-6.8.6-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -2625,76 +2662,76 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
 </section>
 </div>
 <div id="appendix-cryptographic-strength-and-security">
-<section id="section-5">
+<section id="section-7">
       <h2 id="name-appendix-cryptographic-stre">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-appendix-cryptographic-stre" class="section-name selfRef">Appendix: Cryptographic Strength and Security</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-appendix-cryptographic-stre" class="section-name selfRef">Appendix: Cryptographic Strength and Security</a>
       </h2>
 <div id="cryptographic-strength">
-<section id="section-5.1">
+<section id="section-7.1">
         <h3 id="name-cryptographic-strength">
-<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-cryptographic-strength" class="section-name selfRef">Cryptographic Strength</a>
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-cryptographic-strength" class="section-name selfRef">Cryptographic Strength</a>
         </h3>
-<p id="section-5.1-1">For crypto-systems with <em>perfect-security</em>, the critical design parameter is the number of bits of entropy needed to resist any practical brute force attack. In other words, when a large random or pseudo-random number from a cryptographic strength pseudo-random number generator (CSPRNG) <span>[<a href="#CSPRNG" class="xref">CSPRNG</a>]</span> expressed as a string of characters is used as a seed or private key to a cryptosystem with <em>perfect-security</em>, the critical design parameter is determined by the amount of random entropy in that string needed to withstand a brute force attack. Any subsequent cryptographic operations must preserve that minimum level of cryptographic strength. In information theory <span>[<a href="#IThry" class="xref">IThry</a>]</span><span>[<a href="#ITPS" class="xref">ITPS</a>]</span> the entropy of a message or string of characters is measured in bits. Another way of saying this is that the degree of randomness of a string of characters can be measured by the number of bits of entropy in that string.  Assuming conventional non-quantum computers, the convention wisdom is that, for systems with information-theoretic or perfect security, the seed/key needs to have on the order of 128 bits (16 bytes, 32 hex characters) of entropy to practically withstand any brute force attack <span>[<a href="#TMCrypto" class="xref">TMCrypto</a>]</span><span>[<a href="#QCHC" class="xref">QCHC</a>]</span>. A cryptographic quality random or pseudo-random number expressed as a string of characters will have essentially as many bits of entropy as the number of bits in the number. For other crypto-systems such as digital signatures that do not have perfect security, the size of the seed/key may need to be much larger than 128 bits in order to maintain 128 bits of cryptographic strength.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
-<p id="section-5.1-2">An N-bit long base-2 random number has 2<sup>N</sup> different possible values. Given that no other information is available to an attacker with perfect security, the attacker may need to try every possible value before finding the correct one. Thus the number of attempts that the attacker would have to try maybe as much as 2<sup>N-1</sup>.  Given available computing power, one can easily show that 128 is a large enough N to make brute force attack computationally infeasible.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
-<p id="section-5.1-3">Let's suppose that the adversary has access to supercomputers. Current supercomputers can perform on the order of one quadrillion operations per second. Individual CPU cores can only perform about 4 billion operations per second, but a supercomputer will parallelly employ many cores. A quadrillion is approximately 2<sup>50</sup> = 1,125,899,906,842,624. Suppose somehow an adversary had control over one million (2<sup>20</sup> = 1,048,576) supercomputers which could be employed in parallel when mounting a brute force attack. The adversary could then try 2<sup>50</sup> * 2<sup>20</sup> = 2<sup>70</sup> values per second (assuming very conservatively that each try only took one operation).
-There are about 3600 * 24 * 365 = 313,536,000 = 2<sup>log<sub>2</sub>313536000</sup>=2<sup>24.91</sup> ~= 2<sup>25</sup> seconds in a year. Thus this set of a million super computers could try 2<sup>50+20+25</sup> = 2<sup>95</sup> values per year. For a 128-bit random number this means that the adversary would need on the order of 2<sup>128-95</sup> = 2<sup>33</sup> = 8,589,934,592 years to find the right value. This assumes that the value of breaking the cryptosystem is worth the expense of that much computing power. Consequently, a cryptosystem with perfect security and 128 bits of cryptographic strength is computationally infeasible to break via brute force attack.<a href="#section-5.1-3" class="pilcrow">¶</a></p>
+<p id="section-7.1-1">For crypto-systems with <em>perfect-security</em>, the critical design parameter is the number of bits of entropy needed to resist any practical brute force attack. In other words, when a large random or pseudo-random number from a cryptographic strength pseudo-random number generator (CSPRNG) <span>[<a href="#CSPRNG" class="xref">CSPRNG</a>]</span> expressed as a string of characters is used as a seed or private key to a cryptosystem with <em>perfect-security</em>, the critical design parameter is determined by the amount of random entropy in that string needed to withstand a brute force attack. Any subsequent cryptographic operations must preserve that minimum level of cryptographic strength. In information theory <span>[<a href="#IThry" class="xref">IThry</a>]</span><span>[<a href="#ITPS" class="xref">ITPS</a>]</span> the entropy of a message or string of characters is measured in bits. Another way of saying this is that the degree of randomness of a string of characters can be measured by the number of bits of entropy in that string.  Assuming conventional non-quantum computers, the convention wisdom is that, for systems with information-theoretic or perfect security, the seed/key needs to have on the order of 128 bits (16 bytes, 32 hex characters) of entropy to practically withstand any brute force attack <span>[<a href="#TMCrypto" class="xref">TMCrypto</a>]</span><span>[<a href="#QCHC" class="xref">QCHC</a>]</span>. A cryptographic quality random or pseudo-random number expressed as a string of characters will have essentially as many bits of entropy as the number of bits in the number. For other crypto-systems such as digital signatures that do not have perfect security, the size of the seed/key may need to be much larger than 128 bits in order to maintain 128 bits of cryptographic strength.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
+<p id="section-7.1-2">An N-bit long base-2 random number has 2<sup>N</sup> different possible values. Given that no other information is available to an attacker with perfect security, the attacker may need to try every possible value before finding the correct one. Thus the number of attempts that the attacker would have to try maybe as much as 2<sup>N-1</sup>.  Given available computing power, one can easily show that 128 is a large enough N to make brute force attack computationally infeasible.<a href="#section-7.1-2" class="pilcrow">¶</a></p>
+<p id="section-7.1-3">Let's suppose that the adversary has access to supercomputers. Current supercomputers can perform on the order of one quadrillion operations per second. Individual CPU cores can only perform about 4 billion operations per second, but a supercomputer will parallelly employ many cores. A quadrillion is approximately 2<sup>50</sup> = 1,125,899,906,842,624. Suppose somehow an adversary had control over one million (2<sup>20</sup> = 1,048,576) supercomputers which could be employed in parallel when mounting a brute force attack. The adversary could then try 2<sup>50</sup> * 2<sup>20</sup> = 2<sup>70</sup> values per second (assuming very conservatively that each try only took one operation).
+There are about 3600 * 24 * 365 = 313,536,000 = 2<sup>log<sub>2</sub>313536000</sup>=2<sup>24.91</sup> ~= 2<sup>25</sup> seconds in a year. Thus this set of a million super computers could try 2<sup>50+20+25</sup> = 2<sup>95</sup> values per year. For a 128-bit random number this means that the adversary would need on the order of 2<sup>128-95</sup> = 2<sup>33</sup> = 8,589,934,592 years to find the right value. This assumes that the value of breaking the cryptosystem is worth the expense of that much computing power. Consequently, a cryptosystem with perfect security and 128 bits of cryptographic strength is computationally infeasible to break via brute force attack.<a href="#section-7.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="information-theoretic-security-and-perfect-security">
-<section id="section-5.2">
+<section id="section-7.2">
         <h3 id="name-information-theoretic-secur">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-information-theoretic-secur" class="section-name selfRef">Information Theoretic Security and Perfect Security</a>
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-information-theoretic-secur" class="section-name selfRef">Information Theoretic Security and Perfect Security</a>
         </h3>
-<p id="section-5.2-1">The highest level of cryptographic security with respect to a cryptographic secret (seed, salt, or private key) is called  <em>information-theoretic security</em> <span>[<a href="#ITPS" class="xref">ITPS</a>]</span>. A cryptosystem that has this level of security cannot be broken algorithmically even if the adversary has nearly unlimited computing power including quantum computing. It must be broken by brute force if at all. Brute force means that in order to guarantee success the adversary must search for every combination of key or seed. A special case of <em>information-theoretic security</em> is called <em>perfect-security</em> <span>[<a href="#ITPS" class="xref">ITPS</a>]</span>.  <em>Perfect-security</em> means that the ciphertext provides no information about the key. There are two well-known cryptosystems that exhibit <em>perfect security</em>. The first is a <em>one-time-pad</em> (OTP) or Vernum Cipher <span>[<a href="#OTP" class="xref">OTP</a>]</span><span>[<a href="#VCphr" class="xref">VCphr</a>]</span>, the other is <em>secret splitting</em> <span>[<a href="#SSplt" class="xref">SSplt</a>]</span>, a type of secret sharing <span>[<a href="#SShr" class="xref">SShr</a>]</span> that uses the same technique as a <em>one-time-pad</em>.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.2-1">The highest level of cryptographic security with respect to a cryptographic secret (seed, salt, or private key) is called  <em>information-theoretic security</em> <span>[<a href="#ITPS" class="xref">ITPS</a>]</span>. A cryptosystem that has this level of security cannot be broken algorithmically even if the adversary has nearly unlimited computing power including quantum computing. It must be broken by brute force if at all. Brute force means that in order to guarantee success the adversary must search for every combination of key or seed. A special case of <em>information-theoretic security</em> is called <em>perfect-security</em> <span>[<a href="#ITPS" class="xref">ITPS</a>]</span>.  <em>Perfect-security</em> means that the ciphertext provides no information about the key. There are two well-known cryptosystems that exhibit <em>perfect security</em>. The first is a <em>one-time-pad</em> (OTP) or Vernum Cipher <span>[<a href="#OTP" class="xref">OTP</a>]</span><span>[<a href="#VCphr" class="xref">VCphr</a>]</span>, the other is <em>secret splitting</em> <span>[<a href="#SSplt" class="xref">SSplt</a>]</span>, a type of secret sharing <span>[<a href="#SShr" class="xref">SShr</a>]</span> that uses the same technique as a <em>one-time-pad</em>.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="conventions-and-definitions">
-<section id="section-6">
+<section id="section-8">
       <h2 id="name-conventions-and-definitions">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
       </h2>
-<p id="section-6-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+<p id="section-8-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="xref">RFC8174</a>]</span> when, and only when, they
-appear in all capitals, as shown here.<a href="#section-6-1" class="pilcrow">¶</a></p>
+appear in all capitals, as shown here.<a href="#section-8-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
-<section id="section-7">
+<section id="section-9">
       <h2 id="name-security-considerations">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-7-1">TODO Security<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-9-1">TODO Security<a href="#section-9-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-8">
+<section id="section-10">
       <h2 id="name-iana-considerations">
-<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-8-1">This document has no IANA actions.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-10-1">This document has no IANA actions.<a href="#section-10-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<section id="section-9">
+<section id="section-11">
       <h2 id="name-references">
-<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
-<section id="section-9.1">
+<section id="section-11.1">
         <h3 id="name-normative-references">
-<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
 <dt id="CBORC">[CBORC]</dt>
         <dd>
 <span class="refTitle">"CBOR Mapping Object Codes"</span>, <span>n.d.</span>, <span>&lt;<a href="https://en.wikipedia.org/wiki/CBOR">https://en.wikipedia.org/wiki/CBOR</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="CESR_ID">[CESR_ID]</dt>
+<dt id="CESR-ID">[CESR-ID]</dt>
         <dd>
 <span class="refAuthor">Smith, S.</span>, <span class="refTitle">"IETF CESR (Composable Event Streaming Representation) Internet Draft"</span>, <time datetime="2022" class="refDate">2022</time>, <span>&lt;<a href="https://github.com/WebOfTrust/ietf-cesr">https://github.com/WebOfTrust/ietf-cesr</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="DIDK_ID">[DIDK_ID]</dt>
+<dt id="DIDK-ID">[DIDK-ID]</dt>
         <dd>
 <span class="refAuthor">Feairheller, P.</span>, <span class="refTitle">"IETF DID-KERI Internet Draft"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/WebOfTrust/ietf-did-keri">https://github.com/WebOfTrust/ietf-did-keri</a>&gt;</span>. </dd>
 <dd class="break"></dd>
@@ -2702,7 +2739,7 @@ appear in all capitals, as shown here.<a href="#section-6-1" class="pilcrow">¶<
         <dd>
 <span class="refTitle">"JavaScript Object Notation Delimiters"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.json.org/json-en.html">https://www.json.org/json-en.html</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="KERI_ID">[KERI_ID]</dt>
+<dt id="KERI-ID">[KERI-ID]</dt>
         <dd>
 <span class="refAuthor">Smith, S.</span>, <span class="refTitle">"IETF KERI (Key Event Receipt Infrastructure) Internet Draft"</span>, <time datetime="2022" class="refDate">2022</time>, <span>&lt;<a href="https://github.com/WebOfTrust/ietf-keri">https://github.com/WebOfTrust/ietf-keri</a>&gt;</span>. </dd>
 <dd class="break"></dd>
@@ -2710,7 +2747,7 @@ appear in all capitals, as shown here.<a href="#section-6-1" class="pilcrow">¶<
         <dd>
 <span class="refTitle">"Msgpack Mapping Object Codes"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/msgpack/msgpack/blob/master/spec.md">https://github.com/msgpack/msgpack/blob/master/spec.md</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="OOBI_ID">[OOBI_ID]</dt>
+<dt id="OOBI-ID">[OOBI-ID]</dt>
         <dd>
 <span class="refAuthor">Smith, S.</span>, <span class="refTitle">"IETF OOBI (Out-Of-Band-Introduction) Internet Draft"</span>, <time datetime="2022" class="refDate">2022</time>, <span>&lt;<a href="https://github.com/WebOfTrust/ietf-oobi">https://github.com/WebOfTrust/ietf-oobi</a>&gt;</span>. </dd>
 <dd class="break"></dd>
@@ -2730,15 +2767,15 @@ appear in all capitals, as shown here.<a href="#section-6-1" class="pilcrow">¶<
         <dd>
 <span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8949">https://www.rfc-editor.org/rfc/rfc8949</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="SAID_ID">[SAID_ID]</dt>
+<dt id="SAID-ID">[SAID-ID]</dt>
       <dd>
 <span class="refAuthor">Smith, S.</span>, <span class="refTitle">"IETF SAID (Self-Addressing IDentifier) Internet Draft"</span>, <time datetime="2022" class="refDate">2022</time>, <span>&lt;<a href="https://github.com/WebOfTrust/ietf-said">https://github.com/WebOfTrust/ietf-said</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
-<section id="section-9.2">
+<section id="section-11.2">
         <h3 id="name-informative-references">
-<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="BBGP">[BBGP]</dt>

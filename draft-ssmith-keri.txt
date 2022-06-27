@@ -4,8 +4,8 @@
 
 TODO Working Group                                              S. Smith
 Internet-Draft                                             ProSapien LLC
-Intended status: Informational                              16 June 2022
-Expires: 18 December 2022
+Intended status: Informational                              27 June 2022
+Expires: 29 December 2022
 
 
                 Key Event Receipt Infrastructure (KERI)
@@ -15,7 +15,7 @@ Abstract
 
    An identity system-based secure overlay for the Internet is
    presented.  This is based on a Key Event Receipt Infrastructure
-   (KERI) or the KERI protocol [KERI][KERI_ID][RFC0791].  This includes
+   (KERI) or the KERI protocol [KERI][KERI-ID][RFC0791].  This includes
    a primary root-of-trust in self-certifying identifiers (SCIDs)
    [UIT][SCPK][SFS][SCPN][SCURL].  It presents a formalism for Autonomic
    Identifiers (AIDs) and Autonomic Namespaces (ANs).  They are part of
@@ -24,15 +24,15 @@ Abstract
    spanning layer for the internet.  Associated with this system is a
    decentralized key management infrastructure (DKMI).  The primary
    root-of-trust are self-certifying identifiers that are strongly bound
-   at issuance to a cryptographic signing (public, private) key-pair.
+   at issuance to a cryptographic signing (public, private) keypair.
    These are self-contained until/unless control needs to be transferred
-   to a new key-pair.  In that event an append-only chained key-event
+   to a new keypair.  In that event, an append-only chained key-event
    log of signed transfer statements provides end verifiable control
    provenance.  This makes intervening operational infrastructure
    replaceable because the event logs may be served up by any
    infrastructure including ambient infrastructure.  End verifiable logs
    on ambient infrastructure enable ambient verifiability (verifiable by
-   anyone, anywhere, at anytime).  The primary key management operation
+   anyone, anywhere, at any time).  The primary key management operation
    is key rotation (transference) via a novel key pre-rotation scheme
    [DAD][KERI].  Two primary trust modalities motivated the design,
    these are a direct (one-to-one) mode and an indirect (one-to-any)
@@ -40,7 +40,7 @@ Abstract
    (KERL) as a secondary root-of-trust for validating events.  This
    gives rise to the acronym KERI for key event receipt infrastructure.
    In the direct mode, the identity controller establishes control via
-   verified signatures of the controlling key-pair.  The indirect mode
+   verified signatures of the controlling keypair.  The indirect mode
    extends that trust basis with witnessed key event receipt logs (KERL)
    for validating events.  The security and accountability guarantees of
    indirect mode are provided by KA2CE or KERI's Agreement Algorithm for
@@ -54,7 +54,7 @@ Abstract
    events streaming applications such as web 3.0, IoT, and others where
    performance and scalability are more important.  The core KERI engine
    is identifier namespace independent.  This makes KERI a candidate for
-   a universal portable DKMI [KERI][KERI_ID][UIT].
+   a universal portable DKMI [KERI][KERI-ID][UIT].
 
 Discussion Venues
 
@@ -78,7 +78,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 December 2022.
+   This Internet-Draft will expire on 29 December 2022.
 
 Copyright Notice
 
@@ -99,7 +99,7 @@ Table of Contents
    1.  Introduction
      1.1.  Self-Certifying IDentifier (SCID)
      1.2.  Autonomic IDentifier (AID)
-     1.3.  Key Pre-Rotation Basics
+     1.3.  Key Pre-rotation Basics
      1.4.  Cryptographic Primitives
        1.4.1.  CESR
        1.4.2.  Qualified Cryptographic Primitive
@@ -107,55 +107,58 @@ Table of Contents
        1.5.1.  Security Overlay Flaws
        1.5.2.  Triad Bindings
    2.  Basic Terminology
-   3.  Messages and Seals
-     3.1.  Message Field Labels
-       3.1.1.  SAIDs and KERI Label Convention Normalization
-       3.1.2.  Special Label Ordering Requirements
-       3.1.3.  KERI Message Defined Element Labels
-     3.2.  Common Normalized ACDC Labels
-   4.  Event Messages
-     4.1.  Rotation
-       4.1.1.  Partial Participation in Rotation
-       4.1.2.  Inception Event
-     4.2.  Inception Event Message
-       4.2.1.  Event Message Body
-     4.3.  Rotation Event Message
-       4.3.1.  Interaction Event (Also delegating Interaction)
-       4.3.2.  Delegated Inception Event
-       4.3.3.  Delegated Rotation Event
-     4.4.  Receipts
-       4.4.1.  Transferable Prefix Signer Receipt
-     4.5.  Seals
-       4.5.1.  Digest Seal
-       4.5.2.  Merkle Tree Root Digest Seal
-       4.5.3.  Backer Seal
-       4.5.4.  Event Seal
-       4.5.5.  Last Establishment Event Seal
-     4.6.  Other Messages
-       4.6.1.  Query Message
-       4.6.2.  Reply Message
-       4.6.3.  Bare Message
-       4.6.4.  Prod Message
-       4.6.5.  Exchange Message (exchange)
-     4.7.  Notices Embedded in Reply Messages
-       4.7.1.  Key State Notice (KSN)
-       4.7.2.  Transaction State Notice (TSN)
-     4.8.  Transaction Event Log Messages
-       4.8.1.  Registry Inception Event
-       4.8.2.  Registry Rotation Event
-       4.8.3.  Backerless Credential Issuance
-       4.8.4.  Backerless Credential Revocation
-       4.8.5.  Backer Credential Issuance
-       4.8.6.  Backer Credential Revocation
-   5.  Appendix: Cryptographic Strength and Security
-     5.1.  Cryptographic Strength
-     5.2.  Information Theoretic Security and Perfect Security
-   6.  Conventions and Definitions
-   7.  Security Considerations
-   8.  IANA Considerations
-   9.  References
-     9.1.  Normative References
-     9.2.  Informative References
+   3.  Keypair Labeling Convention
+   4.  Key Pre-rotation Details
+   5.  Messages and Seals
+     5.1.  Message Field Labels
+       5.1.1.  SAIDs and KERI Label Convention Normalization
+       5.1.2.  Special Label Ordering Requirements
+       5.1.3.  KERI Message Defined Element Labels
+     5.2.  Common Normalized ACDC Labels
+     5.3.  Version String Field
+   6.  Event Messages
+     6.1.  Rotation
+       6.1.1.  Partial Participation in Rotation
+       6.1.2.  Inception Event
+     6.2.  Inception Event Message
+       6.2.1.  Event Message Body
+     6.3.  Rotation Event Message
+       6.3.1.  Interaction Event (Also delegating Interaction)
+       6.3.2.  Delegated Inception Event
+       6.3.3.  Delegated Rotation Event
+     6.4.  Receipts
+       6.4.1.  Transferable Prefix Signer Receipt
+     6.5.  Seals
+       6.5.1.  Digest Seal
+       6.5.2.  Merkle Tree Root Digest Seal
+       6.5.3.  Backer Seal
+       6.5.4.  Event Seal
+       6.5.5.  Last Establishment Event Seal
+     6.6.  Other Messages
+       6.6.1.  Query Message
+       6.6.2.  Reply Message
+       6.6.3.  Bare Message
+       6.6.4.  Prod Message
+       6.6.5.  Exchange Message (exchange)
+     6.7.  Notices Embedded in Reply Messages
+       6.7.1.  Key State Notice (KSN)
+       6.7.2.  Transaction State Notice (TSN)
+     6.8.  Transaction Event Log Messages
+       6.8.1.  Registry Inception Event
+       6.8.2.  Registry Rotation Event
+       6.8.3.  Backerless Credential Issuance
+       6.8.4.  Backerless Credential Revocation
+       6.8.5.  Backer Credential Issuance
+       6.8.6.  Backer Credential Revocation
+   7.  Appendix: Cryptographic Strength and Security
+     7.1.  Cryptographic Strength
+     7.2.  Information Theoretic Security and Perfect Security
+   8.  Conventions and Definitions
+   9.  Security Considerations
+   10. IANA Considerations
+   11. References
+     11.1.  Normative References
+     11.2.  Informative References
    Acknowledgments
    Author's Address
 
@@ -192,24 +195,25 @@ Table of Contents
    secure attribution of any message or data item without needing to
    trust in any intermediary [PKI][KERI][UIT][SCPK][SFS][SCPN][SCURL].
    A self-certifying identifier (SCID) is uniquely cryptographically
-   derived from the public key of an asymmetric key-pair, (public,
+   derived from the public key of an asymmetric keypair, (public,
    private).  It is self-certifying in the sense that does not rely on a
    trusted entity.  Any non-repudiable signature made with the private
-   key may be verified by extracting the public-key from either the
+   key may be verified by extracting the public key from either the
    identifier itself or incepting information uniquely associated with
    the cryptographic derivation process for the identifier.  In a basic
-   SCID, the mapping between identifier and controlling public key is
-   self-contained in the identifier itself.  A basic SCID is _ephemeral_
-   i.e. it does not support rotation of its key-pairs in the event of
-   key weakness or compromise and therefore must be abandoned once the
-   controlling private key becomes weakened or compromised from
-   exposure.  The generalization of SCIDs with enhanced properties such
-   as persistence are called _autonomic identifiers_ (AIDs).
+   SCID, the mapping between an identifier and its controlling public
+   key is self-contained in the identifier itself.  A basic SCID is
+   _ephemeral_ i.e. it does not support rotation of its keypairs in the
+   event of key weakness or compromise and therefore must be abandoned
+   once the controlling private key becomes weakened or compromised from
+   exposure.  The class of identifiers that generalize SCIDs with
+   enhanced properties such as persistence is called _autonomic
+   identifiers_ (AIDs).
 
 1.2.  Autonomic IDentifier (AID)
 
    A Key Event Log (KEL) gives rise to an enhanced class of SCIDs that
-   are persistent, not ephemeral because their keys may be refreshed or
+   are persistent, not ephemeral, because their keys may be refreshed or
    updated via rotation allowing secure control over the identifier in
    spite of key weakness or even compromise.  This family of generalized
    enhanced SCIDs we call *_autonomic identifiers_* (AIDs). _Autonomic_
@@ -217,7 +221,7 @@ Table of Contents
    evocative of the self-certifying, self-managing properties of this
    class of identifier.
 
-1.3.  Key Pre-Rotation Basics
+1.3.  Key Pre-rotation Basics
 
    An important innovation of KERI is that it solves the key rotation
    problem of PKI (including that of simple self-certifying identifiers)
@@ -225,19 +229,16 @@ Table of Contents
    [DAD][KERI].  This _pre-rotation_ mechanism enables an entity to
    persistently maintain or regain control over an identifier in spite
    of the exposure-related weakening over time or even compromise of the
-   current set of controlling (signing) key pairs.  With key pre-
+   current set of controlling (signing) keypairs.  With key pre-
    rotation, control over the identifier can be re-established by
    rotating to a one-time use set of unexposed but pre-committed
-   rotation key pairs that then become the current signing key pairs.
+   rotation keypairs that then become the current signing keypairs.
    Each rotation in turn cryptographically commits to a new set of
-   rotation keys but without exposing them.  Because the pre-rotated key
-   pairs need never be exposed prior to their one-time use, their attack
-   surface may be optimally minimized.  The current key-state is
+   rotation keys but without exposing them.  Because the pre-rotated
+   keypairs need never be exposed prior to their one-time use, their
+   attack surface may be optimally minimized.  The current key-state is
    maintained via an append-only *_verifiable data structure_* we call a
    *_key event log_* (KEL).
-
-   ToDo describe pre-rotated sequence of key sets (exposed and
-   unexposed)
 
 1.4.  Cryptographic Primitives
 
@@ -248,7 +249,7 @@ Table of Contents
    to a digest (hash), a salt, a seed, a private key, a public key, or a
    signature.  All cryptographic primitives in KERI MUST be expressed
    using the CESR (Compact Event Streaming Representation) protocol
-   [CESR_ID].  CESR supports round trip lossless conversion between its
+   [CESR-ID].  CESR supports round trip lossless conversion between its
    text, binary, and raw domain representations and lossless
    composability between its text and binary domain representations.
    Composability is ensured between any concatenated group of text
@@ -272,7 +273,7 @@ Table of Contents
    compactifies the essential information needed to use that
    cryptographic primitive.  All cryptographic primitives expressed in
    either text or binary CESR are _qualified_ by definition.
-   Qualification is an essential property of CESR [CESR_ID].  The CESR
+   Qualification is an essential property of CESR [CESR-ID].  The CESR
    protocol supports several different types of encoding tables for
    different types of derivation codes.  These tables include very
    compact codes.  For example, a 256-bit (32-byte) digest using the
@@ -287,22 +288,22 @@ Table of Contents
 
 1.5.  Identifier System Security Overlay
 
-   The function of KERI's identifier-system security-overlay is to
+   The function of KERI's identifier-system security overlay is to
    establish the authenticity (or authorship) of the message payload in
    an IP Packet by verifiably attributing it to a cryptonymous self-
    certifying identifier (AID) via an attached set of one or more
    asymmetric key-pair-based non-repudiable digital signatures.  The
-   current valid set of associated asymmetric key-pair(s) is proven via
-   a verifiable data structure called a *_key event log_* (KEL)
+   current valid set of associated asymmetric keypair(s) is proven via a
+   verifiable data structure called a *_key event log_* (KEL)
    [KERI][VDS][ESMT][RT].  The identifier system provides a mapping
-   between the identifier and the key-pair(s) that control the
-   identifier, namely, the public key(s) from those key-pairs.  The
+   between the identifier and the keypair(s) that control the
+   identifier, namely, the public key(s) from those keypairs.  The
    private key(s) is secret and is not shared.
 
    An authenticatable (verifiable) internet message (packet) or data
    item includes the identifier and data in its payload.  Attached to
    the payload is a digital signature(s) made with the private key(s)
-   from the controlling key-pair(s).  Given the identifier in a message,
+   from the controlling keypair(s).  Given the identifier in a message,
    any verifier of a message (data item) can use the identifier system
    mapping to look up the public key(s) belonging to the controlling
    key-pair(s).  The verifier can then verify the attached signature(s)
@@ -329,8 +330,8 @@ Table of Contents
    pair(s) albeit with a verifiable signature from a valid certificate
    authority.  [CEDS][KDDH][DNSH][SFTCA][DNSP][BGPC][BBGP].  Noteworthy
    is that the signature on the certificate is NOT made with the
-   controlling key pairs of the identifier but made with key pairs
-   controlled by the issuer i.e. th CA.  The fact that the certificate
+   controlling keypairs of the identifier but made with keypairs
+   controlled by the issuer i.e. the CA.  The fact that the certificate
    is signed by the CA means that the mapping itself is not verifiable
    but merely that the CA asserted the mapping between key-pair(s) and
    identifier.  The certificate merely provides evidence of the
@@ -360,10 +361,10 @@ Table of Contents
    style of key rotation may well be one of the main reasons that PGP's
    web-of-trust failed [WOT].  Without a universally verifiable
    revocation mechanism, then any rotation (revocation and replacement)
-   assertions either implicity or implicit are mutually independent of
+   assertions either explicit or implicit are mutually independent of
    each other.  This lack of universal cryptographic verifiability of a
    rotation fosters ambiguity at any point in time as to the actual
-   valid mapping between the identifier and its controlling key-pair(s).
+   valid mapping between the identifier and its controlling keypair(s).
    In other words, for a given identifier, any or all assertions made by
    some set of CAs may be potentially valid.
 
@@ -387,23 +388,23 @@ Table of Contents
 1.5.2.  Triad Bindings
 
    In simple form an identifier-system security-overlay binds together a
-   triad consisting of the *_identifier_*, *_key-pairs_*, and
+   triad consisting of the *_identifier_*, *_keypairs_*, and
    *_controllers_*. By *_identifier_* we mean some string of characters.
-   By *_key-pairs_* we mean a set of asymmetric (public, private)
-   cryptographic key pairs used to create and verify non-repudiable
+   By *_keypairs_* we mean a set of asymmetric (public, private)
+   cryptographic keypairs used to create and verify non-repudiable
    digital signatures.  By *_controllers_* we mean the set of entities
-   whose members each control a private key from the given set of *_key-
-   pairs_*. When those bindings are strong then the overlay is highly
-   _invulnerable_ to attack.  In contrast, when those bindings are weak
-   then the overlay is highly _vulnerable_ to attack.  The bindings for
-   a given identifier form a _triad_ that binds together the set of
-   _controllers_, the set of _key-pairs_, and the _identifier_. To
-   reiterate, the set of controllers is bound to the set of key-pairs,
-   the set of key-pairs is bound to the identifier, and the identifier
-   is bound to the set of controllers.  This binding triad can be
-   diagrammed as a triangle where each side is a binding and the three
-   vertices are the _identifier_, the set of _controllers_, and the set
-   of _key-pairs_.
+   whose members each control a private key from the given set of
+   *_keypairs_*. When those bindings are strong then the overlay is
+   highly _invulnerable_ to attack.  In contrast, when those bindings
+   are weak then the overlay is highly _vulnerable_ to attack.  The
+   bindings for a given identifier form a _triad_ that binds together
+   the set of _controllers_, the set of _key-pairs_, and the
+   _identifier_. To reiterate, the set of controllers is bound to the
+   set of keypairs, the set of keypairs is bound to the identifier, and
+   the identifier is bound to the set of controllers.  This binding
+   triad can be diagrammed as a triangle where the sides are the
+   bindings and the vertices are the _identifier_, the set of
+   _controllers_, and the set of _keypairs_.
 
    With KERI all the bindings of the triad are strong because they are
    cryptographically verifiable with a minimum cryptographic strength or
@@ -413,19 +414,19 @@ Table of Contents
    The bound triad is created as follows:
 
    *  Each controller in the set of controllers creates an asymmetric
-      (pubic, private) key-pair.  The public key is derived from the
+      (pubic, private) keypair.  The public key is derived from the
       private key or seed using a one-way derivation that MUST have a
       minimum cryptographic strength of approximately 128 bits
-      [OWF][COWF].  Depending on the crypto-suite used to derive a key-
-      pair the private key or seed may itself have a length larger than
-      128 bits.  A controller may use a cryptographic strength pseudo-
-      random number generator (CSPRNG) [CSPRNG] to create the private
-      key or seed material.  Because the private key material must be
-      kept secret, typically in a secure data store, the management of
-      those secrets may be an important consideration.  One approach to
-      minimize the size of secrets is to create private keys or seeds
-      from a secret salt.  The salt MUST have an entropy of
-      approximately 128 bits.  The salt may then be stretched to meet
+      [OWF][COWF].  Depending on the crypto-suite used to derive a
+      keypair the private key or seed may itself have a length larger
+      than 128 bits.  A controller may use a cryptographic strength
+      pseudo-random number generator (CSPRNG) [CSPRNG] to create the
+      private key or seed material.  Because the private key material
+      must be kept secret, typically in a secure data store, the
+      management of those secrets may be an important consideration.
+      One approach to minimize the size of secrets is to create private
+      keys or seeds from a secret salt.  The salt MUST have an entropy
+      of approximately 128 bits.  The salt may then be stretched to meet
       the length requirements for the crypto suite's private key size
       [Salt][Stretch].  In addition, a hierarchical deterministic
       derivation function may be used to further minimize storage
@@ -551,28 +552,28 @@ Table of Contents
 
    Each event in a KEL MUST include an integer sequence number that is
    one greater than the previous event.  Each event after the inception
-   event MUSt also include a cryptographic digest of the previous event.
+   event MUST also include a cryptographic digest of the previous event.
    This digest means that a given event is cryptographically bound to
    the previous event in the sequence.  The list of digests or pre-
    rotated keys in the inception event cryptographically binds the
    inception event to a subsequent rotation event.  Essentially making a
-   forward committment that forward chains together the events.  The
-   only valid rotation event that may follow the inception event must
-   include the pre-rotated keys.  But only the controller who created
-   those keys and created the digests may verifiably expose them.  Each
-   rotation event in turn makes a forward committment (chain) to the
-   following rotation event via its list of pre-rotated key digests.
-   This makes the KEL a doubly (backward and forward) hash (digest)
-   chained non-repudiably signed append only verifiable data structure.
+   forward commitment that forward chains together the events.  The only
+   valid rotation event that may follow the inception event must include
+   the pre-rotated keys.  But only the controller who created those keys
+   and created the digests may verifiably expose them.  Each rotation
+   event in turn makes a forward commitment (chain) to the following
+   rotation event via its list of pre-rotated key digests.  This makes
+   the KEL a doubly (backward and forward) hash (digest) chained non-
+   repudiably signed append-only verifiable data structure.
 
    Because the signatures on each event are non-repudiable, the
    existence of an alternate but verifiable KEL for an identifier is
    provable evidence of duplicity.  In KERI, there may be at most one
    valid KEL for any identifier or none at all.  Any validator of a KEL
    may enforce this one valid KEL rule before relying on the KEL as
-   proof of the current key-state for the identifier.  This protects the
+   proof of the current key state for the identifier.  This protects the
    validator.  Any unreconcilable evidence of duplicity means the
-   validator does not trust (rely on) any KEL to provide the key-state
+   validator does not trust (rely on) any KEL to provide the key state
    for the identifier.  Rules for handling reconciliable duplicity will
    be discussed later.  From a validator's perspective, either there is
    one-and-only-one valid KEL or none at all.  This protects the
@@ -584,10 +585,10 @@ Table of Contents
    binds the identifier to the controllers of the current key-pairs
    given by the KEL thus completing the tetrad.
 
-   At inception the KEL may be even more strongly bound to its tetrad by
-   deriving the identifier from a digest of the _inception event_.
+   At inception, the KEL may be even more strongly bound to its tetrad
+   by deriving the identifier from a digest of the _inception event_.
    Thereby even one change in not only the original controlling keys
-   pairs but also the pre-rotated key pairs or any other incepting
+   pairs but also the pre-rotated keypairs or any other incepting
    information included in the _inception event_ will result in a
    different identifier.
 
@@ -608,7 +609,7 @@ Table of Contents
       cryptographic operation including but not limited to a digest
       (hash), a salt, a seed, a private key, a public key, or a
       signature.  All _primitives_ in KERI MUST be expressed in CESR
-      (Compact Event Streaming Representation) [CESR_ID].
+      (Compact Event Streaming Representation) [CESR-ID].
 
    Qualified  When _qualified_, a _cryptographic primitive_ includes a
       prepended derivation code (as a proem) that indicates the
@@ -616,8 +617,8 @@ Table of Contents
       simplifies and compactifies the essential information needed to
       use that _cryptographic primitive_. All _cryptographic primitives_
       expressed in either text or binary CESR are _qualified_ by
-      definition [CESR_ID].  Qualification is an essential property of
-      CESR [CESR_ID].
+      definition [CESR-ID].  Qualification is an essential property of
+      CESR [CESR-ID].
 
    Cryptonym  A cryptographic pseudonymous identifier represented by a
       string of characters derived from a random or pseudo-random secret
@@ -636,42 +637,41 @@ Table of Contents
       (SCID) is a type of cryptonym that is uniquely cryptographically
       derived from the public key of an asymmetric non-repudiable
       signing key-pair, (public, private).  It is self-certifying or
-      more precisely self-authenticating because it does does not rely
-      on a trusted entity.  The authenticity of a non-repudiable
-      signature made with the private key may be verified by extracting
-      the public-key from either the identifier itself or incepting
-      information uniquely associated with the cryptographic derivation
-      process for the identifier.  In a basic SCID, the mapping between
-      identifier and controlling public key is self-contained in the
+      more precisely self-authenticating because it does not rely on a
+      trusted entity.  The authenticity of a non-repudiable signature
+      made with the private key may be verified by extracting the public
+      key from either the identifier itself or incepting information
+      uniquely associated with the cryptographic derivation process for
+      the identifier.  In a basic SCID, the mapping between an
+      identifier and its controlling public key is self-contained in the
       identifier itself.  A basic SCID is _ephemeral_ i.e. it does not
-      support rotation of its key-pairs in the event of key weakness or
+      support rotation of its keypairs in the event of key weakness or
       compromise and therefore must be abandoned once the controlling
       private key becomes weakened or compromised from exposure
       [PKI][KERI][UIT][SCPK][SFS][SCPN][SCURL][PKI].
 
-   AID  Autonomic IDentifier.  A self-managing _crytonymous_ identifier
+   AID  Autonomic IDentifier.  A self-managing _cryptonymous_ identifier
       that MUST be self-certifying (self-authenticating) and MUST be
       encoded in CESR as a _qualified_ cryptographic primitive.  An AID
       MAY exhibit other self-managing properties such as transferable
       control using key _pre-rotation_ which enables control over such
       an AID to persist in spite of key weakness or compromise due to
       exposure.  Authoritative control over the identifier persists in
-      spite of the evolution of key-state.
+      spite of the evolution of the key-state.
 
-   Key-State  Includes the set of currently authoritative key-pairs for
+   Key State  Includes the set of currently authoritative key-pairs for
       an AID and any other information necessary to secure or establish
       control over an AID.
 
-   Key Event  Concretely, the serialized data structure that forms an
-      entry in the key event log for an AID.  Abstractly, the data
-      structure itself.  Key events come in different types and are used
-      primarily to establish or change the authoritative set of key-
-      pairs and/or anchor other data to the authoritative set of key-
-      pairs at the point in the key event log actualized by a particular
-      entry.
+   Key Event  Concretely, the serialized data structure of an entry in
+      the key event log for an AID.  Abstractly, the data structure
+      itself.  Key events come in different types and are used primarily
+      to establish or change the authoritative set of keypairs and/or
+      anchor other data to the authoritative set of keypairs at the
+      point in the key event log actualized by a particular entry.
 
    Establishment Event  Key Event that establishes or changes the key-
-      state which includes the current set of authoritative key-pairs
+      state which includes the current set of authoritative keypairs
       (key-state) for an AID.
 
    Non-establishment Event  Key Event that does not change the current
@@ -690,12 +690,12 @@ Table of Contents
       evident upon acceptance as the _inception event_ that begins the
       AID's KEL.
 
-   Rotation Event  Establishement Event that provides the information
+   Rotation Event  Establishment Event that provides the information
       needed to change the key-state which includes a change to the set
-      of authoritative key pairs for an AID.
+      of authoritative keypairs for an AID.
 
    Rotation  The operation of revoking and replacing the set of
-      authoritative key-pairs for an AID.  This operation is made
+      authoritative keypairs for an AID.  This operation is made
       verifiable and duplicity evident upon acceptance as a _rotation
       event_ that is appended to the AID's KEL.
 
@@ -708,20 +708,19 @@ Table of Contents
       AID.  The first entry in a KEL MUST be the one and only Inception
       Event of that AID.
 
-   Version  More that one version of a KEL for an AID exists when for
+   Version  More than one version of a KEL for an AID exists when for
       any two instances of a KEL at least one event is unique between
       the two instances.
 
    Verifiable  A KEL is verifiable means all content in a KEL including
-      the digests and the signatures on that content are verifiably
+      the digests and the signatures on that content is verifiably
       compliant with respect to the KERI protocol.  In other words, the
       KEL is internally consistent and has integrity vis-a-vis its
       backward and forward chaining digests and authenticity vis-a-vis
-      its nonrepudiable signatures.  As a verifiable data structure the
-      KEL satisfies the KERI protocol defined rules for that
+      its non-repudiable signatures.  As a verifiable data structure,
+      the KEL satisfies the KERI protocol-defined rules for that
       verifiability.  This includes the cryptographic verification of
-      any digests or signatures to against the contents so digested or
-      signed.
+      any digests or signatures on the contents so digested or signed.
 
    Duplicity  Means the existence of more than one version of a
       verifiable KEL for a given AID.  Because every event in a KEL must
@@ -736,12 +735,12 @@ Table of Contents
       mutually inconsistent but independently verifiable instances of a
       KEL.
 
-   Validator  Any entity that evaluates one more more AID's KEL in order
-      to determine if it can rely on (trust) the key-state provided by
-      that KEL.  A necessary but insufficient condition for a valid KEL
-      is it is verifiable i.e. is internally inconsistent with respect
-      to compliance with the KERI protocol.  An invalid KEL from the
-      perspective a Validator may be either un-verifiable or it may be
+   Validator  Any entity that evaluates one more AID's KEL in order to
+      determine if it can rely on (trust) the key-state provided by that
+      KEL.  A necessary but insufficient condition for a valid KEL is it
+      is verifiable i.e. is internally inconsistent with respect to
+      compliance with the KERI protocol.  An invalid KEL from the
+      perspective of a Validator may be either unverifiable or it may be
       verifiable but duplicitous with respect to another verifiable
       version of that KEL.  Detected duplicity by a given validator
       means that the validator has seen more than one verifiable version
@@ -750,7 +749,7 @@ Table of Contents
       as the authoritative version for that validator.  Irreconcilable
       duplicity means that none of the versions of a KEL as seen by a
       validator are accepted as the authoritative one for that
-      validator.  The conditions for reconcialable duplicity are
+      validator.  The conditions for reconcilable duplicity are
       described later.
 
    Message  Consists of a serialized data structure that comprises its
@@ -765,7 +764,76 @@ Table of Contents
       whose attachments MUST include one or more signatures on that key
       event.
 
-3.  Messages and Seals
+3.  Keypair Labeling Convention
+
+   In order to make key event expressions both clearer and more concise,
+   we use a keypair labeling convention.  When an AID's key state is
+   dynamic, i.e. the set of controlling keypairs is transferable, then
+   the keypair labels are indexed in order to represent the successive
+   sets of keypairs that constitute the key state at any position in the
+   KEL (key event log).  To elaborate, we use indexes on the labels for
+   AIDs that are transferable to indicate which set of keypairs is
+   associated with the AID at any given point in its key state or KEL.
+   In contrast, when the key state is static, i.e. the set of
+   controlling keypairs is non-transferable then no indexes are needed
+   because the key state never changes.
+
+   Recall that, a keypair is a two tuple, (public, private), of the
+   respective public and private keys in the keypair.  For a given AID,
+   the labeling convention uses an uppercase letter label to represent
+   that AID.  When the key state is dynamic, a superscripted index on
+   that letter is used to indicate which keypair is used at a given key
+   state.  Alternatively, the index may be omitted when the context
+   defines which keypair and which key state, such as, for example, the
+   latest or current key state.  To reiterate, when the key state is
+   static no index is needed.
+
+   In general, without loss of specificity, we use an uppercase letter
+   label to represent both an AID and when indexed to represent its
+   keypair or keypairs at a given key state for that AID.  In addition,
+   when expressed in tuple form the uppercase letter also represents the
+   public key and the lowercase letter represents the private key for a
+   given keypair.  For example, let A denote and AID, then let A also
+   denote a keypair which may be also expressed in tuple form as (A, a).
+   Therefore, when referring to the keypair itself as a pair and not the
+   individual members of the pair, either the uppercase label, A, or the
+   tuple, (A, a), may be used to refer to the keypair itself.  When
+   referring to the individual members of the keypair then the uppercase
+   letter, A, refers to the public key, and the lowercase letter, a,
+   refers to the private key.
+
+   As described above, an establishment key event may change the key
+   state.  Let the sequence of establishment events be indexed by the
+   zero-based integer-valued variable i.  Let the sequence of keypairs
+   used to control an AID be indexed by the zero-based integer-valued
+   variable j.  When the set of controlling keypairs used at any time
+   for a given key state includes only one member, then i = j for every
+   keypair, and only one index is needed.  But when the set of keypairs
+   used at any time for a given key state includes more than one member,
+   then i &#8800; j for every keypair, and both indices are needed.
+
+   the former case, where only one index is needed because i = j, let
+   the indexed keypair for AID, A, be denoted by _A^j_ or in tuple form
+   by _(A^j, a^j)_ where the keypair so indexed uses the j^th keypair
+   from the sequence of all keypairs.  The keypair sequence may be
+   expressed as the list, _[A^0, A^1, A^2, ...]_. The zero element in
+   this sequence is denoted by A^0 or in tuple form by _(A^0, a^0)_.
+
+   In the latter case, where both indices are needed because i &#8800;
+   j, let the indexed keypair for AID, A, be tdenoted by _A^(i,j)_ or in
+   tuple form by _(A^(i,j), a^(i,j))_ where the keypair so indexed
+   appears in the _i^th_ key state and uses the _j^th_ keypair from the
+   sequence of all keypairs.  Suppose, for example, that each key state
+   uses three keypairs, then the sequence of the first two key states
+   that consume the first six keypairs is given by the following list,
+   _[A^(0,0), A^(0,1), A^(0,2), A^(1,3), A^(1,4), A^(1,5)]_.
+
+4.  Key Pre-rotation Details
+
+   ToDo describe the pre-rotated sequence of key sets (exposed and
+   unexposed)
+
+5.  Messages and Seals
 
    Because adding the d field SAID to every key event message type will
    break all the explicit test vectors.  Its no additional pain to
@@ -776,15 +844,15 @@ Table of Contents
    are not common.  The common fields are v, t, d.  The newly revised
    messages and seals are shown below.
 
-3.1.  Message Field Labels
+5.1.  Message Field Labels
 
-3.1.1.  SAIDs and KERI Label Convention Normalization
+5.1.1.  SAIDs and KERI Label Convention Normalization
 
    Because the order of appearance of fields is enforced in all KERI
    messages, where a label appears (in which message or which block in a
    message) adds the necessary context to fully determine its meaning.
 
-3.1.2.  Special Label Ordering Requirements
+5.1.2.  Special Label Ordering Requirements
 
    The version string, v, field MUST be the first field when it appears.
    This enables a RegEx stream parser to consistently find the version
@@ -808,7 +876,7 @@ Table of Contents
    signature made by that authoritative entity as the Controller of the
    private key(s).
 
-3.1.3.  KERI Message Defined Element Labels
+5.1.3.  KERI Message Defined Element Labels
 
        +=======+=================================+======+==========+
        | Label | Description                     | Type | Notes    |
@@ -871,16 +939,20 @@ Table of Contents
    A label may have different values in different contexts but not a
    different value *_type_*.
 
-3.2.  Common Normalized ACDC Labels
+5.2.  Common Normalized ACDC Labels
 
    v is version string d is SAID of enclosing block or map i is a KERI
    identifier AID a is data attributes or data anchors
 
-4.  Event Messages
+5.3.  Version String Field
 
-4.1.  Rotation
+   Get from ACDC
 
-4.1.1.  Partial Participation in Rotation
+6.  Event Messages
+
+6.1.  Rotation
+
+6.1.1.  Partial Participation in Rotation
 
    The nt field is next threshold for the next establishment event.
 
@@ -960,7 +1032,7 @@ Table of Contents
    applied when the previous next field, n is a list of digests not an
    XORed combination of the digests.
 
-4.1.2.  Inception Event
+6.1.2.  Inception Event
 
    When the AID in the i field is a self-addressing self-certifying AID,
    the new Inception Event has two qualified digest fields.  In this
@@ -980,9 +1052,9 @@ Table of Contents
    replaced with dummy characters # of the correct length and then the
    digest is computed.  This is the standard SAID algorithm.
 
-4.2.  Inception Event Message
+6.2.  Inception Event Message
 
-4.2.1.  Event Message Body
+6.2.1.  Event Message Body
 
    {
      "v": "KERI10JSON0001ac_",
@@ -1017,7 +1089,7 @@ Table of Contents
      "a": []
    }
 
-4.3.  Rotation Event Message
+6.3.  Rotation Event Message
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1048,7 +1120,7 @@ Table of Contents
      "a" : []
    }
 
-4.3.1.  Interaction Event (Also delegating Interaction)
+6.3.1.  Interaction Event (Also delegating Interaction)
 
    {
      "v": "KERI10JSON00011c_",
@@ -1067,7 +1139,7 @@ Table of Contents
      ]
    }
 
-4.3.2.  Delegated Inception Event
+6.3.2.  Delegated Inception Event
 
    {
      "v": "KERI10JSON0001ac_",
@@ -1103,7 +1175,7 @@ Table of Contents
      "di": "EJJR2nmwyYAZAoTNZH3ULvaU6Z-i0d8fSVPzhzS6b5CM"
    }
 
-4.3.3.  Delegated Rotation Event
+6.3.3.  Delegated Rotation Event
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1135,7 +1207,7 @@ Table of Contents
      "di" : "EJJR2nmwyYAZAoTNZH3ULvaU6Z-i0d8fSVPzhzS6b5CM"
    }
 
-4.4.  Receipts
+6.4.  Receipts
 
    ### Non-Transferable Prefix Signer Receipt For receipts, the d field
    is the SAID of the associated event, not the receipt message itself.
@@ -1148,7 +1220,7 @@ Table of Contents
      "s": "1"
    }
 
-4.4.1.  Transferable Prefix Signer Receipt
+6.4.1.  Transferable Prefix Signer Receipt
 
    For receipts, the d field is the SAID of the associated event, not
    the receipt message itself.
@@ -1167,28 +1239,28 @@ Table of Contents
        }
    }
 
-4.5.  Seals
+6.5.  Seals
 
-4.5.1.  Digest Seal
+6.5.1.  Digest Seal
 
    {
      "d": "Eabcde..."
    }
 
-4.5.2.  Merkle Tree Root Digest Seal
+6.5.2.  Merkle Tree Root Digest Seal
 
    {
      "rd": "Eabcde8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
    }
 
-4.5.3.  Backer Seal
+6.5.3.  Backer Seal
 
    {
      "bi": "BACDEFG8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM",
      "d" : "EFGKDDA8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
    }
 
-4.5.4.  Event Seal
+6.5.4.  Event Seal
 
    {
 
@@ -1197,15 +1269,15 @@ Table of Contents
      "d": "Eabcde8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
    }
 
-4.5.5.  Last Establishment Event Seal
+6.5.5.  Last Establishment Event Seal
 
    {
      "i": "BACDEFG8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM",
    }
 
-4.6.  Other Messages
+6.6.  Other Messages
 
-4.6.1.  Query Message
+6.6.1.  Query Message
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1238,7 +1310,7 @@ Table of Contents
      }
    }
 
-4.6.2.  Reply Message
+6.6.2.  Reply Message
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1269,7 +1341,7 @@ Table of Contents
      }
    }
 
-4.6.3.  Bare Message
+6.6.3.  Bare Message
 
    Reference to the anchoring seal is provided as an attachment to the
    bare, bre message.  A bare, 'bre', message is a SAD item with an
@@ -1290,7 +1362,7 @@ Table of Contents
      }
    }
 
-4.6.4.  Prod Message
+6.6.4.  Prod Message
 
    {
      "v": "KERI10JSON00011c_",
@@ -1308,7 +1380,7 @@ Table of Contents
      }
    }
 
-4.6.5.  Exchange Message (exchange)
+6.6.5.  Exchange Message (exchange)
 
    {
      "v": "KERI10JSON00006a_",
@@ -1322,9 +1394,9 @@ Table of Contents
      }
    }
 
-4.7.  Notices Embedded in Reply Messages
+6.7.  Notices Embedded in Reply Messages
 
-4.7.1.  Key State Notice (KSN)
+6.7.1.  Key State Notice (KSN)
 
    {
      "v": "KERI10JSON0001d9_",
@@ -1354,7 +1426,7 @@ Table of Contents
      "di": ""
    }
 
-4.7.1.1.  Embedded in Reply
+6.7.1.1.  Embedded in Reply
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1392,7 +1464,7 @@ Table of Contents
        }
    }
 
-4.7.2.  Transaction State Notice (TSN)
+6.7.2.  Transaction State Notice (TSN)
 
    {
      "v": "KERI10JSON0001b0_",
@@ -1417,7 +1489,7 @@ Table of Contents
      "c": []
    }
 
-4.7.2.1.  Embedded in Reply
+6.7.2.1.  Embedded in Reply
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1450,9 +1522,9 @@ Table of Contents
        }
    }
 
-4.8.  Transaction Event Log Messages
+6.8.  Transaction Event Log Messages
 
-4.8.1.  Registry Inception Event
+6.8.1.  Registry Inception Event
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1466,7 +1538,7 @@ Table of Contents
      "c" : ["NB"]
    }
 
-4.8.2.  Registry Rotation Event
+6.8.2.  Registry Rotation Event
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1480,7 +1552,7 @@ Table of Contents
      "ba" : []
    }
 
-4.8.3.  Backerless Credential Issuance
+6.8.3.  Backerless Credential Issuance
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1492,7 +1564,7 @@ Table of Contents
      "dt": "2020-08-01T12:20:05.123456+00:00"
    }
 
-4.8.4.  Backerless Credential Revocation
+6.8.4.  Backerless Credential Revocation
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1505,7 +1577,7 @@ Table of Contents
      "dt": "2020-08-01T12:20:05.123456+00:00"
    }
 
-4.8.5.  Backer Credential Issuance
+6.8.5.  Backer Credential Issuance
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1522,7 +1594,7 @@ Table of Contents
      "dt": "2020-08-01T12:20:05.123456+00:00"
    }
 
-4.8.6.  Backer Credential Revocation
+6.8.6.  Backer Credential Revocation
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1540,9 +1612,9 @@ Table of Contents
      "dt": "2020-08-01T12:20:05.123456+00:00"
    }
 
-5.  Appendix: Cryptographic Strength and Security
+7.  Appendix: Cryptographic Strength and Security
 
-5.1.  Cryptographic Strength
+7.1.  Cryptographic Strength
 
    For crypto-systems with _perfect-security_, the critical design
    parameter is the number of bits of entropy needed to resist any
@@ -1598,7 +1670,7 @@ Table of Contents
    with perfect security and 128 bits of cryptographic strength is
    computationally infeasible to break via brute force attack.
 
-5.2.  Information Theoretic Security and Perfect Security
+7.2.  Information Theoretic Security and Perfect Security
 
    The highest level of cryptographic security with respect to a
    cryptographic secret (seed, salt, or private key) is called
@@ -1616,7 +1688,7 @@ Table of Contents
    of secret sharing [SShr] that uses the same technique as a _one-time-
    pad_.
 
-6.  Conventions and Definitions
+8.  Conventions and Definitions
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -1624,39 +1696,39 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-7.  Security Considerations
+9.  Security Considerations
 
    TODO Security
 
-8.  IANA Considerations
+10.  IANA Considerations
 
    This document has no IANA actions.
 
-9.  References
+11.  References
 
-9.1.  Normative References
+11.1.  Normative References
 
    [CBORC]    "CBOR Mapping Object Codes", n.d.,
               <https://en.wikipedia.org/wiki/CBOR>.
 
-   [CESR_ID]  Smith, S., "IETF CESR (Composable Event Streaming
+   [CESR-ID]  Smith, S., "IETF CESR (Composable Event Streaming
               Representation) Internet Draft", 2022,
               <https://github.com/WebOfTrust/ietf-cesr>.
 
-   [DIDK_ID]  Feairheller, P., "IETF DID-KERI Internet Draft", n.d.,
+   [DIDK-ID]  Feairheller, P., "IETF DID-KERI Internet Draft", n.d.,
               <https://github.com/WebOfTrust/ietf-did-keri>.
 
    [JSOND]    "JavaScript Object Notation Delimiters", n.d.,
               <https://www.json.org/json-en.html>.
 
-   [KERI_ID]  Smith, S., "IETF KERI (Key Event Receipt Infrastructure)
+   [KERI-ID]  Smith, S., "IETF KERI (Key Event Receipt Infrastructure)
               Internet Draft", 2022,
               <https://github.com/WebOfTrust/ietf-keri>.
 
    [MGPK]     "Msgpack Mapping Object Codes", n.d.,
               <https://github.com/msgpack/msgpack/blob/master/spec.md>.
 
-   [OOBI_ID]  Smith, S., "IETF OOBI (Out-Of-Band-Introduction) Internet
+   [OOBI-ID]  Smith, S., "IETF OOBI (Out-Of-Band-Introduction) Internet
               Draft", 2022, <https://github.com/WebOfTrust/ietf-oobi>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
@@ -1678,11 +1750,11 @@ Table of Contents
               DOI 10.17487/RFC8949, December 2020,
               <https://www.rfc-editor.org/rfc/rfc8949>.
 
-   [SAID_ID]  Smith, S., "IETF SAID (Self-Addressing IDentifier)
+   [SAID-ID]  Smith, S., "IETF SAID (Self-Addressing IDentifier)
               Internet Draft", 2022,
               <https://github.com/WebOfTrust/ietf-said>.
 
-9.2.  Informative References
+11.2.  Informative References
 
    [BBGP]     Birge-Lee, H., "Bamboozling certificate authorities with
               BGP", vol. 27th USENIX Security Symposium, no. 18, pp.

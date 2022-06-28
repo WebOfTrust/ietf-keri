@@ -662,7 +662,12 @@ Upon rotation, the old next keys are exposed but only after a new next set has b
 
 In essence, each key set follows a rotation lifecycle where it changes its role with each rotation event. A pre-rotated key set starts as the next set, then on the ensuing rotation becomes the current set, and then on the following rotation is discarded. The lifecycle for the initial key set in an inception event is slightly different. The initial key set starts as the current set and then on the following rotation is discarded.
 
+## Example
 The following example illustrates the lifecycle roles of the key sets drawn from a sequence of keys used for three establishment events; one inception followed by two rotations.
+
+
+## Partial Rotation
+
 
 
 # Messages and Seals

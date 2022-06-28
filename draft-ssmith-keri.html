@@ -1032,7 +1032,7 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Smith</td>
-<td class="center">Expires 29 December 2022</td>
+<td class="center">Expires 30 December 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1045,12 +1045,12 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ssmith-keri-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-06-27" class="published">27 June 2022</time>
+<time datetime="2022-06-28" class="published">28 June 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-12-29">29 December 2022</time></dd>
+<dd class="expires"><time datetime="2022-12-30">30 December 2022</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1094,7 +1094,7 @@ The KA2CE approach may be much more performant and scalable than more complex ap
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 29 December 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 30 December 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1167,6 +1167,14 @@ The KA2CE approach may be much more performant and scalable than more complex ap
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-key-pre-rotation-details" class="xref">Key Pre-rotation Details</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="xref">4.1</a>.  <a href="#name-example" class="xref">Example</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="xref">4.2</a>.  <a href="#name-partial-rotation" class="xref">Partial Rotation</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-messages-and-seals" class="xref">Messages and Seals</a></p>
@@ -1607,7 +1615,31 @@ Unless otherwise indicated, all cryptographic primitives in this specification w
       <h2 id="name-key-pre-rotation-details">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-key-pre-rotation-details" class="section-name selfRef">Key Pre-rotation Details</a>
       </h2>
-<p id="section-4-1">ToDo describe the pre-rotated sequence of key sets (exposed and unexposed)<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">Each establishment event involves two sets of keys that each play a role that together establishes complete control authority over the AID associated at the location of that event in the KEL. The two roles are labeled <em>current</em> and <em>next</em>. Each establishment event designates both sets of keypairs. The first (<em>current</em>) set consists of the authoritative signing keypairs bound to the AID at the location in the KEL where the establishment event occurs. The second (<em>next</em>) set consists of the ensuing pre-rotated keypairs that will become the <em>current</em> set upon the next establishment event. Each public key in the set of next (ensuing) pre-rotated public keys is hidden in or blinded by a digest of that key. In addition, each establishment event designates two threshold expressions, one for each set of keypairs (<em>current</em> and <em>next</em>). The <em>current</em> threshold determines the needed satisficing subset of signatures from the associated set of keypairs for the event to be considered valid. The <em>next</em> threshold is a forward commitment to a future <em>current</em> threshold. The simplest type of threshold expression is an integer that is no greater than nor no less than the number of members in the set. When the establishment event is the inception event then the <em>current</em> set is the <em>initial</em> set.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">To clarify, each establishment event <span class="bcp14">MUST</span> include a list (ordered) of the qualified public keys from each of the current (initial) set of keypairs), a threshold for the current set, a list (ordered) of the qualified cryptographic digests of the qualified public keys from the next set of keypairs, and a threshold for the next set. Each event <span class="bcp14">MUST</span> also include the AID itself as either a qualified public key or a qualified digest of the inception establishment event. To be valid, each establishment event <span class="bcp14">MUST</span> be signed by a threshold-satisficing subset of private keys from the current set of keypairs.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">The creator of the inception event <span class="bcp14">MUST</span> create two sets of keypairs, the current (initial) set, and the next set. The private keys from the current set are kept as secrets. The public keys from the current set are exposed via inclusion in the inception event. Both the public and private keys from the next set are kept as secrets and only the cryptographic digests of the public keys from the next set are exposed via inclusion in the event. The public keys from the next set are only exposed in a subsequent establishment if any.  Both thresholds are exposed via inclusion in the event.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-4">Upon emittance of the inception event, the current (initial) set of keypairs becomes the current set of verifiable authoritative signing keypairs for the identifier. Emittance of the inception event also issues the identifier. Moreover, to be verifiably authoritative, the inception event must be signed by a threshold satisficing subset of the current (initial) set of private keys. The inception event may be verified against the attached signatures using the included current (initial) list of public keys. When self-addressing, a digest of the serialization of the inception event provides the AID itself as derived by the SAID protocol <span>[<a href="#SAID-ID" class="xref">SAID-ID</a>]</span>.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<p id="section-4-5">There <span class="bcp14">MUST</span> be only one inception establishment event. All subsequent establishment events <span class="bcp14">MUST</span> be rotation events.<a href="#section-4-5" class="pilcrow">¶</a></p>
+<p id="section-4-6">Unlike inception, the creator of a rotation event <span class="bcp14">MUST</span> create only one set of keypairs, the newly next set. Both the public and private keys from the newly next set are kept as secrets and only the cryptographic digests of the public keys from the newly next set are exposed via inclusion in the event. The list of newly current public keys <span class="bcp14">MUST</span> be taken from the set of old next public keys from the most recent (previous) establishment event. The subset of old next keys that comprise the newly current set of public keys <span class="bcp14">MUST</span> be unhidden or unblinded because they appear as the public keys themselves and no longer appear as digests of the public keys. Both thresholds are exposed via inclusion in the event.<a href="#section-4-6" class="pilcrow">¶</a></p>
+<p id="section-4-7">Upon emittance of the rotation event, the newly current keypairs become the current set of verifiable authoritative signing keypairs for the identifier. The old current set of keypairs from the previous establishment event has been revoked and replaced by the newly current set. Moreover, to be verifiably authoritative, the rotation event must be signed by a threshold satisficing subset of the newly current set of private keys. The rotation event may be verified against the attached signatures using the included newly current list of public keys.<a href="#section-4-7" class="pilcrow">¶</a></p>
+<p id="section-4-8">The act of inclusion in each establishment event of the digests of the new next set of public keys performs a pre-rotation operation on that set by making a verifiable forward blinded commitment to that set. Consequently, no other set may be used for the next rotation operation. Because the next set of pre-rotated keys is blinded (i.e. has not been exposed i.e. used to sign or even published) an attacker can't forge and sign a verifiable rotation operation without first unblinding the pre-rotated keys. Assuming sufficient cryptographic strength of the digest means that the only attack surface is the private key store itself. But the creator is free to make that key store as arbitrarily secure as needed because the pre-rotated keys are not used for signing until the next rotation.  In other words, as long as the creator keeps secret the pre-rotated public keys themselves, an attacker must attack the key storage infrastructure because side-channel attacks on signing infrastructure are obviated.<a href="#section-4-8" class="pilcrow">¶</a></p>
+<p id="section-4-9">Upon rotation, the old next keys are exposed but only after a new next set has been created and stored. Thus the creator is always able to stay one step ahead of an attacker. By the time a new rotation event is published, it is too late for an attacker to create a verifiable rotation event to supplant it. The first published is the authoritative one.<a href="#section-4-9" class="pilcrow">¶</a></p>
+<p id="section-4-10">In essence, each key set follows a rotation lifecycle where it changes its role with each rotation event. A pre-rotated key set starts as the next set, then on the ensuing rotation becomes the current set, and then on the following rotation is discarded. The lifecycle for the initial key set in an inception event is slightly different. The initial key set starts as the current set and then on the following rotation is discarded.<a href="#section-4-10" class="pilcrow">¶</a></p>
+<div id="example">
+<section id="section-4.1">
+        <h3 id="name-example">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-example" class="section-name selfRef">Example</a>
+        </h3>
+<p id="section-4.1-1">The following example illustrates the lifecycle roles of the key sets drawn from a sequence of keys used for three establishment events; one inception followed by two rotations.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="partial-rotation">
+<section id="section-4.2">
+        <h3 id="name-partial-rotation">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-partial-rotation" class="section-name selfRef">Partial Rotation</a>
+      </h3>
+</section>
+</div>
 </section>
 </div>
 <div id="messages-and-seals">

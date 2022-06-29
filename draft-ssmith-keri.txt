@@ -1035,7 +1035,7 @@ Table of Contents
     |       | A^(1,0), A^(2,0)]_ |    |             H(A^(4,1))]_ |    |
     +-------+--------------------+----+--------------------------+----+
     |   1   |         _[A^(3,1), |  1 |            _[H(A^(5,2)), |  2 |
-    |       |         A^(4,1))]_ |    | H(A^(6,2)), H(A^(7,2))]_ |    |
+    |       |          A^(4,1)]_ |    | H(A^(6,2)), H(A^(7,2))]_ |    |
     +-------+--------------------+----+--------------------------+----+
     |   2   |         _[A^(5,2), |  2 |            _[H(A^(8,3)), |  2 |
     |       | A^(6,2), A^(7,2)]_ |    | H(A^(9,3)), H(A^(10,3)]_ |    |
@@ -1043,7 +1043,9 @@ Table of Contents
 
                                   Table 1
 
-   _CTH_ means Current Threshold. _NTH_ means Next Threshold
+   *  _CTH_ means Current Threshold.
+
+   *  _NTH_ means Next Threshold.
 
 4.2.  Partial Pre-rotation
 

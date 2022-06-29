@@ -631,15 +631,17 @@ In order to make key event expressions both clearer and more concise, we use a k
 
 Recall that, a keypair is a two tuple, *(public, private)*, of the respective public and private keys in the keypair. For a given AID, the labeling convention uses an uppercase letter label to represent that AID. When the key state is dynamic, a superscripted index on that letter is used to indicate which keypair is used at a given key state. Alternatively, the index may be omitted when the context defines which keypair and which key state, such as, for example, the latest or current key state. To reiterate, when the key state is static no index is needed.
 
-In general, without loss of specificity, we use an uppercase letter label to represent both an AID and when indexed to represent its keypair or keypairs at a given key state for that AID. In addition, when expressed in tuple form the uppercase letter also represents the public key and the lowercase letter represents the private key for a given keypair. For example, let *A* denote and AID, then let* A* also denote a keypair which may be also expressed in tuple form as *(A, a)*. Therefore, when referring to the keypair itself as a pair and not the individual members of the pair, either the uppercase label, *A*, or the tuple, *(A, a)*, may be used to refer to the keypair itself. When referring to the individual members of the keypair then the uppercase letter, *A*, refers to the public key, and the lowercase letter, *a*, refers to the private key.
+In general, without loss of specificity, we use an uppercase letter label to represent both an AID and when indexed to represent its keypair or keypairs that are authoritative at a given key state for that AID. In addition, when expressed in tuple form the uppercase letter also represents the public key and the lowercase letter represents the private key for a given keypair. For example, let *A* denote and AID, then let* A* also denote a keypair which may be also expressed in tuple form as *(A, a)*. Therefore, when referring to the keypair itself as a pair and not the individual members of the pair, either the uppercase label, *A*, or the tuple, *(A, a)*, may be used to refer to the keypair itself. When referring to the individual members of the keypair then the uppercase letter, *A*, refers to the public key, and the lowercase letter, *a*, refers to the private key.
 
-As described above, an establishment key event may change the key state. Let the sequence of establishment events be indexed by the zero-based integer-valued variable `i`. Let the sequence of keypairs used to control an AID be indexed by the zero-based integer-valued variable `j`. When the set of controlling keypairs used at any time for a given key state includes only one member, then *i = j* for every keypair, and only one index is needed. But when the set of keypairs used at any time for a given key state includes more than one member, then *i != j* for every keypair, and both indices are needed.
+Let the sequence of keypairs that are authoritative (i.e establish control authority) for an AID be indexed by the zero-based integer-valued, strictly increasing by one, variable *i*. Furthermore, as described above, an establishment key event may change the key state. Let the sequence of establishment events be indexed by the zero-based integer-valued, strictly increasing by one, variable *j*. When the set of controlling keypairs that are authoritative for a given key state includes only one member, then *i = j* for every keypair, and only one index is needed. But when the set of keypairs used at any time for a given key state includes more than one member, then *i != j* for every keypair, and both indices are needed.
 
-the former case, where only one index is needed because *i = j*, let the indexed keypair for AID, *A*, be denoted by *A<sup>j</sup>* or in tuple form by *(A<sup>j</sup>, a<sup>j</sup>)* where the keypair so indexed uses the j<sup>th</sup> keypair from the sequence of all keypairs.  The keypair sequence may be expressed as the list, *[A<sup>0</sup>, A<sup>1</sup>, A<sup>2</sup>, ...]*. The zero element in this sequence is denoted by *A<sup>0</sup>* or in tuple form by *(A<sup>0</sup>, a<sup>0</sup>)*.
+In the former case, where only one index is needed because *i = j*, let the indexed keypair for AID, *A*, be denoted by *A<sup>i</sup>* or in tuple form by *(A<sup>i</sup>, a<sup>i</sup>)* where the keypair so indexed uses the *i<sup>th</sup>* keypair from the sequence of all keypairs.  The keypair sequence may be expressed as the list, *[A<sup>0</sup>, A<sup>1</sup>, A<sup>2</sup>, ...]*. The zero element in this sequence is denoted by *A<sup>0</sup>* or in tuple form by *(A<sup>0</sup>, a<sup>0</sup>)*.
 
-In the latter case, where both indices are needed because *i != j*, let the indexed keypair for AID, *A*, be denoted by *A<sup>i,j</sup>* or in tuple form by *(A<sup>i,j</sup>, a<sup>i,j</sup>)* where the keypair so indexed appears in the *i<sup>th</sup>* key state and uses the *j<sup>th</sup>* keypair from the sequence of all keypairs. Suppose, for example, that each key state uses three keypairs, then the sequence of the first two key states that consume the first six keypairs is given by the following list, *[A<sup>0,0</sup>, A<sup>0,1</sup>, A<sup>0,2</sup>, A<sup>1,3</sup>,  A<sup>1,4</sup>,  A<sup>1,5</sup>]*.
+In the latter case, where both indices are needed because *i != j*, let the indexed keypair for AID, *A*, be denoted by *A<sup>i,j</sup>* or in tuple form by *(A<sup>i,j</sup>, a<sup>i,j</sup>)* where the keypair so indexed is authoritative or potentially authoritative for *i<sup>th</sup>* keypair from the sequence of all keypairs that is authoritative in the the *j<sup>th</sup>* key state. Suppose, for example, that for a given AID labeled *A* each key state uses three keypairs to establish control authority, then the sequence of the first two key states will consume the first six keypairs as given by the following list, *[A<sup>0,0</sup>, A<sup>1,0</sup>, A<sup>2,0</sup>, A<sup>3,1</sup>,  A<sup>4,1</sup>,  A<sup>5,1</sup>]*.
 
-With pre-rotation, each public key from the set of pre-rotated keypairs may be hidden as a qualified cryptographic digest of that public key. The digest of public key *A* is represented using the function notation *H(A)* for hash or digest. When singly indexed, the digest of *A<sup>j</sup>* is denoted by *H(A</u><sup>j</sup>)* and when doubly indexed the digest of *A<sup>i,j</sup>* is denoted by *H(A<sup>i,j</sup>}*.
+Furthermore, with pre-rotation, each public key from the set of pre-rotated keypairs may be hidden as a qualified cryptographic digest of that public key. The digest of the public key labeled *A* is represented using the functional notation *H(A)* for hash (digest). When singly indexed, the digest of *A<sup>i</sup>* is denoted by *H(A</u><sup>i</sup>)* and when doubly indexed the digest of *A<sup>i,j</sup>* is denoted by *H(A<sup>i,j</sup>}*. A pre-rotated keypair is potentially authoritative for the next or subsequent establishment event after the establishment event when the digest of the pre-rotated keypair first appears. Therefore its *j<sup>th</sup>* index value is one greater than the *j<sup>th</sup>* index value of the establishment event in which its digest first appears. As explained in more detail below, for partial rotation of a pre-rotated set, a pre-rotated keypair from a set of two or more pre-rotated keypairs is only potentially authoritative so its actual authoritative *j<sup>th</sup>* index may change when it is actually rotated in if ever.
+
+Finally, each key event in a KEL MUST have a zero-based integer-valued, strictly increasing by one, sequence number. Abstractly we may use the variable *k* as an index on any keypair label to denote the sequence number of an event for which that keypair is authoritative. Usually, this appears as a subscript.  Thus any given keypair label could have three indices, namely, *i,j,k* that appear as follows, *A<sup>i,j</sup><sub>k</sub>* where *i* denotes the *i<sup>th</sup>* keypair from the sequence of all keypairs, *j* denotes the *j<sup>th</sup> establishment event in which the keypair is authoritative, and *k* represents the *k<sup>th</sup>* key event in which the keypair is authoritative. When a KEL has only establishment events then *j = k*.
 
 # Key Pre-rotation Details
 
@@ -662,35 +664,45 @@ Upon rotation, the old next keys are exposed but only after a new next set has b
 
 In essence, each key set follows a rotation lifecycle where it changes its role with each rotation event. A pre-rotated key set starts as the next set, then on the ensuing rotation becomes the current set, and then on the following rotation is discarded. The lifecycle for the initial key set in an inception event is slightly different. The initial key set starts as the current set and then on the following rotation is discarded.
 
-## Example
-The following example illustrates the lifecycle roles of the key sets drawn from a sequence of keys used for three establishment events; one inception followed by two rotations.
+## Pre-Rotation Example
+
+Recall that the keypairs for a given AID may be represented by the indexed letter label such as *A<sup>i,j</sup><sub>k</sub>* where *i* denotes the *i<sup>th</sup>* keypair from the sequence of all keypairs, *j* denotes the *j<sup>th</sup> establishment event in which the keypair is authoritative, and *k* represents the *k<sup>th</sup>* key event in which the keypair is authoritative. When a KEL has only establishment events then *j = k*. When only one keypair is authoritative at any given key state then *i = j*.
+
+Also, recall that a pre-rotated keypair is designated by the digest of its public key appearing in an establishment event. The digest is denoted as *H(A)* or *H(A<sup>i,j</sup><sub>k</sub>)* in indexed form. The appearance of the digest makes a forward verifiable cryptographic commitment that may be realized in the future when and if that public key is exposed and listed as a current authoritative signing key in a subsequent establishment event.
+
+The following example illustrates the lifecycle roles of the key sets drawn from a sequence of keys used for three establishment events; one inception followed by two rotations. The initial number of authoritative keypairs is three and then changes to two and then changes back to three.
+
+|Sequence Number| Current Keypairs | Current Threshold | Next Keypairs| Next Threshold |
+|---|---|---|---|---|
+|0| *[A<sup>0,0</sup><sub>0</sub>, A<sup>1,0</sup><sub>0</sub>, A<sup>2,0</sup><sub>0</sub>]* | 2 | *[H(A<sup>3,1</sup><sub>1</sub>), H(A<sup>4,1</sup><sub>1</sub>)]* | 1 |
+|1| *[A<sup>3,1</sup><sub>1</sub>, A<sup>4,1sub>)]* | 1 | *[H(A<sup>5,2</sup><sub>2</sub>), H(A<sup>6,2</sup><sub>2</sub>), H(A<sup>7,2</sup><sub>2</sub>)]* | 2 |
+|2| *[A<sup>5,2</sup><sub>2</sub>, A<sup>6,2</sup><sub>2</sub>, A<sup>7,2</sup><sub>2</sub>]* | 2 | *[H(A<sup>8,3</sup><sub>3</sub>), H(A<sup>9,3</sup><sub>3</sub>), H(A<sup>10,3</sup><sub>3</sub>)]* | 2 |
 
 
-## Partial Rotation
+## Partial Pre-rotation
+
+With the additional field a validator is able to verify that both the set of signatures on a given rotation event both satisfies the original next threshold of signatures and public keys of that threshold satisficing set of signing public keys were part of the next next digest list committed too by the prior establishment event without revealing the next public keys of those signers that did not participate in the rotation.
+
+Besides providing better fault tolerance to controller availability yet still preserving post-quantum protection, the partial rotation allows unused keypairs from non-participating rotation members to be reused as members of the new next pre-rotation set without exposing the associated public keys. This latter advantage has application to multi-sig thresholds where some of the members are escrow or custodial members where participation in every rotation may be cumbersome. The primary disadvantage of the partial rotation approach is that is is more verbose and consumes more bandwidth. However this is outweighed by the simplicity and increased security and fault tolerance of only one format for next threshold and next key digest list declaration. Moreover every rotation can now be a partial rotation since every establishment event provides a list of next thresholds in order. Order preservation is essential for fractionally weighted thresholds which order was not protected explicitly by the establishment events but had to be ensured out-of-band by the multi-sig members. Putting the ordering in-band allows an additional check by each member of a multi-sig group that indeed the digest for their own individual next public key is included in the next digest list in the proper position before signing. A validator also now can fully evaluate the next key state for degree of security vis-a-vis the type of multi-sig both group size and threshold.
+
+The `k` field of a partial rotation provides the public keys of the participating signers in their same order of appearance in the previous next `n` field digest list. Non participating public keys are skipped. The `nt` field from the previous establishment event provides the satisficing threshold needed to accept the new rotation.
+The `kt` field is the new signing threshold for the subset of public keys in the `k` field list. Both thresholds, `kt` from the current event and `nt` from the prior establishment event must be satisfied by the signers of any given rotation event.
+
+The validator verifies the rotation against the original next digest list with the following procedure.
+- the validator ensures that there is a corresponding entry in order in the previous `n` digest field list for the digest of each of the public keys in the `k` field list. This may be performed by an ordered search.
+-  Starting with the digest of the first member of the `k` field and comparing it in turn in order starting with the first member of the previous `n` field list.
+- When a match is found then the search resumes at the next member of each of the `k` and `n` lists until a corresponding match is found. Search resumes by repeating the prior step.
+- the validator ensures that the attached signatures satisfy the original threshold given by the `nt` field of the prior establishment event where the signers are taken from the `k` field list of public keys. The attached indexed signature indexes refer to the order of appearance in the. `k` field, not the previous `n` field.
+
+To reiterate, the signatures on the rotation event must meet the original next threshold given by the `ot` field. The new current signing threshold is provided by the `kt` field and the new current public signing keys are provided by the `k` field. The new next digest in the `n` field or `n` field list may or may not include some of all of the digests from the previous `n` field list that do not have corresponding entries in the `k` field list.
+
+This approach allows any threshold satisficing set of signers to rotate to a new current set of signing keys that is a threshold satisficing subset of the previous next threshold without requiring knowledge of all the previous next public signing keys. Those members not represented by the public keys digests in the `k` field may be part of the new next digest or digest list because the underlying public keys were not disclosed by the rotation. This only may be applied when the previous next field, `n` is a list of digests not an XORed combination of the digests.
+
+## Partial Pre-rotation Example
 
 
 
-# Messages and Seals
-
-Because adding the `d` field SAID to every key event message type will break all the explicit test vectors. Its no additional pain to normalize the field ordering across all message types and seals.
-Originally all messages included an `i` field but that is not true anymore. So the changed field ordering is to put the fields that are common to all message types first in order followed by fields that are not common. The common fields are `v`, `t`, `d`.
-The newly revised messages and seals are shown below.
-
-## Message Field Labels
-
-### SAIDs and KERI Label Convention Normalization
-
-Because the order of appearance of fields is enforced in all KERI messages, where a label appears (in which message or which block in a message) adds the necessary context to fully determine its meaning.
-
-### Special Label Ordering Requirements
-
-The version string, `v`, field MUST be the first field when it appears. This enables a RegEx stream parser to consistently find the version string.
-
-There are two other identifiers that appear after `v` when `v` is present or may appear first
-when `v` is not present. These are `i` and `d`.
-
-In this context, `i` is short for `ai`, which is short for the Autonomic IDentifier (AID). The AID given by the `i` field may also be thought of as a securely attributable identifier, authoritative identifier, authenticatable identifier, authorizing identifier, or authoring identifier. Because AIDs may be namespaced, the essential component of an AID is the cryptographically derived Controller identifier prefix. An AID MUST be self-certifying. An AID may be simply the Controller identifier prefix or may be namespaced as part of a W3C Decentralized IDentifier (DID) {{W3C_DID}}. Another way of thinking about an `i` field is that it is the identifier of the authoritative entity to which a statement may be securely attributed, thereby making the statement verifiably authentic via a non-repudiable signature made by that authoritative entity as the Controller of the private key(s).
-
+# Field Labels
 
 ### KERI Message Defined Element Labels
 
@@ -735,32 +747,90 @@ A label may have different values in different contexts but not a different valu
 Get from ACDC
 
 
+
+## SAIDs and KERI Label Convention Normalization
+
+Because the order of appearance of fields is enforced in all KERI messages, where a label appears (in which message or which block in a message) adds the necessary context to fully determine its meaning.
+
+### Special Label Ordering Requirements
+
+The version string, `v`, field MUST be the first field when it appears. This enables a RegEx stream parser to consistently find the version string.
+
+There are two other identifiers that appear after `v` when `v` is present or may appear first
+when `v` is not present. These are `i` and `d`.
+
+In this context, `i` is short for `ai`, which is short for the Autonomic IDentifier (AID). The AID given by the `i` field may also be thought of as a securely attributable identifier, authoritative identifier, authenticatable identifier, authorizing identifier, or authoring identifier. Because AIDs may be namespaced, the essential component of an AID is the cryptographically derived Controller identifier prefix. An AID MUST be self-certifying. An AID may be simply the Controller identifier prefix or may be namespaced as part of a W3C Decentralized IDentifier (DID) {{W3C_DID}}. Another way of thinking about an `i` field is that it is the identifier of the authoritative entity to which a statement may be securely attributed, thereby making the statement verifiably authentic via a non-repudiable signature made by that authoritative entity as the Controller of the private key(s).
+
+
+The `nt` field is next threshold for the next establishment event.
+
+
+
+
+
+# Seals
+
+## Seals
+
+### Digest Seal
+
+~~~json
+{
+  "d": "Eabcde..."
+}
+~~~
+
+### Merkle Tree Root Digest Seal
+
+~~~json
+{
+  "rd": "Eabcde8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
+}
+~~~
+
+### Backer Seal
+
+~~~json
+{
+  "bi": "BACDEFG8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM",
+  "d" : "EFGKDDA8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
+}
+
+~~~
+
+### Event Seal
+~~~json
+{
+
+  "i": "Ebietyi8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM.",
+  "s": "3",
+  "d": "Eabcde8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
+}
+~~~
+
+
+### Last Establishment Event Seal
+
+~~~json
+{
+  "i": "BACDEFG8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM",
+}
+
+~~~
+
+
+
+# Key Event Messages (Non-delegated)
+
+Because adding the `d` field SAID to every key event message type will break all the explicit test vectors. Its no additional pain to normalize the field ordering across all message types and seals.
+Originally all messages included an `i` field but that is not true anymore. So the changed field ordering is to put the fields that are common to all message types first in order followed by fields that are not common. The common fields are `v`, `t`, `d`.
+The newly revised messages and seals are shown below.
+
 # Event Messages
 
 
 ## Rotation
 
-
-### Partial Participation in Rotation
-
-The `nt` field is next threshold for the next establishment event.
-
-With the additional field a validator is able to verify that both the set of signatures on a given rotation event both satisfies the original next threshold of signatures and public keys of that threshold satisficing set of signing public keys were part of the next next digest list committed too by the prior establishment event without revealing the next public keys of those signers that did not participate in the rotation.
-
-Besides providing better fault tolerance to controller availability yet still preserving post-quantum protection, the partial rotation allows unused keypairs from non-participating rotation members to be reused as members of the new next pre-rotation set without exposing the associated public keys. This latter advantage has application to multi-sig thresholds where some of the members are escrow or custodial members where participation in every rotation may be cumbersome. The primary disadvantage of the partial rotation approach is that is is more verbose and consumes more bandwidth. However this is outweighed by the simplicity and increased security and fault tolerance of only one format for next threshold and next key digest list declaration. Moreover every rotation can now be a partial rotation since every establishment event provides a list of next thresholds in order. Order preservation is essential for fractionally weighted thresholds which order was not protected explicitly by the establishment events but had to be ensured out-of-band by the multi-sig members. Putting the ordering in-band allows an additional check by each member of a multi-sig group that indeed the digest for their own individual next public key is included in the next digest list in the proper position before signing. A validator also now can fully evaluate the next key state for degree of security vis-a-vis the type of multi-sig both group size and threshold.
-
-The `k` field of a partial rotation provides the public keys of the participating signers in their same order of appearance in the previous next `n` field digest list. Non participating public keys are skipped. The `nt` field from the previous establishment event provides the satisficing threshold needed to accept the new rotation.
-The `kt` field is the new signing threshold for the subset of public keys in the `k` field list. Both thresholds, `kt` from the current event and `nt` from the prior establishment event must be satisfied by the signers of any given rotation event.
-
-The validator verifies the rotation against the original next digest list with the following procedure.
-- the validator ensures that there is a corresponding entry in order in the previous `n` digest field list for the digest of each of the public keys in the `k` field list. This may be performed by an ordered search.
--  Starting with the digest of the first member of the `k` field and comparing it in turn in order starting with the first member of the previous `n` field list.
-- When a match is found then the search resumes at the next member of each of the `k` and `n` lists until a corresponding match is found. Search resumes by repeating the prior step.
-- the validator ensures that the attached signatures satisfy the original threshold given by the `nt` field of the prior establishment event where the signers are taken from the `k` field list of public keys. The attached indexed signature indexes refer to the order of appearance in the. `k` field, not the previous `n` field.
-
-To reiterate, the signatures on the rotation event must meet the original next threshold given by the `ot` field. The new current signing threshold is provided by the `kt` field and the new current public signing keys are provided by the `k` field. The new next digest in the `n` field or `n` field list may or may not include some of all of the digests from the previous `n` field list that do not have corresponding entries in the `k` field list.
-
-This approach allows any threshold satisficing set of signers to rotate to a new current set of signing keys that is a threshold satisficing subset of the previous next threshold without requiring knowledge of all the previous next public signing keys. Those members not represented by the public keys digests in the `k` field may be part of the new next digest or digest list because the underlying public keys were not disclosed by the rotation. This only may be applied when the previous next field, `n` is a list of digests not an XORed combination of the digests.
 
 ### Inception Event
 
@@ -942,7 +1012,8 @@ When the AID is not self-addressing, i.e. the `i` field derivation code is not a
 ~~~
 
 
-## Receipts
+# Receipt Messages
+
 ### Non-Transferable Prefix Signer Receipt
 For receipts, the `d` field is the SAID of the associated event, not the receipt message itself.
 
@@ -976,57 +1047,9 @@ For receipts, the `d` field is the SAID of the associated event, not the receipt
 }
 ~~~
 
-## Seals
+# Delegated Key Event Messages
 
-### Digest Seal
-
-~~~json
-{
-  "d": "Eabcde..."
-}
-~~~
-
-### Merkle Tree Root Digest Seal
-
-~~~json
-{
-  "rd": "Eabcde8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
-}
-~~~
-
-### Backer Seal
-
-~~~json
-{
-  "bi": "BACDEFG8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM",
-  "d" : "EFGKDDA8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
-}
-
-~~~
-
-### Event Seal
-~~~json
-{
-
-  "i": "Ebietyi8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM.",
-  "s": "3",
-  "d": "Eabcde8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
-}
-~~~
-
-
-### Last Establishment Event Seal
-
-~~~json
-{
-  "i": "BACDEFG8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM",
-}
-
-~~~
-
-
-
-## Other Messages
+# Other Messages
 
 ### Query Message
 

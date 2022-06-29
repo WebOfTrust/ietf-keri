@@ -672,11 +672,11 @@ Also, recall that a pre-rotated keypair is designated by the digest of its publi
 
 The following example illustrates the lifecycle roles of the key sets drawn from a sequence of keys used for three establishment events; one inception followed by two rotations. The initial number of authoritative keypairs is three and then changes to two and then changes back to three.
 
-|Sequence Number| Current Keypairs | Current Threshold | Next Keypairs| Next Threshold |
-|---|---|---|---|---|
-|0| *[A<sup>0,0</sup><sub>0</sub>, A<sup>1,0</sup><sub>0</sub>, A<sup>2,0</sup><sub>0</sub>]* | 2 | *[H(A<sup>3,1</sup><sub>1</sub>), H(A<sup>4,1</sup><sub>1</sub>)]* | 1 |
-|1| *[A<sup>3,1</sup><sub>1</sub>, A<sup>4,1sub>)]* | 1 | *[H(A<sup>5,2</sup><sub>2</sub>), H(A<sup>6,2</sup><sub>2</sub>), H(A<sup>7,2</sup><sub>2</sub>)]* | 2 |
-|2| *[A<sup>5,2</sup><sub>2</sub>, A<sup>6,2</sup><sub>2</sub>, A<sup>7,2</sup><sub>2</sub>]* | 2 | *[H(A<sup>8,3</sup><sub>3</sub>), H(A<sup>9,3</sup><sub>3</sub>), H(A<sup>10,3</sup><sub>3</sub>)]* | 2 |
+|Event| Current Keypairs | Current Threshold | Next Keypairs| Next Threshold |
+|:-:|--:|--:|--:|--:|
+|0| *[A<sup>0,0</sup>, A<sup>1,0</sup>, A<sup>2,0</sup>]* | 2 | *[H(A<sup>3,1</sup>), H(A<sup>4,1</sup>)]* | 1 |
+|1| *[A<sup>3,1</sup>, A<sup>4,1</sup>)]* | 1 | *[H(A<sup>5,2</sup>), H(A<sup>6,2</sup>), H(A<sup>7,2</sup>)]* | 2 |
+|2| *[A<sup>5,2</sup>, A<sup>6,2</sup>, A<sup>7,2</sup>]* | 2 | *[H(A<sup>8,3</sup>), H(A<sup>9,3</sup>), H(A<sup>10,3</sup>]* | 2 |
 
 
 ## Partial Pre-rotation

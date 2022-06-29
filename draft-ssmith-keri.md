@@ -672,12 +672,14 @@ Also, recall that a pre-rotated keypair is designated by the digest of its publi
 
 The following example illustrates the lifecycle roles of the key sets drawn from a sequence of keys used for three establishment events; one inception followed by two rotations. The initial number of authoritative keypairs is three and then changes to two and then changes back to three.
 
-|Event| Current Keypairs | Current Threshold | Next Keypairs| Next Threshold |
+|Event| Current Keypairs | CT | Next Keypairs| NT |
 |:-:|--:|--:|--:|--:|
 |0| *[A<sup>0,0</sup>, A<sup>1,0</sup>, A<sup>2,0</sup>]* | 2 | *[H(A<sup>3,1</sup>), H(A<sup>4,1</sup>)]* | 1 |
 |1| *[A<sup>3,1</sup>, A<sup>4,1</sup>)]* | 1 | *[H(A<sup>5,2</sup>), H(A<sup>6,2</sup>), H(A<sup>7,2</sup>)]* | 2 |
 |2| *[A<sup>5,2</sup>, A<sup>6,2</sup>, A<sup>7,2</sup>]* | 2 | *[H(A<sup>8,3</sup>), H(A<sup>9,3</sup>), H(A<sup>10,3</sup>]* | 2 |
 
+*CTH* means Current Threshold.
+*NTH* means Next Threshold
 
 ## Partial Pre-rotation
 

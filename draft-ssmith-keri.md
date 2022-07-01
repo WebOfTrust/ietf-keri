@@ -639,13 +639,15 @@ In the former case, where only one index is needed because *i = j*, let the inde
 
 In the latter case, where both indices are needed because *i != j*, let the indexed keypair for AID, *A*, be denoted by *A<sup>i,j</sup>* or in tuple form by *(A<sup>i,j</sup>, a<sup>i,j</sup>)* where the keypair so indexed is authoritative or potentially authoritative for *i<sup>th</sup>* keypair from the sequence of all keypairs that is authoritative in the the *j<sup>th</sup>* key state. Suppose, for example, that for a given AID labeled *A* each key state uses three keypairs to establish control authority, then the sequence of the first two key states will consume the first six keypairs as given by the following list, *[A<sup>0,0</sup>, A<sup>1,0</sup>, A<sup>2,0</sup>, A<sup>3,1</sup>,  A<sup>4,1</sup>,  A<sup>5,1</sup>]*.
 
-Furthermore, with pre-rotation, each public key from the set of pre-rotated keypairs may be hidden as a qualified cryptographic digest of that public key. The digest of the public key labeled *A* is represented using the functional notation *H(A)* for hash (digest). When singly indexed, the digest of *A<sup>i</sup>* is denoted by *H(A</u><sup>i</sup>)* and when doubly indexed the digest of *A<sup>i,j</sup>* is denoted by *H(A<sup>i,j</sup>}*. A pre-rotated keypair is potentially authoritative for the next or subsequent establishment event after the establishment event when the digest of the pre-rotated keypair first appears. Therefore its *j<sup>th</sup>* index value is one greater than the *j<sup>th</sup>* index value of the establishment event in which its digest first appears. As explained in more detail below, for partial rotation of a pre-rotated set, a pre-rotated keypair from a set of two or more pre-rotated keypairs is only potentially authoritative so its actual authoritative *j<sup>th</sup>* index may change when it is actually rotated in if ever.
+Furthermore, with pre-rotation, each public key from the set of pre-rotated keypairs may be hidden as a qualified cryptographic digest of that public key. The digest of the public key labeled *A* is represented using the functional notation *H(A)* for hash (digest). When singly indexed, the digest of *A<sup>i</sup>* is denoted by *H(A</u><sup>i</sup>)* and when doubly indexed the digest of *A<sup>i,j</sup>* is denoted by *H(A<sup>i,j</sup>}*. A pre-rotated keypair is potentially authoritative for the next or subsequent establishment event after the establishment event when the digest of the pre-rotated keypair first appears. Therefore its *j<sup>th</sup>* index value is one greater than the *j<sup>th</sup>* index value of the establishment event in which its digest first appears. As explained in more detail below, for partial rotation of a pre-rotated set, a pre-rotated keypair from a set of two or more pre-rotated keypairs is only potentially authoritative so that its actual authoritative *j<sup>th</sup>* index may change when it is actually rotated in if ever.
 
 Finally, each key event in a KEL MUST have a zero-based integer-valued, strictly increasing by one, sequence number. Abstractly we may use the variable *k* as an index on any keypair label to denote the sequence number of an event for which that keypair is authoritative. Usually, this appears as a subscript.  Thus any given keypair label could have three indices, namely, *i,j,k* that appear as follows, *A<sup>i,j</sup><sub>k</sub>* where *i* denotes the *i<sup>th</sup>* keypair from the sequence of all keypairs, *j* denotes the *j<sup>th</sup> establishment event in which the keypair is authoritative, and *k* represents the *k<sup>th</sup>* key event in which the keypair is authoritative. When a KEL has only establishment events then *j = k*.
 
-# Key Pre-rotation Details
+# Pre-rotation Detail
 
-Each establishment event involves two sets of keys that each play a role that together establishes complete control authority over the AID associated at the location of that event in the KEL. The two roles are labeled *current* and *next*. Each establishment event designates both sets of keypairs. The first (*current*) set consists of the authoritative signing keypairs bound to the AID at the location in the KEL where the establishment event occurs. The second (*next*) set consists of the ensuing pre-rotated keypairs that will become the *current* set upon the next establishment event. Each public key in the set of next (ensuing) pre-rotated public keys is hidden in or blinded by a digest of that key. In addition, each establishment event designates two threshold expressions, one for each set of keypairs (*current* and *next*). The *current* threshold determines the needed satisficing subset of signatures from the associated set of keypairs for the event to be considered valid. The *next* threshold is a forward commitment to a future *current* threshold. The simplest type of threshold expression is an integer that is no greater than nor no less than the number of members in the set. When the establishment event is the inception event then the *current* set is the *initial* set.
+Each establishment event involves two sets of keys that each play a role that together establishes complete control authority over the AID associated at the location of that event in the KEL. The two roles are labeled *current* and *next*. Each establishment event designates both sets of keypairs. The first (*current*) set consists of the authoritative signing keypairs bound to the AID at the location in the KEL where the establishment event occurs. The second (*next*) set consists of the ensuing pre-rotated keypairs that will become the *current* set upon the next establishment event. Each public key in the set of next (ensuing) pre-rotated public keys is hidden in or blinded by a digest of that key. When the establishment event is the inception event then the *current* set is the *initial* set.
+
+In addition, each establishment event designates two threshold expressions, one for each set of keypairs (*current* and *next*). The *current* threshold determines the needed satisficing subset of signatures from the associated set of keypairs for the event to be considered valid. The *next* threshold is a forward commitment to a future *current* threshold. The simplest type of threshold expression is an integer that is no greater than nor no less than the number of members in the set. An integer threshold acts as an *M of N* threshold where *M* is the threshold and *N* is the number of keypairs in the list. If any set of *M* of the *N* private keys from the key list verifiably signs the event then the threshold is satisfied.
 
 To clarify, each establishment event MUST include a list (ordered) of the qualified public keys from each of the current (initial) set of keypairs), a threshold for the current set, a list (ordered) of the qualified cryptographic digests of the qualified public keys from the next set of keypairs, and a threshold for the next set. Each event MUST also include the AID itself as either a qualified public key or a qualified digest of the inception establishment event. To be valid, each establishment event MUST be signed by a threshold-satisficing subset of private keys from the current set of keypairs.
 
@@ -684,89 +686,117 @@ The following example illustrates the lifecycle roles of the key sets drawn from
 
 ## Partial Pre-rotation
 
-With the additional field a validator is able to verify that both the set of signatures on a given rotation event both satisfies the original next threshold of signatures and public keys of that threshold satisficing set of signing public keys were part of the next next digest list committed too by the prior establishment event without revealing the next public keys of those signers that did not participate in the rotation.
+The pre-rotation mechanism supports partial pre-rotation or more exactly partial rotation of pre-rotated keypairs. The primary use case for partial rotation is to enable pre-rotated keypairs designated in one establishment event to be held in reserve and not exposed at the next (immediately subsequent) establishment event. This reserve feature enables keypairs held by controllers as members of a set of pre-rotated keypairs to be used for the purpose of fault tolerance in the case of non-availability by other controllers while at the same time minimizing the burden of participation by the reserve members. In other words, a reserved pre-rotated keypair contributes to the potential availability and fault tolerance of control authority over the AID without necessarily requiring the participation of the reserve key-pair in a rotation until and unless it is needed to provide continuity of control authority in the event of a fault (non-availability of a non-reserved member). This reserve feature enables different classes of key controllers to contribute to the control authority over an AID. This enables provisional key control authority. For example, a key custodial service or key escrow service could hold a keypair in reserve to be used only upon satisfaction of the terms of the escrow agreement. This could be used to provide continuity of service in the case of some failure event. Provisional control authority may be used to prevent types of common-mode failures without burdening the provisional participants in the normal non-failure use cases.
 
-Besides providing better fault tolerance to controller availability yet still preserving post-quantum protection, the partial rotation allows unused keypairs from non-participating rotation members to be reused as members of the new next pre-rotation set without exposing the associated public keys. This latter advantage has application to multi-sig thresholds where some of the members are escrow or custodial members where participation in every rotation may be cumbersome. The primary disadvantage of the partial rotation approach is that is is more verbose and consumes more bandwidth. However this is outweighed by the simplicity and increased security and fault tolerance of only one format for next threshold and next key digest list declaration. Moreover every rotation can now be a partial rotation since every establishment event provides a list of next thresholds in order. Order preservation is essential for fractionally weighted thresholds which order was not protected explicitly by the establishment events but had to be ensured out-of-band by the multi-sig members. Putting the ordering in-band allows an additional check by each member of a multi-sig group that indeed the digest for their own individual next public key is included in the next digest list in the proper position before signing. A validator also now can fully evaluate the next key state for degree of security vis-a-vis the type of multi-sig both group size and threshold.
+### Basic Fractionally Weighted Threshold
 
-The `k` field of a partial rotation provides the public keys of the participating signers in their same order of appearance in the previous next `n` field digest list. Non participating public keys are skipped. The `nt` field from the previous establishment event provides the satisficing threshold needed to accept the new rotation.
-The `kt` field is the new signing threshold for the subset of public keys in the `k` field list. Both thresholds, `kt` from the current event and `nt` from the prior establishment event must be satisfied by the signers of any given rotation event.
+This partial rotation or reserve feature is best employed with thresholds that are fractionally weighted. The exact syntax for fractionally weighted thresholds is provided later, but for the sake of explanation of partial pre-rotation, a summary is provided here. A fractionally weighted threshold consists of a list of one or more clauses where each clause is itself a list of rational fractions ( i.e. ratios of positive integers expressed as fractions). Each entry in each clause in the fractional weight list corresponds one-to-one to a public key appearing in a key list in an establishment event. Key lists order a key set. A weight list of clauses orders a set of rational fraction weights. Satisfaction of a fractionally weighted threshold requires satisfaction of each and every clause in the list. In other words, the clauses are logically ANDed together. Satisfaction of any clause requires that the sum of the weights in that clause that correspond to verified signatures on that event must sum to at least one. Using rational fractions and rational fraction summation avoids the problem of floating-point rounding errors and ensures exactness in threshold satisfaction.
 
-The validator verifies the rotation against the original next digest list with the following procedure.
-- the validator ensures that there is a corresponding entry in order in the previous `n` digest field list for the digest of each of the public keys in the `k` field list. This may be performed by an ordered search.
--  Starting with the digest of the first member of the `k` field and comparing it in turn in order starting with the first member of the previous `n` field list.
-- When a match is found then the search resumes at the next member of each of the `k` and `n` lists until a corresponding match is found. Search resumes by repeating the prior step.
-- the validator ensures that the attached signatures satisfy the original threshold given by the `nt` field of the prior establishment event where the signers are taken from the `k` field list of public keys. The attached indexed signature indexes refer to the order of appearance in the. `k` field, not the previous `n` field.
+For example, consider the following simple single clause fractionally weighted threshold, *[1/2, 1/2, 1/2]*. Three weights mean there MUST be exactly three corresponding key pairs. Let the three keypairs in one-to-one order be denoted by the list of indexed public keys, *[A<sup>0</sup>, A<sup>1</sup>, A<sup>2</sup>]. The threshold is satisfied if any two of the public keys sign because *1/2 + 1/2 = 1*. This is exactly equivalent to an integer-valued *2 of 3* threshold.
 
-To reiterate, the signatures on the rotation event must meet the original next threshold given by the `ot` field. The new current signing threshold is provided by the `kt` field and the new current public signing keys are provided by the `k` field. The new next digest in the `n` field or `n` field list may or may not include some of all of the digests from the previous `n` field list that do not have corresponding entries in the `k` field list.
+Fractionally weighted thresholds become more interesting when the weights are not all equal or include multiple clauses. Consider the following five-element single clause fractionally weighted threshold list, *[1/2, 1/2, 1/2, 1/4, 1/4]* and its corresponding public key list, *[A<sup>0</sup>, A<sup>1</sup>, A<sup>2</sup>, A<sup>3</sup>, A<sup>4</sup>].  Satisfaction would be met given signatures from any two or more of A<sup>0</sup>, A<sup>1</sup>, or A<sup>2</sup> because each of these keys has a weight of 1/2 and the combination of any two or more sums to 1 or more. Alternatively, satisfaction would be met with signatures from any one or more of A<sup>0</sup>, A<sup>1</sup>, or A<sup>2</sup> and both of A<sup>3</sup>, and A<sup>4</sup> because any of those combinations would sum to 1 or more. Because participation of A<sup>3</sup> and A<sup>4</sup> is not required as long as at least two of A<sup>0</sup>, A<sup>1</sup>, and A<sup>2</sup> are available then A<sup>3</sup> and A<sup>4</sup> may be treated as reserve members of the controlling set of keys. These reserve members only need to participate in the unfortunate event that only one of the other three is available. The flexibility of a fractionally weighted threshold enables redundancy in the combinations of keys needed to satisfice for both day-to-day and reserve contingency use cases.
 
-This approach allows any threshold satisficing set of signers to rotate to a new current set of signing keys that is a threshold satisficing subset of the previous next threshold without requiring knowledge of all the previous next public signing keys. Those members not represented by the public keys digests in the `k` field may be part of the new next digest or digest list because the underlying public keys were not disclosed by the rotation. This only may be applied when the previous next field, `n` is a list of digests not an XORed combination of the digests.
+### Pre-rotation Protocol with Support for Partial Pre-rotation
 
-## Partial Pre-rotation Example
+Defined herein is a detailed description of the pre-rotation protocol. This protocol includes support for *partial pre-rotation* i.e. a rotation operation on a set of pre-rotated keys that may keep some keys in reserve (i.e unexposed) while exposing others as needed.
 
+Essentially, a valid ***rotation*** operation requires the satisfaction of two different thresholds. These are the *current* threshold of the given rotation (establishment) event with respect to its associated *current* public key list and the next threshold from the given rotation event's most recent prior establishment event with respect to its associated blinded next key digest list. For short, we denote the next threshold from the most recent prior establishment event as the *prior next* threshold, and the list of unblinded public keys taken from the blinded key digest list from the most recent prior establishment event as the *prior next* key list. Explication of the elements of the *prior next* key list requires exposing or unblinding the underlying public keys committed to by their corresponding digests that appear in the next key digest list of the most recent prior establishment event. The unexposed (blinded) public keys MAY be held in reserve.
+
+More precisely, any rotation event's *current* public key list MUST include a satisfiable subset of the *prior next* key list with respect to the *prior next* threshold. In addition, any rotation event's *current* public key list MUST include a satisfiable set of public keys with respect to its *current* threshold. In other words, the current public key list must be satisfiable with respect to both the *current* and *prior next* thresholds.
+
+To reiterate, in order to maintain the integrity of the forward commitment to the pre-rotated list of keys made by the *prior next* event, the *current* key list MUST include a satisfiable subset of exposed pre-rotated next keys from the most recent prior establishment event where satisfiable applies to both thresholds, *current* and *prior next*.
+
+When both the *current* and the *prior next* key lists and thresholds are identical then the validation can be simplified by comparing the two lists and thresholds to confirm that they are identical and then confirming that the signatures satisfy the one threshold with respect to the one key list. When not identical then the validator MUST perform the appropriate set math to confirm compliance.
+
+Ordering MUST be the same for a given key list and its associated threshold weight list. The order of appearance, however, of any public keys that appear in both the *current* and *prior next* key lists MAY be different.  A validator MUST therefore confirm that the set of keys in the *current* key list truly includes a subset of the *prior next* key list and that the *current* key list is satisfiable with respect to both the *current* and *prior next* thresholds. Actual satisfaction means that the set of attached signatures MUST satisfy both the *current* and *prior next* thresholds as applied to their respective key lists.
+
+Suppose that the *current* public key list does not include a proper subset of the *prior next* key list. This means that no keys were held in reserve. This also means that the current key list is either identical to the prior next key list or is a superset of the prior next key list.  Nonetheless, such a rotation MAY change the *current* key list and or threshold with respect to the *prior next* key list and/or threshold as long as it meets the satisfiability constraints defined above.
+
+If the *current* key list includes the full set of keys from the *prior next* key list then a ***full rotation*** has occurred, not a ***partial rotation*** because no keys were held in reserve or omitted. A *full rotation* MAY add new keys to the *current* key list and/or change the current threshold with respect to the *prior next* key list and threshold.
+
+## Pre-rotation Example with Partial Rotation
+
+Provided here is an illustrative example to help to clarify the pre-rotation protocol, especially with regard to partial rotation.
+
+| SN | Role | Keys | Threshold |
+|:-:|:-:|--:|--:|
+| 0 | Crnt | *[A<sup>0</sup>, A<sup>1</sup>, A<sup>2</sup>, A<sup>3</sup>, A<sup>4</sup>]* | *[1/2, 1/2, 1/2, 1/4, 1/4]* |
+| 0 | Next | *[H(A<sup>5</sup>), H(A<sup>6</sup>), H(A<sup>7</sup>), H(A<sup>8</sup>), H(A<sup>9</sup>)]* | *[1/2, 1/2, 1/2, 1/4, 1/4]* |
+| 1 | Crnt | *[A<sup>5</sup>, A<sup>6</sup>, A<sup>7</sup>]* | *[1/2, 1/2, 1/2]* |
+| 1 | Next | *[H(A<sup>10</sup>), H(A<sup>11</sup>), H(A<sup>12</sup>), H(A<sup>8</sup>),H(A<sup>9</sup>)]]* | *[1/2, 1/2, 1/2, 1/4, 1/4]*  |
+| 2 | Crnt | *[A<sup>10</sup>, A<sup>8</sup>, A<sup>9</sup>]* | *[1/2, 1/2, 1/2]* |
+| 2 | Next | *[H(A<sup>13</sup>), H(A<sup>14</sup>), H(A<sup>15</sup>), H(A<sup>16</sup>),H(A<sup>17</sup>)]]* | *[1/2, 1/2, 1/2, 1/4, 1/4]*  |
+| 3 | Crnt | *[A<sup>13</sup>, A<sup>14</sup>, A<sup>15</sup>]* | *[1/2, 1/2, 1/2]* |
+| 3 | Next | *[H(A<sup>18</sup>), H(A<sup>19</sup>), H(A<sup>20</sup>), H(A<sup>16</sup>),H(A<sup>17</sup>)]]* | *[1/2, 1/2, 1/2, 1/4, 1/4]*  |
+| 4 | Crnt | *[A<sup>18</sup>, A<sup>20</sup>, A<sup>21</sup>]* | *[1/2, 1/2, 1/2]* |
+| 4 | Next | *[H(A<sup>22</sup>), H(A<sup>23</sup>), H(A<sup>24</sup>), H(A<sup>16</sup>),H(A<sup>17</sup>)]]* | *[1/2, 1/2, 1/2, 1/4, 1/4]*  |
 
 
 # Field Labels
 
-### KERI Message Defined Element Labels
+
+## KERI Data Structure Field Labels
 
 |Label|Description|Type|Notes|
 |---|---|---|---|
-|v| Version String| | |
-|i| Identifier Prefix|  | |
-|s| Sequence Number|  | |
-|t| Message Type| | |
-|te| Last received Event Message Type in Key State Notice | | |
-|d| SAID of Event ||
+|v| Version String | | |
+|i| Identifier Prefix  (AID) |  | |
+|s| Sequence Number |  | |
+|t| Message Type | | |
+|te| Last received Event Message Type in a Key State Notice | | |
+|d| Event SAID ||
 |p| Prior Event SAID | | |
 |kt| Keys Signing Threshold || |
 |k| List of Signing Keys (ordered key set)| | |
 |nt| Next Keys Signing Threshold || |
-|n| List of Next Key Digests (ordered digest set) |   | |
+|n| List of Next Key Digests (ordered key digest set) |   | |
 |bt| Backer Threshold || |
-|b| List of Backers  (ordered backer set) | | |
-|br| List of Witnesses to Remove (ordered witness set) | | |
-|ba| List of Witnesses to Add (ordered witness set) | | |
+|b| List of Backers  (ordered backer set of AIDs) | | |
+|br| List of Backers to Remove (ordered backer set of AIDS) | | |
+|ba| List of Backers to Add (ordered backer set of AIDs) | | |
 |c| List of Configuration Traits/Modes |  | |
 |a| List of Anchors (seals) || |
-|da| Delegator Anchor Seal in Delegated Event (Location Seal) | | Obsolete |
-|di| Delegator Identifier Prefix  | | |
-|rd| Merkle Tree Root Digest || |
+|di| Delegator Identifier Prefix  (AID) | | |
+|rd| Merkle Tree Root Digest (SAID) || |
 |ee| Last Establishment Event Map | | |
 |vn| Version Number ("major.minor")  |  | |
 
-A label may have different values in different contexts but not a different value ***type***.
+A field label may have different values in different contexts but not a different ***type*** for its field value. Although some field value types may be a union of elemental value types.
+
+Because the order of appearance of fields is enforced in all KERI messages, where a label appears (in which message or which block in a message) the message in which a label appears adds the necessary context to fully determine its meaning.
 
 
-## Common Normalized ACDC Labels
+### Special Label Ordering Requirements
 
-`v` is version string
-`d` is SAID of enclosing block or map
-`i` is a KERI identifier AID
-`a` is data attributes or data anchors
+The version string, `v`, field MUST be the first field when it appears. This enables a RegEx stream parser to consistently find the version string in any of the supported serialization formats.
+
+There are two other identifiers that appear after `v` when `v` is present or may appear first
+when `v` is not present. These are `i` and `d`.
+
+In this context, `i` is short for `ai`, which is short for the Autonomic IDentifier (AID). The AID given by the `i` field may also be thought of as a securely attributable identifier, authoritative identifier, authenticatable identifier, authorizing identifier, or authoring identifier. Because AIDs may be namespaced, the essential component of an AID is the cryptographically derived Controller identifier prefix. An AID MUST be self-certifying. An AID may be simply the Controller identifier prefix or MAY be namespaced as part of a W3C Decentralized IDentifier (DID) {{W3C_DID}} or other namespace convention. Another way of thinking about an `i` field is that it is the identifier of the authoritative entity to which a statement may be securely attributed, thereby making the statement verifiably authentic via a non-repudiable signature made by that authoritative entity as the Controller of the private key(s).
+
+In this context, `d` is short for digest, which is short for Self-Addressing IDentifier (SAID). The SAID given the the `d` field is ToDo
+
+
+
+
 
 
 ## Version String Field
 
 Get from ACDC
 
-
-
-## SAIDs and KERI Label Convention Normalization
-
-Because the order of appearance of fields is enforced in all KERI messages, where a label appears (in which message or which block in a message) adds the necessary context to fully determine its meaning.
-
-### Special Label Ordering Requirements
-
-The version string, `v`, field MUST be the first field when it appears. This enables a RegEx stream parser to consistently find the version string.
-
-There are two other identifiers that appear after `v` when `v` is present or may appear first
-when `v` is not present. These are `i` and `d`.
-
-In this context, `i` is short for `ai`, which is short for the Autonomic IDentifier (AID). The AID given by the `i` field may also be thought of as a securely attributable identifier, authoritative identifier, authenticatable identifier, authorizing identifier, or authoring identifier. Because AIDs may be namespaced, the essential component of an AID is the cryptographically derived Controller identifier prefix. An AID MUST be self-certifying. An AID may be simply the Controller identifier prefix or may be namespaced as part of a W3C Decentralized IDentifier (DID) {{W3C_DID}}. Another way of thinking about an `i` field is that it is the identifier of the authoritative entity to which a statement may be securely attributed, thereby making the statement verifiably authentic via a non-repudiable signature made by that authoritative entity as the Controller of the private key(s).
-
+## Next Threshold Field
 
 The `nt` field is next threshold for the next establishment event.
 
+
+## Common Normalized ACDC and KERI Labels
+
+`v` is the version string
+`d` is the SAID of the enclosing block or map
+`i` is a KERI identifier AID
+`a` is the data attributes or data anchors depending on the message type
 
 
 

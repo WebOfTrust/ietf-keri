@@ -732,6 +732,7 @@ Provided here is an illustrative example to help to clarify the pre-rotation pro
 | 4 | Next | *[H(A<sup>22</sup>), H(A<sup>23</sup>), H(A<sup>24</sup>), H(A<sup>16</sup>),H(A<sup>17</sup>)]* | *[1/2, 1/2, 1/2, 1/4, 1/4]*  |
 
 
+
 # Field Labels
 
 

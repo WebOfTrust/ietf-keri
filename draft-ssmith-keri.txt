@@ -4,8 +4,8 @@
 
 TODO Working Group                                              S. Smith
 Internet-Draft                                             ProSapien LLC
-Intended status: Informational                               1 July 2022
-Expires: 2 January 2023
+Intended status: Informational                               2 July 2022
+Expires: 3 January 2023
 
 
                 Key Event Receipt Infrastructure (KERI)
@@ -78,7 +78,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 January 2023.
+   This Internet-Draft will expire on 3 January 2023.
 
 Copyright Notice
 
@@ -99,7 +99,7 @@ Table of Contents
    1.  Introduction
      1.1.  Self-Certifying IDentifier (SCID)
      1.2.  Autonomic IDentifier (AID)
-     1.3.  Key Pre-rotation Basics
+     1.3.  Key Pre-rotation Concept
      1.4.  Cryptographic Primitives
        1.4.1.  CESR
        1.4.2.  Qualified Cryptographic Primitive
@@ -109,12 +109,15 @@ Table of Contents
    2.  Basic Terminology
    3.  Keypair Labeling Convention
    4.  Pre-rotation Detail
-     4.1.  Pre-Rotation Example
-     4.2.  Partial Pre-rotation
-       4.2.1.  Basic Fractionally Weighted Threshold
-       4.2.2.  Pre-rotation Protocol with Support for Partial
-               Pre-rotation
-     4.3.  Pre-rotation Example with Partial Rotation
+     4.1.  Inception Event Pre-rotation
+     4.2.  Rotation Using Pre-rotation
+     4.3.  Pre-Rotation Example
+     4.4.  Reserve Rotation
+     4.5.  Custorial Rotation
+     4.6.  Basic Fractionally Weighted Threshold
+       4.6.1.  Partial Pre-rotation Detail
+     4.7.  Reserve Rotation Example
+     4.8.  Custodial Rotation Example
    5.  Field Labels
      5.1.  KERI Data Structure Field Labels
        5.1.1.  Special Label Ordering Requirements
@@ -229,7 +232,7 @@ Table of Contents
    evocative of the self-certifying, self-managing properties of this
    class of identifier.
 
-1.3.  Key Pre-rotation Basics
+1.3.  Key Pre-rotation Concept
 
    An important innovation of KERI is that it solves the key rotation
    problem of PKI (including that of simple self-certifying identifiers)
@@ -900,30 +903,40 @@ Table of Contents
 
    Each establishment event involves two sets of keys that each play a
    role that together establishes complete control authority over the
-   AID associated at the location of that event in the KEL.  The two
-   roles are labeled _current_ and _next_. Each establishment event
-   designates both sets of keypairs.  The first (_current_) set consists
-   of the authoritative signing keypairs bound to the AID at the
-   location in the KEL where the establishment event occurs.  The second
-   (_next_) set consists of the ensuing pre-rotated keypairs that will
-   become the _current_ set upon the next establishment event.  Each
-   public key in the set of next (ensuing) pre-rotated public keys is
-   hidden in or blinded by a digest of that key.  When the establishment
-   event is the inception event then the _current_ set is the _initial_
-   set.
+   AID associated at the location of that event in the KEL.  To clarify,
+   control authority is split between keypairs that hold signing
+   authority and keypairs that hold rotation authority.  A rotation
+   revodes and replaces the keypairs that hold signing authority as well
+   as replacing the keypairs that hold rotation authority.  The two set
+   sets of keys are labeled _current_ and _next_. Each establishment
+   event designates both sets of keypairs.  The first (_current_) set
+   consists of the authoritative signing keypairs bound to the AID at
+   the location in the KEL where the establishment event occurs.  The
+   second (_next_) set consists of the pre-rotated authoritative
+   rotation keypairs that will be actualized in the next (ensuing)
+   establishment event.  Each public key in the set of next (ensuing)
+   pre-rotated public keys is hidden in or blinded by a digest of that
+   key.  When the establishment event is the inception event then the
+   _current_ set is the _initial_ set.  The pre-rotated _next_ set of
+   Rotation keypairs are one-time use only rotation keypairs, but MAY be
+   repurposed as signing keypairs after their one time use to rotate.
 
    In addition, each establishment event designates two threshold
    expressions, one for each set of keypairs (_current_ and _next_).
    The _current_ threshold determines the needed satisficing subset of
-   signatures from the associated set of keypairs for the event to be
-   considered valid.  The _next_ threshold is a forward commitment to a
-   future _current_ threshold.  The simplest type of threshold
-   expression is an integer that is no greater than nor no less than the
+   signatures from the associated _current_ set of keypairs for signing
+   authority to be considered valid.  The _next_ threshold determines
+   the needed satisficing subset of signatures from the associated
+   _next_ set of hidden keypairs for rotation authority to be considered
+   valid.  The simplest type of threshold expression for either
+   threshold is an integer that is no greater than nor no less than the
    number of members in the set.  An integer threshold acts as an _M of
-   N_ threshold where _M_ is the threshold and _N_ is the number of
-   keypairs in the list.  If any set of _M_ of the _N_ private keys from
+   N_ threshold where _M_ is the threshold and _N_ is the total number
+   of keypairs represented by the public keys in the key list.  If any
+   set of _M_ of the _N_ private keys belonging to the public keys in
    the key list verifiably signs the event then the threshold is
-   satisfied.
+   satisfied for the control authority role (signing or rotation)
+   associated with the given key list and threshold .
 
    To clarify, each establishment event MUST include a list (ordered) of
    the qualified public keys from each of the current (initial) set of
@@ -931,88 +944,119 @@ Table of Contents
    qualified cryptographic digests of the qualified public keys from the
    next set of keypairs, and a threshold for the next set.  Each event
    MUST also include the AID itself as either a qualified public key or
-   a qualified digest of the inception establishment event.  To be
-   valid, each establishment event MUST be signed by a threshold-
-   satisficing subset of private keys from the current set of keypairs.
+   a qualified digest of the inception establishment event.
+
+   Each non-establishment event MUST be signed by a threshold-
+   satisficing subset of private keys from the _current_ set of keypairs
+   from the most recent establishment event.  A little more explanation
+   is needed to understand the requirements for a valid set of
+   signatures for each type of establishment event.
+
+4.1.  Inception Event Pre-rotation
 
    The creator of the inception event MUST create two sets of keypairs,
-   the current (initial) set, and the next set.  The private keys from
-   the current set are kept as secrets.  The public keys from the
-   current set are exposed via inclusion in the inception event.  Both
-   the public and private keys from the next set are kept as secrets and
-   only the cryptographic digests of the public keys from the next set
-   are exposed via inclusion in the event.  The public keys from the
-   next set are only exposed in a subsequent establishment if any.  Both
-   thresholds are exposed via inclusion in the event.
+   the _current_ (_initial_) set, and the _next_ set.  The private keys
+   from the current set are kept as secrets.  The public keys from the
+   _current_ set are exposed via inclusion in the inception event.  Both
+   the public and private keys from the _next_ set are kept as secrets
+   and only the cryptographic digests of the public keys from the _next_
+   set are exposed via inclusion in the event.  The public keys from the
+   _next_ set are only exposed in a subsequent establishment if any.
+   Both thresholds are exposed via inclusion in the event.
 
-   Upon emittance of the inception event, the current (initial) set of
-   keypairs becomes the current set of verifiable authoritative signing
-   keypairs for the identifier.  Emittance of the inception event also
-   issues the identifier.  Moreover, to be verifiably authoritative, the
-   inception event must be signed by a threshold satisficing subset of
-   the current (initial) set of private keys.  The inception event may
-   be verified against the attached signatures using the included
-   current (initial) list of public keys.  When self-addressing, a
-   digest of the serialization of the inception event provides the AID
-   itself as derived by the SAID protocol [SAID-ID].
+   Upon emittance of the inception event, the _current_ (_initial_) set
+   of keypairs becomes the current set of verifiable authoritative
+   signing keypairs for the identifier.  Emittance of the inception
+   event also issues the identifier.  Moreover, to be verifiably
+   authoritative, the inception event must be signed by a threshold
+   satisficing subset of the _current_ (_initial_) set of private keys.
+   The inception event may be verified against the attached signatures
+   using the included _current_ (_initial_) list of public keys.  When
+   self-addressing, a digest of the serialization of the inception event
+   provides the AID itself as derived by the SAID protocol [SAID-ID].
 
    There MUST be only one inception establishment event.  All subsequent
    establishment events MUST be rotation events.
 
-   Unlike inception, the creator of a rotation event MUST create only
-   one set of keypairs, the newly next set.  Both the public and private
-   keys from the newly next set are kept as secrets and only the
-   cryptographic digests of the public keys from the newly next set are
-   exposed via inclusion in the event.  The list of newly current public
-   keys MUST be taken from the set of old next public keys from the most
-   recent (previous) establishment event.  The subset of old next keys
-   that comprise the newly current set of public keys MUST be unhidden
-   or unblinded because they appear as the public keys themselves and no
-   longer appear as digests of the public keys.  Both thresholds are
-   exposed via inclusion in the event.
+4.2.  Rotation Using Pre-rotation
 
-   Upon emittance of the rotation event, the newly current keypairs
-   become the current set of verifiable authoritative signing keypairs
-   for the identifier.  The old current set of keypairs from the
+   Unlike inception, the creator of a rotation event MUST create only
+   one set of keypairs, the newly _next_ set.  Both the public and
+   private keys from the newly _next_ set are kept as secrets and only
+   the cryptographic digests of the public keys from the newly _next_
+   set are exposed via inclusion in the event.  The list of newly
+   _current_ public keys MUST include the an old _next_ threshold
+   satisficing subset of old _next_ public keys from the most recent
+   prior establishment event.  For short, we denote the next threshold
+   from the most recent prior establishment event as the _prior next_
+   threshold, and the list of unblinded public keys taken from the
+   blinded key digest list from the most recent prior establishment
+   event as the _prior next_ key list.  The subset of old _prior next_
+   keys that are included in the newly current set of public keys MUST
+   be unhidden or unblinded because they appear as the public keys
+   themselves and no longer appear as digests of the public keys.  Both
+   thresholds are exposed via inclusion in the event.
+
+   Upon emittance of the rotation event, the newly _current_ keypairs
+   become the _current_ set of verifiable authoritative signing keypairs
+   for the identifier.  The old _current_ set of keypairs from the
    previous establishment event has been revoked and replaced by the
-   newly current set.  Moreover, to be verifiably authoritative, the
-   rotation event must be signed by a threshold satisficing subset of
-   the newly current set of private keys.  The rotation event may be
-   verified against the attached signatures using the included newly
-   current list of public keys.
+   newly _current_ set.  Moreover, to be verifiably authoritative, the
+   rotation event must be signed by a dual threshold satisficing subset
+   of the newly _current_ set of private keys.  To elaborate, the set of
+   signatures on a rotation event MUST satisfy two thresholds.  These
+   are the newly _current_ threshold and the old _prior next_ threshold
+   from the most recent prior establishment event.  Therefore the newly
+   _current_ set of public keys must include a satisfiable subset with
+   respect to the old _prior next_ threshold of public keys from the old
+   _prior next_ key list.  The included newly _current_ list of public
+   keys enables verification of the rotation event against the attached
+   signatures.
 
    The act of inclusion in each establishment event of the digests of
-   the new next set of public keys performs a pre-rotation operation on
-   that set by making a verifiable forward blinded commitment to that
-   set.  Consequently, no other set may be used for the next rotation
-   operation.  Because the next set of pre-rotated keys is blinded (i.e.
-   has not been exposed i.e. used to sign or even published) an attacker
-   can't forge and sign a verifiable rotation operation without first
-   unblinding the pre-rotated keys.  Assuming sufficient cryptographic
-   strength of the digest means that the only attack surface is the
-   private key store itself.  But the creator is free to make that key
-   store as arbitrarily secure as needed because the pre-rotated keys
-   are not used for signing until the next rotation.  In other words, as
-   long as the creator keeps secret the pre-rotated public keys
-   themselves, an attacker must attack the key storage infrastructure
-   because side-channel attacks on signing infrastructure are obviated.
+   the new _next_ set of public keys performs a pre-rotation operation
+   on that set by making a verifiable forward blinded commitment to that
+   set.  Consequently, no other set may be used to satisfy the threshold
+   for the _next_ rotation operation.  Because the _next_ set of pre-
+   rotated keys is blinded (i.e. has not been exposed i.e. used to sign
+   or even published) an attacker can't forge and sign a verifiable
+   rotation operation without first unblinding the pre-rotated keys.
+   Therefore, given sufficient cryptographic strength of the digests,
+   the only attack surface available to the adversary is a side-channel
+   attack on the private key store itself and not on signing
+   infrastructure.  But the creator of the pre-rotated private keys is
+   free to make that key store as arbitrarily secure as needed because
+   the pre-rotated keys are not used for signing until the next
+   rotation.  In other words, as long as the creator keeps secret the
+   pre-rotated public keys themselves, an attacker must attack the key
+   storage infrastructure because side-channel attacks on signing
+   infrastructure are obviated.
 
-   Upon rotation, the old next keys are exposed but only after a new
-   next set has been created and stored.  Thus the creator is always
-   able to stay one step ahead of an attacker.  By the time a new
-   rotation event is published, it is too late for an attacker to create
-   a verifiable rotation event to supplant it.  The first published is
-   the authoritative one.
+   As explained later, for a validator, the first seen rule applies,
+   that is, the first seen version of an event is the authoritative one
+   for that validator.  The first seen wins.  In other words the first
+   published becomes the first seen.  Upon rotation, the old prior
+   _next_ keys are exposed but only after a new _next_ set has been
+   created and stored.  Thus the creator is always able to stay one step
+   ahead of an attacker.  By the time a new rotation event is published,
+   it is too late for an attacker to create a verifiable rotation event
+   to supplant it because the orginal version has already been published
+   and may be first seen by the validator.  The window for an attacker
+   is the network latency for the first published event to be first seen
+   by the network of validators.  Any later key compromise is too late.
 
    In essence, each key set follows a rotation lifecycle where it
-   changes its role with each rotation event.  A pre-rotated key set
-   starts as the next set, then on the ensuing rotation becomes the
-   current set, and then on the following rotation is discarded.  The
+   changes its role with each rotation event.  A pre-rotated keypair set
+   starts as the member of the _next_ key set holding one-time rotation
+   control authority.  On the ensuing rotation that keypair becomes part
+   of the the _current_ key set holding signing control authority.
+   Finally on the following rotation that keypair is discarded.  The
    lifecycle for the initial key set in an inception event is slightly
-   different.  The initial key set starts as the current set and then on
-   the following rotation is discarded.
+   different.  The initial key set starts as the _current_ set holding
+   signing authority and is discarded on the ensuing rotation event if
+   any.
 
-4.1.  Pre-Rotation Example
+4.3.  Pre-Rotation Example
 
    Recall that the keypairs for a given AID may be represented by the
    indexed letter label such as _A^(i,j)_k_ where _i_ denotes the _i^th_
@@ -1056,10 +1100,10 @@ Table of Contents
 
    *  _NTH_ means Next Threshold.
 
-4.2.  Partial Pre-rotation
+4.4.  Reserve Rotation
 
    The pre-rotation mechanism supports partial pre-rotation or more
-   exactly partial rotation of pre-rotated keypairs.  The primary use
+   exactly partial rotation of pre-rotated keypairs.  One important use
    case for partial rotation is to enable pre-rotated keypairs
    designated in one establishment event to be held in reserve and not
    exposed at the next (immediately subsequent) establishment event.
@@ -1083,26 +1127,41 @@ Table of Contents
    common-mode failures without burdening the provisional participants
    in the normal non-failure use cases.
 
-4.2.1.  Basic Fractionally Weighted Threshold
+4.5.  Custorial Rotation
 
-   This partial rotation or reserve feature is best employed with
-   thresholds that are fractionally weighted.  The exact syntax for
-   fractionally weighted thresholds is provided later, but for the sake
-   of explanation of partial pre-rotation, a summary is provided here.
-   A fractionally weighted threshold consists of a list of one or more
-   clauses where each clause is itself a list of rational fractions (
-   i.e. ratios of positive integers expressed as fractions).  Each entry
-   in each clause in the fractional weight list corresponds one-to-one
-   to a public key appearing in a key list in an establishment event.
-   Key lists order a key set.  A weight list of clauses orders a set of
-   rational fraction weights.  Satisfaction of a fractionally weighted
-   threshold requires satisfaction of each and every clause in the list.
-   In other words, the clauses are logically ANDed together.
-   Satisfaction of any clause requires that the sum of the weights in
-   that clause that correspond to verified signatures on that event must
-   sum to at least one.  Using rational fractions and rational fraction
-   summation avoids the problem of floating-point rounding errors and
-   ensures exactness in threshold satisfaction.
+   Partial pre-rotation supports another important use case that of
+   custodial key rotation.  Because control authority is split between
+   two key sets, the first for signing authority and the second (pre-
+   roateted) for rotation authority the associated thresholds and key
+   list can be structured in such a way that a designated custodial
+   agent can hold signing authority while the original controller can
+   hold exclusive rotation authority.  The holder of the rotation
+   authority can then at any time without the cooperation of the
+   custodial agent if need be revoke the agent's signing authority and
+   assign it so some other agent or return that authority to itself.
+
+4.6.  Basic Fractionally Weighted Threshold
+
+   This partial rotation feature for either reserve or custodial
+   rotation authority is best employed with thresholds that are
+   fractionally weighted.  The exact syntax for fractionally weighted
+   thresholds is provided later, but for the sake of explanation of
+   partial pre-rotation, a summary is provided here.  A fractionally
+   weighted threshold consists of a list of one or more clauses where
+   each clause is itself a list of legal rational fractions ( i.e.
+   ratios of non-negative integers expressed as fractions, zero is not
+   allowed in the denominator).  Each entry in each clause in the
+   fractional weight list corresponds one-to-one to a public key
+   appearing in a key list in an establishment event.  Key lists order a
+   key set.  A weight list of clauses orders a set of rational fraction
+   weights.  Satisfaction of a fractionally weighted threshold requires
+   satisfaction of each and every clause in the list.  In other words,
+   the clauses are logically ANDed together.  Satisfaction of any clause
+   requires that the sum of the weights in that clause that correspond
+   to verified signatures on that event must sum to at least one.  Using
+   rational fractions and rational fraction summation avoids the problem
+   of floating-point rounding errors and ensures exactness and
+   universality of threshold satisfaction computations.
 
    For example, consider the following simple single clause fractionally
    weighted threshold, _[1/2, 1/2, 1/2]_. Three weights mean there MUST
@@ -1111,6 +1170,9 @@ Table of Contents
    _[A^0, A^1, A^2].  The threshold is satisfied if any two of the
    public keys sign because *1/2 + 1/2 = 1_. This is exactly equivalent
    to an integer-valued _2 of 3_ threshold.
+
+   The order of appearance of the public key in a given key list and its
+   associated threshold weight list MUST be the same.
 
    Fractionally weighted thresholds become more interesting when the
    weights are not all equal or include multiple clauses.  Consider the
@@ -1131,18 +1193,18 @@ Table of Contents
    combinations of keys needed to satisfice for both day-to-day and
    reserve contingency use cases.
 
-4.2.2.  Pre-rotation Protocol with Support for Partial Pre-rotation
+4.6.1.  Partial Pre-rotation Detail
 
    Defined herein is a detailed description of the pre-rotation
    protocol.  This protocol includes support for _partial pre-rotation_
    i.e. a rotation operation on a set of pre-rotated keys that may keep
    some keys in reserve (i.e unexposed) while exposing others as needed.
 
-   Essentially, a valid *_rotation_* operation requires the satisfaction
-   of two different thresholds.  These are the _current_ threshold of
-   the given rotation (establishment) event with respect to its
-   associated _current_ public key list and the next threshold from the
-   given rotation event's most recent prior establishment event with
+   As described above, a valid *_rotation_* operation requires the
+   satisfaction of two different thresholds.  These are the _current_
+   threshold of the given rotation (establishment) event with respect to
+   its associated _current_ public key list and the next threshold from
+   the given rotation event's most recent prior establishment event with
    respect to its associated blinded next key digest list.  For short,
    we denote the next threshold from the most recent prior establishment
    event as the _prior next_ threshold, and the list of unblinded public
@@ -1162,30 +1224,38 @@ Table of Contents
    the current public key list must be satisfiable with respect to both
    the _current_ and _prior next_ thresholds.
 
-   To reiterate, in order to maintain the integrity of the forward
-   commitment to the pre-rotated list of keys made by the _prior next_
-   event, the _current_ key list MUST include a satisfiable subset of
-   exposed pre-rotated next keys from the most recent prior
-   establishment event where satisfiable applies to both thresholds,
-   _current_ and _prior next_.
+   To reiterate, in order to make verifiable the maintenance of the
+   integrity of the forward commitment to the pre-rotated list of keys
+   made by the _prior next_ event, i.e. provide verifiable rotation
+   control authority, the _current_ key list MUST include a satisfiable
+   subset of exposed (unblinded) pre-rotated next keys from the most
+   recent prior establishment event where satisfiable is with respect to
+   the _prior next_ threshold.  Moreover, in order to establish
+   verifiable signing control authority, the _current_ key list MUST
+   also include a satisfiable subset of public keys where satisfiable is
+   with respect to the _current_ threshold.
 
-   When both the _current_ and the _prior next_ key lists and thresholds
-   are identical then the validation can be simplified by comparing the
-   two lists and thresholds to confirm that they are identical and then
+   These two conditions are trivially satisfied whenever the _current_
+   and _prior next_ key lists and thresholds are equivalent.  When both
+   the _current_ and the _prior next_ key lists and thresholds are
+   identical then the validation can be simplified by comparing the two
+   lists and thresholds to confirm that they are identical and then
    confirming that the signatures satisfy the one threshold with respect
-   to the one key list.  When not identical then the validator MUST
-   perform the appropriate set math to confirm compliance.
+   to the one key list.  When not identical, the validator MUST perform
+   the appropriate set math to confirm compliance.
 
-   Ordering MUST be the same for a given key list and its associated
-   threshold weight list.  The order of appearance, however, of any
-   public keys that appear in both the _current_ and _prior next_ key
-   lists MAY be different.  A validator MUST therefore confirm that the
-   set of keys in the _current_ key list truly includes a subset of the
-   _prior next_ key list and that the _current_ key list is satisfiable
-   with respect to both the _current_ and _prior next_ thresholds.
-   Actual satisfaction means that the set of attached signatures MUST
-   satisfy both the _current_ and _prior next_ thresholds as applied to
-   their respective key lists.
+   Recall, that the order of appearance of the public key in a given key
+   list and its associated threshold weight list MUST be the same.  The
+   order of appearance, however, of any public keys that appear in both
+   the _current_ and _prior next_ key lists MAY be different between the
+   two key lists and hence the two associated threshold weight lists.  A
+   validator MUST therefore confirm that the set of keys in the
+   _current_ key list truly includes a satisfiable subset of the _prior
+   next_ key list and that the _current_ key list is satisfiable with
+   respect to both the _current_ and _prior next_ thresholds.  Actual
+   satisfaction means that the set of attached signatures MUST satisfy
+   both the _current_ and _prior next_ thresholds as applied to their
+   respective key lists.
 
    Suppose that the _current_ public key list does not include a proper
    subset of the _prior next_ key list.  This means that no keys were
@@ -1203,10 +1273,11 @@ Table of Contents
    change the current threshold with respect to the _prior next_ key
    list and threshold.
 
-4.3.  Pre-rotation Example with Partial Rotation
+4.7.  Reserve Rotation Example
 
    Provided here is an illustrative example to help to clarify the pre-
-   rotation protocol, especially with regard to partial rotation.
+   rotation protocol, especially with regard to and threshold
+   satisfaction for reserve rotation.
 
        +====+======+=============================+=================+
        | SN | Role |                        Keys |       Threshold |
@@ -1241,8 +1312,43 @@ Table of Contents
        | 4  | Next |         _[H(A^22), H(A^23), |     _[1/2, 1/2, |
        |    |      |  H(A^24), H(A^16),H(A^17)]_ | 1/2, 1/4, 1/4]_ |
        +----+------+-----------------------------+-----------------+
+       | 5  | Crnt |   _[A^22, A^25, A^26, A^16, |     _[1/2, 1/2, |
+       |    |      |                      A^17]_ |     1/2, 0, 0]_ |
+       +----+------+-----------------------------+-----------------+
+       | 5  | Next |         _[H(A^27), H(A^28), |     _[1/2, 1/2, |
+       |    |      |  H(A^29), H(A^30),H(A^31)]_ | 1/2, 1/4, 1/4]_ |
+       +----+------+-----------------------------+-----------------+
 
                                   Table 2
+
+4.8.  Custodial Rotation Example
+
+   Provided here is an illustrative example to help to clarify the pre-
+   rotation protocol, especially with regard to threshold satisfaction
+   for custodial rotation.
+
+   +====+======+==================================+===================+
+   | SN | Role |                             Keys |         Threshold |
+   +====+======+==================================+===================+
+   | 0  | Crnt |                _[A^0, A^1, A^2]_ | _[1/2, 1/2, 1/2]_ |
+   +----+------+----------------------------------+-------------------+
+   | 0  | Next |       _[H(A^3), H(A^4), H(A^5)]_ | _[1/2, 1/2, 1/2]_ |
+   +----+------+----------------------------------+-------------------+
+   | 1  | Crnt | _[A^3, A^4, A^5, A^6, A^7, A^8]_ |   _[0, 0, 0, 1/2, |
+   |    |      |                                  |        1/2, 1/2]_ |
+   +----+------+----------------------------------+-------------------+
+   | 1  | Next |     _[H(A^9), H(A^10), H(A^11)]_ | _[1/2, 1/2, 1/2]_ |
+   +----+------+----------------------------------+-------------------+
+   | 2  | Crnt |   _[A^9, A^10, A^11, A^12, A^13, |   _[0, 0, 0, 1/2, |
+   |    |      |                           A^14]_ |        1/2, 1/2]_ |
+   +----+------+----------------------------------+-------------------+
+   | 2  | Next |    _[H(A^15), H(A^16), H(A^17)]_ | _[1/2, 1/2, 1/2]_ |
+   +----+------+----------------------------------+-------------------+
+
+                                 Table 3
+
+   ToDo delegated custodial example with partial rotation and using 0
+   fraction signing weights on exposed pre-rotated keys
 
 5.  Field Labels
 
@@ -1304,7 +1410,7 @@ Table of Contents
           |       | ("major.minor")              |      |       |
           +-------+------------------------------+------+-------+
 
-                                  Table 3
+                                  Table 4
 
    A field label may have different values in different contexts but not
    a different *_type_* for its field value.  Although some field value

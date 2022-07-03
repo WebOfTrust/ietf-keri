@@ -11,22 +11,22 @@
 The primary key management operation is key rotation (transference) via a novel key pre-rotation scheme  . Two primary trust modalities motivated the design, these are a direct (one-to-one) mode and an indirect (one-to-any) mode. The indirect mode depends on witnessed key event receipt logs (KERL) as a secondary root-of-trust for validating events. This gives rise to the acronym KERI for key event receipt infrastructure. In the direct mode, the identity controller establishes control via verified signatures of the controlling keypair. The indirect mode extends that trust basis with witnessed key event receipt logs (KERL) for validating events. The security and accountability guarantees of indirect mode are provided by KA2CE or KERI's Agreement Algorithm for Control Establishment among a set of witnesses.
 The KA2CE approach may be much more performant and scalable than more complex approaches that depend on a total ordering distributed consensus ledger. Nevertheless, KERI may employ a distributed consensus ledger when other considerations make it the best choice. The KERI approach to DKMI allows for more granular composition. Moreover, because KERI is event streamed it enables DKMI that operates in-stride with data events streaming applications such as web 3.0, IoT, and others where performance and scalability are more important. The core KERI engine is identifier namespace independent. This makes KERI a candidate for a universal portable DKMI  . 
     " name="description">
-<meta content="xml2rfc 3.12.10" name="generator">
+<meta content="xml2rfc 3.13.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ssmith-keri-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.12.10
+  xml2rfc 3.13.0
     Python 3.10.4
     appdirs 1.4.4
     ConfigArgParse 1.5.3
-    google-i18n-address 2.5.1
+    google-i18n-address 2.5.2
     html5lib 1.1
     intervaltree 3.1.0
-    Jinja2 2.11.3
+    Jinja2 3.1.2
     kitchen 1.2.6
-    lxml 4.8.0
-    MarkupSafe 2.0.1
-    pycountry 20.7.3
+    lxml 4.9.1
+    MarkupSafe 2.1.1
+    pycountry 22.3.5
     pyflakes 2.4.0
     PyYAML 6.0
     requests 2.27.1
@@ -1032,7 +1032,7 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Smith</td>
-<td class="center">Expires 3 January 2023</td>
+<td class="center">Expires 4 January 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1045,12 +1045,12 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ssmith-keri-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-07-02" class="published">2 July 2022</time>
+<time datetime="2022-07-03" class="published">3 July 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-01-03">3 January 2023</time></dd>
+<dd class="expires"><time datetime="2023-01-04">4 January 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1094,7 +1094,7 @@ The KA2CE approach may be much more performant and scalable than more complex ap
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 January 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 January 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1923,6 +1923,32 @@ Unless otherwise indicated, all cryptographic primitives in this specification w
             </tr>
           </tbody>
         </table>
+<p id="section-4.7-3">The meaning of the column labels is as follows:<a href="#section-4.7-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.7-4.1">SN is the sequence number of the event. Each event uses two rows in the table.<a href="#section-4.7-4.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-4.7-4.2">Role is either Current (Crnt) or Next and indicates the role of the key list and threshold on that row.<a href="#section-4.7-4.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-4.7-4.3">Keys is the list of public keys denoted with indexed label of the keypair sequence.<a href="#section-4.7-4.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-4.7-4.4">Threshold is the threshold of signatures that must be satisfied for validity.<a href="#section-4.7-4.4" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-4.7-5">Commentary of each event follows:<a href="#section-4.7-5" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.7-6">
+<li id="section-4.7-6.1">Inception: Five keypairs have signing authority and five other keypairs have rotation authority. Any two of the first three or any one of the first three and both the last two are sufficient. This anticipates holding the last two in reserve.<a href="#section-4.7-6.1" class="pilcrow">¶</a>
+</li>
+          <li id="section-4.7-6.2">Rotation: The first three keypairs from the prior next, A<sup>5</sup>, A<sup>6</sup>, and A<sup>7</sup>, are rotated at the new current signing keypairs. This exposes the keypairs. The last two from the prior next, A<sup>8</sup> and A<sup>9</sup>, are held in reserve. They have not been exposed are included in the next key list.<a href="#section-4.7-6.2" class="pilcrow">¶</a>
+</li>
+          <li id="section-4.7-6.3">Rotation: The prior next keypairs, A<sup>11</sup> and A<sup>12</sup> are unavalible to sign the rotation and particpate as the part of the newly current signing keys. Therefore A<sup>8</sup> and A<sup>9</sup> must be activated (pulled out of reserve) and included and exposed as both one time rotation keys and newly current signing keys. The signing authority (weight) of each of A<sup>8</sup> and A<sup>9</sup> has been increased to 1/2 from 1/4. This means that any two of the three of A<sup>10</sup>, A<sup>8</sup>, and A<sup>9</sup> may satisfy the signing threshold. Nonetheless, the rotation event #2 <span class="bcp14">MUST</span> be signed by all three of A<sup>10</sup>, A<sup>8</sup>, and A<sup>9</sup> in order to satisfy the prior next threshold because in that threshold A<sup>8</sup>, and A<sup>9</sup>  only have a weight of 1/4.<a href="#section-4.7-6.3" class="pilcrow">¶</a>
+</li>
+          <li id="section-4.7-6.4">Rotation: The keypairs H(A<sup>16</sup>),H(A<sup>17</sup> have been held in reserve from event #2<a href="#section-4.7-6.4" class="pilcrow">¶</a>
+</li>
+          <li id="section-4.7-6.5">Rotation: The keypairs H(A<sup>16</sup>), H(A<sup>17</sup> continue to be held in reserve.<a href="#section-4.7-6.5" class="pilcrow">¶</a>
+</li>
+          <li id="section-4.7-6.6">Rotation: The keypairs A<sup>16</sup>, and A<sup>17</sup> are pulled out of reserved and exposed in order to perform the rotation because A<sup>23</sup>, and A<sup>24</sup> are unavailable. Two new keypairs, A<sup>25</sup>, A<sup>26</sup>, are added to the current signing key list. The current signing authority of A<sup>16</sup>, and A<sup>17</sup> is none because they are assigned a weight of 0 in the new current signing threshold. For the rotation event to be valid it must be signed by A<sup>22</sup>, A<sup>16</sup>, and A<sup>17</sup> in order to satisfy the prior next threshold for rotation authority and also must be signed by any two of A<sup>22</sup>, A<sup>25</sup>, and A<sup>26</sup> in order to satisfy the new current signing authority for the event itself. This illustrates how reserved keypairs may be used exclusively for rotation authority and not for signing authority.<a href="#section-4.7-6.6" class="pilcrow">¶</a>
+</li>
+        </ol>
 </section>
 </div>
 <div id="custodial-rotation-example">
@@ -2004,7 +2030,27 @@ Unless otherwise indicated, all cryptographic primitives in this specification w
             </tr>
           </tbody>
         </table>
-<p id="section-4.8-3">ToDo delegated custodial example with partial rotation and using 0 fraction signing weights on exposed pre-rotated keys<a href="#section-4.8-3" class="pilcrow">¶</a></p>
+<p id="section-4.8-3">The meaning of the column labels is as follows:<a href="#section-4.8-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.8-4.1">SN is the sequence number of the event. Each event uses two rows in the table.<a href="#section-4.8-4.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-4.8-4.2">Role is either Current (Crnt) or Next and indicates the role of the key list and threshold on that row.<a href="#section-4.8-4.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-4.8-4.3">Keys is the list of public keys denoted with indexed label of the keypair sequence.<a href="#section-4.8-4.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-4.8-4.4">Threshold is the threshold of signatures that must be satisfied for validity.<a href="#section-4.8-4.4" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-4.8-5">Commentary of each event follows:<a href="#section-4.8-5" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.8-6">
+<li id="section-4.8-6.1">Inception: The private keys from current signing keypairs  A<sup>0</sup>, A<sup>1</sup>, and A<sup>2</sup> are held by the custodian of the identifier. The owner of the identifier provides the digests of the next rotation keypairs, H(A<sup>3</sup>), H(A<sup>4</sup>), and H(A<sup>5</sup>) to the custodian in order that the custodian may include them in the event and then sign the event. The owner holds the private keys from the next rotation keypairs A<sup>3</sup>, A<sup>4</sup>, and A<sup>5</sup>. A self-addressing AID would then be created by the formulation of the inception event. Once formed, the custodian controls the signing authority over the identifier by virtue of holding the associated private keys for the current key list. But the owner controls the rotation authority by virtue of holding the associated private keys for the next key list. Because the controller of the rotation authority may at their sole discretion revoke and replace the keys that hold signing authority, the owner, holder of the next private keys, is ultimately in control of the identifier so constituted by this inception event.<a href="#section-4.8-6.1" class="pilcrow">¶</a>
+</li>
+          <li id="section-4.8-6.2">Rotation: The owner changes custodians with this event. The new custodian creates new current signing keypairs, A<sup>6</sup>, A<sup>7</sup>, and A<sup>8</sup> and holds the associated private keys. The new custodian provides the public keys A<sup>6</sup>, A<sup>7</sup>, and A<sup>8</sup> to the owner so that the owner can formulate and sign the rotation event that transfers signing authority to the new custodian. The owner exposes its rotation public keys,  A<sup>3</sup>, A<sup>4</sup>, and A<sup>5</sup> by including them in the new current key list. But the weights of those rotation keys in the new current signing threshold are all 0 so they have no signing authority.  The owner creates a new set of next keypairs and includes their public key digests, H(A<sup>9</sup>), H(A<sup>10</sup>), H(A<sup>11</sup>) in the new next key list. The owner holds the associated private keys and thereby retains rotation authority. This event <span class="bcp14">MUST</span> be signed by any two of A<sup>3</sup>, A<sup>4</sup>, and A<sup>5</sup> in order to satisfy the prior next threshold and also <span class="bcp14">MUST</span> be signed by any two A<sup>6</sup>, A<sup>7</sup>, and A<sup>8</sup> in order to satisfy the new current signing threshold. The new current threshold and new next threshold clearly delineate that the new custodian now holds exclusive signing authority and owner continues to retain exclusive rotation authority.<a href="#section-4.8-6.2" class="pilcrow">¶</a>
+</li>
+          <li id="section-4.8-6.3">Rotation: Change to yet another custodian following the same pattern as event #1<a href="#section-4.8-6.3" class="pilcrow">¶</a>
+</li>
+        </ol>
+<p id="section-4.8-7">ToDo in delegation section below. Delegated custodial example with partial rotation and using 0 fraction signing weights on exposed pre-rotated keys<a href="#section-4.8-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>

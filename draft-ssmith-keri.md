@@ -746,6 +746,26 @@ Provided here is an illustrative example to help to clarify the pre-rotation pro
 | 5 | Crnt | *[A<sup>22</sup>, A<sup>25</sup>, A<sup>26</sup>, A<sup>16</sup>, A<sup>17</sup>]* | *[1/2, 1/2, 1/2, 0, 0]* |
 | 5 | Next | *[H(A<sup>27</sup>), H(A<sup>28</sup>), H(A<sup>29</sup>), H(A<sup>30</sup>),H(A<sup>31</sup>)]* | *[1/2, 1/2, 1/2, 1/4, 1/4]*  |
 
+The meaning of the column labels is as follows:
+
++ SN is the sequence number of the event. Each event uses two rows in the table.
++ Role is either Current (Crnt) or Next and indicates the role of the key list and threshold on that row.
++ Keys is the list of public keys denoted with indexed label of the keypair sequence.
++ Threshold is the threshold of signatures that must be satisfied for validity.
+
+Commentary of each event follows:
+
+0. Inception: Five keypairs have signing authority and five other keypairs have rotation authority. Any two of the first three or any one of the first three and both the last two are sufficient. This anticipates holding the last two in reserve.
+
+1. Rotation: The first three keypairs from the prior next, A<sup>5</sup>, A<sup>6</sup>, and A<sup>7</sup>, are rotated at the new current signing keypairs. This exposes the keypairs. The last two from the prior next, A<sup>8</sup> and A<sup>9</sup>, are held in reserve. They have not been exposed are included in the next key list.
+
+2. Rotation: The prior next keypairs, A<sup>11</sup> and A<sup>12</sup> are unavalible to sign the rotation and particpate as the part of the newly current signing keys. Therefore A<sup>8</sup> and A<sup>9</sup> must be activated (pulled out of reserve) and included and exposed as both one time rotation keys and newly current signing keys. The signing authority (weight) of each of A<sup>8</sup> and A<sup>9</sup> has been increased to 1/2 from 1/4. This means that any two of the three of A<sup>10</sup>, A<sup>8</sup>, and A<sup>9</sup> may satisfy the signing threshold. Nonetheless, the rotation event \#2 MUST be signed by all three of A<sup>10</sup>, A<sup>8</sup>, and A<sup>9</sup> in order to satisfy the prior next threshold because in that threshold A<sup>8</sup>, and A<sup>9</sup>  only have a weight of 1/4.
+
+3. Rotation: The keypairs H(A<sup>16</sup>),H(A<sup>17</sup> have been held in reserve from event \#2
+
+4. Rotation: The keypairs H(A<sup>16</sup>), H(A<sup>17</sup> continue to be held in reserve.
+
+5. Rotation: The keypairs A<sup>16</sup>, and A<sup>17</sup> are pulled out of reserved and exposed in order to perform the rotation because A<sup>23</sup>, and A<sup>24</sup> are unavailable. Two new keypairs, A<sup>25</sup>, A<sup>26</sup>, are added to the current signing key list. The current signing authority of A<sup>16</sup>, and A<sup>17</sup> is none because they are assigned a weight of 0 in the new current signing threshold. For the rotation event to be valid it must be signed by A<sup>22</sup>, A<sup>16</sup>, and A<sup>17</sup> in order to satisfy the prior next threshold for rotation authority and also must be signed by any two of A<sup>22</sup>, A<sup>25</sup>, and A<sup>26</sup> in order to satisfy the new current signing authority for the event itself. This illustrates how reserved keypairs may be used exclusively for rotation authority and not for signing authority.
 
 
 ## Custodial Rotation Example
@@ -761,9 +781,25 @@ Provided here is an illustrative example to help to clarify the pre-rotation pro
 | 2 | Crnt | *[A<sup>9</sup>, A<sup>10</sup>, A<sup>11</sup>, A<sup>12</sup>, A<sup>13</sup>, A<sup>14</sup>]* | *[0, 0, 0, 1/2, 1/2, 1/2]* |
 | 2 | Next | *[H(A<sup>15</sup>), H(A<sup>16</sup>), H(A<sup>17</sup>)]* | *[1/2, 1/2, 1/2]*  |
 
+The meaning of the column labels is as follows:
+
++ SN is the sequence number of the event. Each event uses two rows in the table.
++ Role is either Current (Crnt) or Next and indicates the role of the key list and threshold on that row.
++ Keys is the list of public keys denoted with indexed label of the keypair sequence.
++ Threshold is the threshold of signatures that must be satisfied for validity.
 
 
-ToDo delegated custodial example with partial rotation and using 0 fraction signing weights on exposed pre-rotated keys
+Commentary of each event follows:
+
+0. Inception: The private keys from current signing keypairs  A<sup>0</sup>, A<sup>1</sup>, and A<sup>2</sup> are held by the custodian of the identifier. The owner of the identifier provides the digests of the next rotation keypairs, H(A<sup>3</sup>), H(A<sup>4</sup>), and H(A<sup>5</sup>) to the custodian in order that the custodian may include them in the event and then sign the event. The owner holds the private keys from the next rotation keypairs A<sup>3</sup>, A<sup>4</sup>, and A<sup>5</sup>. A self-addressing AID would then be created by the formulation of the inception event. Once formed, the custodian controls the signing authority over the identifier by virtue of holding the associated private keys for the current key list. But the owner controls the rotation authority by virtue of holding the associated private keys for the next key list. Because the controller of the rotation authority may at their sole discretion revoke and replace the keys that hold signing authority, the owner, holder of the next private keys, is ultimately in control of the identifier so constituted by this inception event.
+
+1. Rotation: The owner changes custodians with this event. The new custodian creates new current signing keypairs, A<sup>6</sup>, A<sup>7</sup>, and A<sup>8</sup> and holds the associated private keys. The new custodian provides the public keys A<sup>6</sup>, A<sup>7</sup>, and A<sup>8</sup> to the owner so that the owner can formulate and sign the rotation event that transfers signing authority to the new custodian. The owner exposes its rotation public keys,  A<sup>3</sup>, A<sup>4</sup>, and A<sup>5</sup> by including them in the new current key list. But the weights of those rotation keys in the new current signing threshold are all 0 so they have no signing authority.  The owner creates a new set of next keypairs and includes their public key digests, H(A<sup>9</sup>), H(A<sup>10</sup>), H(A<sup>11</sup>) in the new next key list. The owner holds the associated private keys and thereby retains rotation authority. This event MUST be signed by any two of A<sup>3</sup>, A<sup>4</sup>, and A<sup>5</sup> in order to satisfy the prior next threshold and also MUST be signed by any two A<sup>6</sup>, A<sup>7</sup>, and A<sup>8</sup> in order to satisfy the new current signing threshold. The new current threshold and new next threshold clearly delineate that the new custodian now holds exclusive signing authority and owner continues to retain exclusive rotation authority.
+
+2. Rotation: Change to yet another custodian following the same pattern as event \#1
+
+
+
+ToDo in delegation section below. Delegated custodial example with partial rotation and using 0 fraction signing weights on exposed pre-rotated keys
 
 # Field Labels
 

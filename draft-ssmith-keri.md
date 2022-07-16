@@ -178,6 +178,20 @@ informative:
     target: https://en.wikipedia.org/wiki/Information_theory
     title: Information Theory
 
+  BLAKE3:
+    target: ttps://github.com/BLAKE3-team/BLAKE3
+    title: BLAKE3
+
+  BLAKE3Spec:
+    target: https://github.com/BLAKE3-team/BLAKE3-specs/blob/master/blake3.pdf
+    title: BLAKE3 one function, fast everywhere
+
+  BLAKE3Hash:
+    target: https://www.infoq.com/news/2020/01/blake3-fast-crypto-hash/
+    title: “BLAKE3 Is an Extremely Fast, Parallel Cryptographic Hash”
+    seriesinfo: InfoQ
+    date: 2020-01-12
+
   QCHC:
     target: https://cr.yp.to/hash/collisioncost-20090823.pdf
     title: "Cost analysis of hash collisions: Will quantum computers make SHARCS obsolete?"
@@ -272,7 +286,6 @@ informative:
   Hash:
     target: https://en.wikipedia.org/wiki/Cryptographic_hash_function
     title: Cryptographic Hash Function
-
 
   W3C_DID:
     target: https://w3c-ccg.github.io/did-spec/
@@ -409,14 +422,11 @@ informative:
       ins: "H. Birge-Lee"
       name: "H. Birge-Lee"
 
-
   RFC6962: CT
-
 
   CTE:
     target: https://certificate.transparency.dev
     title: Certificate Transparency Ecosystem
-
 
   CTAOL:
     target: https://queue.acm.org/detail.cfm?id=2668154
@@ -442,19 +452,9 @@ informative:
     title: Efficient sparse merkle trees
     seriesinfo: "Nordic Conference on Secure IT Systems, pp. 199-215, 2016"
 
-  BLAKE3:
-    target: ttps://github.com/BLAKE3-team/BLAKE3
-    title: BLAKE3
-
-  BLAKE3Spec:
-    target: https://github.com/BLAKE3-team/BLAKE3-specs/blob/master/blake3.pdf
-    title: BLAKE3 one function, fast everywhere
-
-  BLAKE3Hash:
-    target: https://www.infoq.com/news/2020/01/blake3-fast-crypto-hash/
-    title: “BLAKE3 Is an Extremely Fast, Parallel Cryptographic Hash”
-    seriesinfo: InfoQ
-    date: 2020-01-12
+  RC:
+    target: https://en.wikipedia.org/wiki/Ricardian_contract
+    title: Ricardian Contract
 
 
 --- abstract
@@ -799,14 +799,13 @@ Commentary of each event follows:
 
 
 
-ToDo in delegation section below. Delegated custodial example with partial rotation and using 0 fraction signing weights on exposed pre-rotated keys
+# KERI Data Structures
 
-# Field Labels
+A KERI data structure such as a key event message body may be abstractly modeled as a nested `key: value` mapping. To avoid confusion with the cryptographic use of the term *key* we instead use the term *field* to refer to a mapping pair and the terms *field label* and *field value* for each member of a pair. These pairs can be represented by two tuples e.g `(label, value)`. We qualify this terminology when necessary by using the term *field map* to reference such a mapping. *Field maps* may be nested where a given *field value* is itself a reference to another *field map*.  We call this nested set of fields a *nested field map* or simply a *nested map* for short. A *field* may be represented by a framing code or block delimited serialization.  In a block delimited serialization, such as JSON, each *field map* is represented by an object block with block delimiters such as `{}` {{RFC8259}}{{JSOND}}{{RFC4627}}. Given this equivalence, we may also use the term *block* or *nested block* as synonymous with *field map* or *nested field map*. In many programming languages, a field map is implemented as a dictionary or hash table in order to enable performant asynchronous lookup of a *field value* from its *field label*. Reproducible serialization of *field maps* requires a canonical ordering of those fields. One such canonical ordering is called insertion or field creation order. A list of `(field, value)` pairs provides an ordered representation of any field map. Most programming languages now support ordered dictionaries or hash tables that provide reproducible iteration over a list of ordered field `(label, value)` pairs where the ordering is the insertion or field creation order. This enables reproducible round trip serialization/deserialization of *field maps*. Serialized KERI data structures depend on insertion-ordered field maps for their canonical serialization/deserialization. KERI data structures support multiple serialization types, namely JSON, CBOR, MGPK, and CESR but for the sake of simplicity, we will only use JSON herein for examples {{RFC8259}}{{JSOND}}{{CBORC}}{{RFC8949}}{{MGPK}}{{CESR-ID}}. The basic set of normative field labels in KERI field maps is defined in the table in the following section.
 
+## Field Labels for KERI Data Structures
 
-## KERI Data Structure Field Labels
-
-|Label|Description|Type|Notes|
+|Label|Title|Description|Notes|
 |---|---|---|---|
 |v| Version String | | |
 |i| Identifier Prefix  (AID) |  | |
@@ -830,25 +829,55 @@ ToDo in delegation section below. Delegated custodial example with partial rotat
 |ee| Last Establishment Event Map | | |
 |vn| Version Number ("major.minor")  |  | |
 
-A field label may have different values in different contexts but not a different ***type*** for its field value. Although some field value types may be a union of elemental value types.
+A field label may have different values in different contexts but MUST not have a different field value ***type***. This requirement makes it easier to implement in strongly typed languages with rigid data structures. Notwithstanding the former, some field value types MAY be a union of elemental value types.
 
-Because the order of appearance of fields is enforced in all KERI messages, where a label appears (in which message or which block in a message) the message in which a label appears adds the necessary context to fully determine its meaning.
+Because the order of appearance of fields is enforced in all KERI data structures, whenever a field appears (in a given message or block in a message) the message in which a label appears MUST provide the necessary context to fully determine the meaning of that field and hence the field value type and associated semantics.
+
+## Compact Labels
+
+The primary field labels are compact in that they use only one or two characters. KERI is meant to support resource-constrained applications such as supply chain or IoT (Internet of Things) applications. Compact labels better support resource-constrained applications in general. With compact labels, the over-the-wire verifiable signed serialization consumes a minimum amount of bandwidth. Nevertheless, without loss of generality, a one-to-one normative semantic overlay using more verbose expressive field labels may be applied to the normative compact labels after verification of the over-the-wire serialization. This approach better supports bandwidth and storage constraints on transmission while not precluding any later semantic post-processing. This is a well-known design pattern for resource-constrained applications.
 
 
-### Special Label Ordering Requirements
-
-The version string, `v`, field MUST be the first field when it appears. This enables a RegEx stream parser to consistently find the version string in any of the supported serialization formats.
-
-There are two other identifiers that appear after `v` when `v` is present or may appear first
-when `v` is not present. These are `i` and `d`.
-
-In this context, `i` is short for `ai`, which is short for the Autonomic IDentifier (AID). The AID given by the `i` field may also be thought of as a securely attributable identifier, authoritative identifier, authenticatable identifier, authorizing identifier, or authoring identifier. Because AIDs may be namespaced, the essential component of an AID is the cryptographically derived Controller identifier prefix. An AID MUST be self-certifying. An AID may be simply the Controller identifier prefix or MAY be namespaced as part of a W3C Decentralized IDentifier (DID) {{W3C_DID}} or other namespace convention. Another way of thinking about an `i` field is that it is the identifier of the authoritative entity to which a statement may be securely attributed, thereby making the statement verifiably authentic via a non-repudiable signature made by that authoritative entity as the Controller of the private key(s).
-
-In this context, `d` is short for digest, which is short for Self-Addressing IDentifier (SAID). The SAID given the the `d` field is ToDo
+## Special Label Ordering Requirements
 
 
 
+## Version String Field
 
+The version string, `v`, field MUST be the first field in any top-level KERI field map in which it appears. Typically the version string, `v`, field appears as the first top-level field in a KERI message body. This enables a RegEx stream parser to consistently find the version string in any of the supported serialization formats for KERI messages. The `v` field provides a regular expression target for determining the serialization format and size (character count) of a serialized KERI message body. A stream parser may use the version string to extract and deserialize (deterministically) any serialized KERI message body in a stream of serialized KERI messages. Each KERI message in a stream may use a different serialization type.
+
+The format of the version string is `KERIvvSSSShhhhhh_`. The first four characters `KERI` indicate the enclosing field map serialization. The next two characters, `vv` provide the lowercase hexadecimal notation for the major and minor version numbers of the version of the KERI specification used for the serialization. The first `v` provides the major version number and the second `v` provides the minor version number. For example, `01` indicates major version 0 and minor version 1 or in dotted-decimal notation `0.1`. Likewise `1c` indicates major version 1 and minor version decimal 12 or in dotted-decimal notation `1.12`. The next four characters `SSSS` indicate the serialization type in uppercase. The four supported serialization types are `JSON`, `CBOR`, `MGPK`, and `CESR` for the JSON, CBOR, MessagePack, and CESR serialization standards respectively {{JSOND}}{{RFC4627}}{{CBORC}}{{RFC8949}}{{MGPK}}{{CESR-ID}}. The next six characters provide in lowercase hexadecimal notation the total number of characters in the serialization of the KERI message body. The maximum length of a given KERI message body is thereby constrained to be *2<sup>24</sup> = 16,777,216* characters in length. The final character `-` is the version string terminator. This enables later versions of ACDC to change the total version string size and thereby enable versioned changes to the composition of the fields in the version string while preserving deterministic regular expression extractability of the version string. Although a given KERI serialization type may use field map delimiters or framing code characters that appear before (i.e. prefix) the version string field in a serialization, the set of possible prefixes is sufficiently constrained by the allowed serialization protocols to guarantee that a regular expression can determine unambiguously the start of any ordered field map serialization that includes the version string as the first field value. Given the version string, a parser may then determine the end of the serialization so that it can extract the full serialization (KERI message body) from the stream without first deserializing it or parsing it field-by-field. This enables performant stream parsing and off-loading of KERI message streams that include any or all of the supported serialization types interleaved in a single stream.
+
+
+
+
+
+## SAID (Self-Addressing IDentifier) Fields
+
+
+Some fields in KERI data structures may have for their value a SAID. In this context, `d` is short for digest, which is short for Self-Addressing IDentifier (SAID). A SAID follows the SAID protocol {{SAID-ID}}. Essentially a SAID is a Self-Addressing IDentifier (self-referential content addressable). A SAID is a special type of cryptographic digest of its encapsulating *field map* (block). The encapsulating block of a SAID is called a SAD (Self-Addressed Data). Using a SAID as a *field value* enables a more compact but secure representation of the associated block (SAD) from which the SAID is derived. Any nested field map that includes a SAID field (i.e. is, therefore, a SAD) may be compacted into its SAID. The uncompacted blocks for each associated SAID may be attached or cached to optimize bandwidth and availability without decreasing security.
+
+Each SAID provides a stable universal cryptographically verifiable and agile reference to its encapsulating block (serialized *field map*).
+
+Recall that a cryptographic commitment (such as a digital signature or cryptographic digest) on a given digest with sufficient cryptographic strength including collision resistance {{HCR}}{{QCHC}} is equivalent to a commitment to the block from which the given digest was derived.  Specifically, a digital signature on a SAID makes a verifiable cryptographic non-repudiable commitment that is equivalent to a commitment on the full serialization of the associated block from which the SAID was derived. This enables reasoning about KERI data structures in whole or in part via their SAIDS in a fully interoperable, verifiable, compact, and secure manner. This also supports the well-known bow-tie model of Ricardian Contracts {{RC}}. This includes reasoning about the whole KERI data structure given by its top-level SAID, `d`, field as well as reasoning about any nested or attached data structures using their SAIDS.
+
+
+
+## AID (Autonomic IDentifier) Fields
+
+Some fields, such as the `i` and `di` fields, MUST each have an AID (Autonomic IDentifier) as its value. An AID is a fully qualified Self-Certifying IDentifier (SCID) as described above {{KERI}}{{KERI-ID}}. An AID MUST be self-certifying.
+In this context, `i` is short for `ai`, which is short for the Autonomic IDentifier (AID). The AID given by the `i` field may also be thought of as a securely attributable identifier, authoritative identifier, authenticatable identifier, authorizing identifier, or authoring identifier.Another way of thinking about an `i` field is that it is the identifier of the authoritative entity to which a statement may be securely attributed, thereby making the statement verifiably authentic via a non-repudiable signature made by that authoritative entity as the Controller of the private key(s).
+
+
+
+
+### Namespaced AIDs
+Because KERI is agnostic about the namespace for any particular AID, different namespace standards may be used to express KERI AIDs within AID fields in an ACDC. The examples below use the W3C DID namespace specification with the `did:keri` method {{DIDK-ID}}. But the examples would have the same validity from a KERI perspective if some other supported namespace was used or no namespace was used at all. The latter case consists of a bare KERI AID (identifier prefix).
+
+ToDo Explain agnosticism vis a vis namespaces
+ Because AIDs may be namespaced, the essential component of an AID is the cryptographically derived Controller identifier prefix.  An AID MUST be the Controller identifier prefix.  part of a W3C Decentralized IDentifier (DID) {{W3C_DID}} or other namespace convention.
+
+Version string namespaces the AIDs as KERI so don't need any namespacing on a per identifier basis.
 
 
 ## Version String Field
@@ -872,9 +901,9 @@ The `nt` field is next threshold for the next establishment event.
 
 # Seals
 
-## Seals
 
-### Digest Seal
+
+## Digest Seal
 
 ~~~json
 {
@@ -882,7 +911,7 @@ The `nt` field is next threshold for the next establishment event.
 }
 ~~~
 
-### Merkle Tree Root Digest Seal
+## Merkle Tree Root Digest Seal
 
 ~~~json
 {
@@ -890,7 +919,7 @@ The `nt` field is next threshold for the next establishment event.
 }
 ~~~
 
-### Backer Seal
+## Backer Seal
 
 ~~~json
 {
@@ -900,7 +929,7 @@ The `nt` field is next threshold for the next establishment event.
 
 ~~~
 
-### Event Seal
+## Event Seal
 ~~~json
 {
 
@@ -911,7 +940,7 @@ The `nt` field is next threshold for the next establishment event.
 ~~~
 
 
-### Last Establishment Event Seal
+## Last Establishment Event Seal
 
 ~~~json
 {
@@ -928,13 +957,9 @@ Because adding the `d` field SAID to every key event message type will break all
 Originally all messages included an `i` field but that is not true anymore. So the changed field ordering is to put the fields that are common to all message types first in order followed by fields that are not common. The common fields are `v`, `t`, `d`.
 The newly revised messages and seals are shown below.
 
-# Event Messages
 
 
-## Rotation
-
-
-### Inception Event
+## Inception Event
 
 When the AID in the `i` field is a self-addressing self-certifying AID, the new Inception Event has two
 qualified digest fields. In this case both the `d` and `i` fields must have the same value. This means the digest suite's derivation code, used for the `i` field must be the same for the `d` field.
@@ -943,9 +968,8 @@ The derivation of the `d` and `i` fields is special. Both the `d` and `i` fields
 When the AID is not self-addressing, i.e. the `i` field derivation code is not a digest. Then the `i` is given its value and the `d` field is replaced with dummy characters `#` of the correct length and then the digest is computed. This is the standard SAID algorithm.
 
 
-## Inception Event Message
+## Inception Event Message Body
 
-### Event Message Body
 
 ~~~json
 {
@@ -984,7 +1008,7 @@ When the AID is not self-addressing, i.e. the `i` field derivation code is not a
 
 
 
-## Rotation Event Message
+## Rotation Event Message Body
 
 ~~~json
 {
@@ -1018,7 +1042,7 @@ When the AID is not self-addressing, i.e. the `i` field derivation code is not a
 ~~~
 
 
-### Interaction Event  (Also delegating Interaction)
+## Interaction Event Message Body
 
 ~~~json
 {
@@ -1039,7 +1063,15 @@ When the AID is not self-addressing, i.e. the `i` field derivation code is not a
 }
 ~~~
 
-### Delegated Inception Event
+
+# Delegated Key Event Messages
+
+
+ToDo in delegation section below. Delegated custodial example with partial rotation and using 0 fraction signing weights on exposed pre-rotated keys
+
+
+
+## Delegated Inception Event Message Body
 
 ~~~json
 {
@@ -1079,7 +1111,8 @@ When the AID is not self-addressing, i.e. the `i` field derivation code is not a
 
 
 
-### Delegated Rotation Event
+
+## Delegated Rotation Event Message Body
 
 ~~~json
 {
@@ -1116,7 +1149,7 @@ When the AID is not self-addressing, i.e. the `i` field derivation code is not a
 
 # Receipt Messages
 
-### Non-Transferable Prefix Signer Receipt
+## Non-Transferable Prefix Signer Receipt Message Body
 For receipts, the `d` field is the SAID of the associated event, not the receipt message itself.
 
 
@@ -1130,7 +1163,7 @@ For receipts, the `d` field is the SAID of the associated event, not the receipt
 }
 ~~~
 
-### Transferable Prefix Signer Receipt
+## Transferable Prefix Signer Receipt Message Body
 For receipts, the `d` field is the SAID of the associated event, not the receipt message itself.
 
 ~~~json
@@ -1149,11 +1182,10 @@ For receipts, the `d` field is the SAID of the associated event, not the receipt
 }
 ~~~
 
-# Delegated Key Event Messages
 
 # Other Messages
 
-### Query Message
+## Query Message Message Body
 
 ~~~json
 {
@@ -1190,7 +1222,7 @@ For receipts, the `d` field is the SAID of the associated event, not the receipt
 }
 ~~~
 
-### Reply Message
+## Reply Message Body
 
 ~~~json
 {
@@ -1225,9 +1257,28 @@ For receipts, the `d` field is the SAID of the associated event, not the receipt
 }
 ~~~
 
+## Prod Message Body
+
+~~~json
+{
+  "v": "KERI10JSON00011c_",
+  "t": "prd",
+  "d": "EZ-i0d8JZAoTNZH3ULaU6JR2nmwyvYAfSVPzhzS6b5CM",
+  "r": "sealed/data",
+  "rr": "process/sealed/data"
+  "q":
+  {
+     d" : "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM",
+    "i" : "EAoTNZH3ULvYAfSVPzhzS6baU6JR2nmwyZ-i0d8JZ5CM",
+    "s" : "5",
+    "ri": "EAoTNZH3ULvYAfSVPzhzS6baU6JR2nmwyZ-i0d8JZ5CM",
+    "dd": "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM"
+  }
+}
+~~~
 
 
-### Bare Message
+## Bare Message Body
 
 Reference to the anchoring seal is provided as an attachment to the bare, `bre` message.
 A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' field.
@@ -1249,27 +1300,8 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
 }
 ~~~
 
-### Prod Message
 
-~~~json
-{
-  "v": "KERI10JSON00011c_",
-  "t": "prd",
-  "d": "EZ-i0d8JZAoTNZH3ULaU6JR2nmwyvYAfSVPzhzS6b5CM",
-  "r": "sealed/data",
-  "rr": "process/sealed/data"
-  "q":
-  {
-     d" : "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM",
-    "i" : "EAoTNZH3ULvYAfSVPzhzS6baU6JR2nmwyZ-i0d8JZ5CM",
-    "s" : "5",
-    "ri": "EAoTNZH3ULvYAfSVPzhzS6baU6JR2nmwyZ-i0d8JZ5CM",
-    "dd": "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM"
-  }
-}
-~~~
-
-### Exchange Message (exchange)
+## Exchange Message Body
 
 ~~~json
 {
@@ -1285,9 +1317,9 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
 }
 ~~~
 
-## Notices Embedded in Reply Messages
+# Notices Embedded in Reply Messages
 
-### Key State Notice (KSN)
+## Key State Notice (KSN)
 
 ~~~json
 {
@@ -1319,7 +1351,7 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
 }
 ~~~
 
-#### Embedded in Reply
+## Embedded in Reply
 
 ~~~json
 {
@@ -1359,7 +1391,7 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
 }
 ~~~
 
-### Transaction State Notice (TSN)
+## Transaction State Notice (TSN)
 
 ~~~json
 {
@@ -1386,7 +1418,7 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
 }
 ~~~
 
-#### Embedded in Reply
+## Embedded in Reply
 
 ~~~json
 {
@@ -1421,9 +1453,9 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
 }
 ~~~
 
-## Transaction Event Log Messages
+# Transaction Event Log Messages
 
-### Registry Inception Event
+## Registry Inception Event Message Body
 
 ~~~json
 {
@@ -1440,7 +1472,7 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
 
 ~~~
 
-### Registry Rotation Event
+## Registry Rotation Event Message Body
 
 ~~~json
 {
@@ -1456,7 +1488,7 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
 }
 ~~~
 
-### Backerless Credential Issuance
+## Backerless ACDC Issuance Message Body
 
 ~~~json
 {
@@ -1470,7 +1502,7 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
 }
 ~~~
 
-### Backerless Credential Revocation
+## Backerless ACDC Revocation Message Body
 
 ~~~json
 {
@@ -1485,7 +1517,7 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
 }
 ~~~
 
-### Backer Credential Issuance
+## Backered ACDC Issuance Message Body
 
 ~~~json
 {
@@ -1504,7 +1536,7 @@ A bare, 'bre', message is a SAD item with an associated derived SAID in its 'd' 
 }
 ~~~
 
-### Backer Credential Revocation
+### Backered ACDC Revocation Message Body
 
 ~~~json
 {

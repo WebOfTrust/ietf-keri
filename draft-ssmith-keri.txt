@@ -4,8 +4,8 @@
 
 TODO Working Group                                              S. Smith
 Internet-Draft                                             ProSapien LLC
-Intended status: Informational                               3 July 2022
-Expires: 4 January 2023
+Intended status: Informational                              16 July 2022
+Expires: 17 January 2023
 
 
                 Key Event Receipt Infrastructure (KERI)
@@ -78,7 +78,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 January 2023.
+   This Internet-Draft will expire on 17 January 2023.
 
 Copyright Notice
 
@@ -118,58 +118,61 @@ Table of Contents
        4.6.1.  Partial Pre-rotation Detail
      4.7.  Reserve Rotation Example
      4.8.  Custodial Rotation Example
-   5.  Field Labels
-     5.1.  KERI Data Structure Field Labels
-       5.1.1.  Special Label Ordering Requirements
-     5.2.  Version String Field
-     5.3.  Next Threshold Field
-     5.4.  Common Normalized ACDC and KERI Labels
+   5.  KERI Data Structures
+     5.1.  Field Labels for KERI Data Structures
+     5.2.  Compact Labels
+     5.3.  Special Label Ordering Requirements
+     5.4.  Version String Field
+     5.5.  SAID (Self-Addressing IDentifier) Fields
+     5.6.  AID (Autonomic IDentifier) Fields
+       5.6.1.  Namespaced AIDs
+     5.7.  Version String Field
+     5.8.  Next Threshold Field
+     5.9.  Common Normalized ACDC and KERI Labels
    6.  Seals
-     6.1.  Seals
-       6.1.1.  Digest Seal
-       6.1.2.  Merkle Tree Root Digest Seal
-       6.1.3.  Backer Seal
-       6.1.4.  Event Seal
-       6.1.5.  Last Establishment Event Seal
+     6.1.  Digest Seal
+     6.2.  Merkle Tree Root Digest Seal
+     6.3.  Backer Seal
+     6.4.  Event Seal
+     6.5.  Last Establishment Event Seal
    7.  Key Event Messages (Non-delegated)
-   8.  Event Messages
-     8.1.  Rotation
-       8.1.1.  Inception Event
-     8.2.  Inception Event Message
-       8.2.1.  Event Message Body
-     8.3.  Rotation Event Message
-       8.3.1.  Interaction Event (Also delegating Interaction)
-       8.3.2.  Delegated Inception Event
-       8.3.3.  Delegated Rotation Event
+     7.1.  Inception Event
+     7.2.  Inception Event Message Body
+     7.3.  Rotation Event Message Body
+     7.4.  Interaction Event Message Body
+   8.  Delegated Key Event Messages
+     8.1.  Delegated Inception Event Message Body
+     8.2.  Delegated Rotation Event Message Body
    9.  Receipt Messages
-     9.1.  Non-Transferable Prefix Signer Receipt
-       9.1.1.  Transferable Prefix Signer Receipt
-   10. Delegated Key Event Messages
-   11. Other Messages
-     11.1.  Query Message
-       11.1.1.  Reply Message
-       11.1.2.  Bare Message
-       11.1.3.  Prod Message
-       11.1.4.  Exchange Message (exchange)
-     11.2.  Notices Embedded in Reply Messages
-       11.2.1.  Key State Notice (KSN)
-       11.2.2.  Transaction State Notice (TSN)
-     11.3.  Transaction Event Log Messages
-       11.3.1.  Registry Inception Event
-       11.3.2.  Registry Rotation Event
-       11.3.3.  Backerless Credential Issuance
-       11.3.4.  Backerless Credential Revocation
-       11.3.5.  Backer Credential Issuance
-       11.3.6.  Backer Credential Revocation
-   12. Appendix: Cryptographic Strength and Security
-     12.1.  Cryptographic Strength
-     12.2.  Information Theoretic Security and Perfect Security
-   13. Conventions and Definitions
-   14. Security Considerations
-   15. IANA Considerations
-   16. References
-     16.1.  Normative References
-     16.2.  Informative References
+     9.1.  Non-Transferable Prefix Signer Receipt Message Body
+     9.2.  Transferable Prefix Signer Receipt Message Body
+   10. Other Messages
+     10.1.  Query Message Message Body
+     10.2.  Reply Message Body
+     10.3.  Prod Message Body
+     10.4.  Bare Message Body
+     10.5.  Exchange Message Body
+   11. Notices Embedded in Reply Messages
+     11.1.  Key State Notice (KSN)
+     11.2.  Embedded in Reply
+     11.3.  Transaction State Notice (TSN)
+     11.4.  Embedded in Reply
+   12. Transaction Event Log Messages
+     12.1.  Registry Inception Event Message Body
+     12.2.  Registry Rotation Event Message Body
+     12.3.  Backerless ACDC Issuance Message Body
+     12.4.  Backerless ACDC Revocation Message Body
+     12.5.  Backered ACDC Issuance Message Body
+       12.5.1.  Backered ACDC Revocation Message Body
+   13. Appendix: Cryptographic Strength and Security
+     13.1.  Cryptographic Strength
+     13.2.  Information Theoretic Security and Perfect Security
+   14. Conventions and Definitions
+   15. Security Considerations
+   16. IANA Considerations
+   17. References
+     17.1.  Normative References
+     17.2.  Informative References
    Acknowledgments
    Author's Address
 
@@ -1462,117 +1465,263 @@ Table of Contents
    *  (2) Rotation: Change to yet another custodian following the same
       pattern as event #1
 
-   ToDo in delegation section below.  Delegated custodial example with
-   partial rotation and using 0 fraction signing weights on exposed pre-
-   rotated keys
+5.  KERI Data Structures
 
-5.  Field Labels
+   A KERI data structure such as a key event message body may be
+   abstractly modeled as a nested key: value mapping.  To avoid
+   confusion with the cryptographic use of the term _key_ we instead use
+   the term _field_ to refer to a mapping pair and the terms _field
+   label_ and _field value_ for each member of a pair.  These pairs can
+   be represented by two tuples e.g (label, value).  We qualify this
+   terminology when necessary by using the term _field map_ to reference
+   such a mapping. _Field maps_ may be nested where a given _field
+   value_ is itself a reference to another _field map_.  We call this
+   nested set of fields a _nested field map_ or simply a _nested map_
+   for short.  A _field_ may be represented by a framing code or block
+   delimited serialization.  In a block delimited serialization, such as
+   JSON, each _field map_ is represented by an object block with block
+   delimiters such as {} [RFC8259][JSOND][RFC4627].  Given this
+   equivalence, we may also use the term _block_ or _nested block_ as
+   synonymous with _field map_ or _nested field map_. In many
+   programming languages, a field map is implemented as a dictionary or
+   hash table in order to enable performant asynchronous lookup of a
+   _field value_ from its _field label_. Reproducible serialization of
+   _field maps_ requires a canonical ordering of those fields.  One such
+   canonical ordering is called insertion or field creation order.  A
+   list of (field, value) pairs provides an ordered representation of
+   any field map.  Most programming languages now support ordered
+   dictionaries or hash tables that provide reproducible iteration over
+   a list of ordered field (label, value) pairs where the ordering is
+   the insertion or field creation order.  This enables reproducible
+   round trip serialization/deserialization of _field maps_. Serialized
+   KERI data structures depend on insertion-ordered field maps for their
+   canonical serialization/deserialization.  KERI data structures
+   support multiple serialization types, namely JSON, CBOR, MGPK, and
+   CESR but for the sake of simplicity, we will only use JSON herein for
+   examples [RFC8259][JSOND][CBORC][RFC8949][MGPK][CESR-ID].  The basic
+   set of normative field labels in KERI field maps is defined in the
+   table in the following section.
 
-5.1.  KERI Data Structure Field Labels
+5.1.  Field Labels for KERI Data Structures
 
-          +=======+==============================+======+=======+
-          | Label | Description                  | Type | Notes |
-          +=======+==============================+======+=======+
-          | v     | Version String               |      |       |
-          +-------+------------------------------+------+-------+
-          | i     | Identifier Prefix (AID)      |      |       |
-          +-------+------------------------------+------+-------+
-          | s     | Sequence Number              |      |       |
-          +-------+------------------------------+------+-------+
-          | t     | Message Type                 |      |       |
-          +-------+------------------------------+------+-------+
-          | te    | Last received Event Message  |      |       |
-          |       | Type in a Key State Notice   |      |       |
-          +-------+------------------------------+------+-------+
-          | d     | Event SAID                   |      |       |
-          +-------+------------------------------+------+-------+
-          | p     | Prior Event SAID             |      |       |
-          +-------+------------------------------+------+-------+
-          | kt    | Keys Signing Threshold       |      |       |
-          +-------+------------------------------+------+-------+
-          | k     | List of Signing Keys         |      |       |
-          |       | (ordered key set)            |      |       |
-          +-------+------------------------------+------+-------+
-          | nt    | Next Keys Signing Threshold  |      |       |
-          +-------+------------------------------+------+-------+
-          | n     | List of Next Key Digests     |      |       |
-          |       | (ordered key digest set)     |      |       |
-          +-------+------------------------------+------+-------+
-          | bt    | Backer Threshold             |      |       |
-          +-------+------------------------------+------+-------+
-          | b     | List of Backers (ordered     |      |       |
-          |       | backer set of AIDs)          |      |       |
-          +-------+------------------------------+------+-------+
-          | br    | List of Backers to Remove    |      |       |
-          |       | (ordered backer set of AIDS) |      |       |
-          +-------+------------------------------+------+-------+
-          | ba    | List of Backers to Add       |      |       |
-          |       | (ordered backer set of AIDs) |      |       |
-          +-------+------------------------------+------+-------+
-          | c     | List of Configuration        |      |       |
-          |       | Traits/Modes                 |      |       |
-          +-------+------------------------------+------+-------+
-          | a     | List of Anchors (seals)      |      |       |
-          +-------+------------------------------+------+-------+
-          | di    | Delegator Identifier Prefix  |      |       |
-          |       | (AID)                        |      |       |
-          +-------+------------------------------+------+-------+
-          | rd    | Merkle Tree Root Digest      |      |       |
-          |       | (SAID)                       |      |       |
-          +-------+------------------------------+------+-------+
-          | ee    | Last Establishment Event Map |      |       |
-          +-------+------------------------------+------+-------+
-          | vn    | Version Number               |      |       |
-          |       | ("major.minor")              |      |       |
-          +-------+------------------------------+------+-------+
+      +=======+==============================+=============+=======+
+      | Label | Title                        | Description | Notes |
+      +=======+==============================+=============+=======+
+      | v     | Version String               |             |       |
+      +-------+------------------------------+-------------+-------+
+      | i     | Identifier Prefix (AID)      |             |       |
+      +-------+------------------------------+-------------+-------+
+      | s     | Sequence Number              |             |       |
+      +-------+------------------------------+-------------+-------+
+      | t     | Message Type                 |             |       |
+      +-------+------------------------------+-------------+-------+
+      | te    | Last received Event Message  |             |       |
+      |       | Type in a Key State Notice   |             |       |
+      +-------+------------------------------+-------------+-------+
+      | d     | Event SAID                   |             |       |
+      +-------+------------------------------+-------------+-------+
+      | p     | Prior Event SAID             |             |       |
+      +-------+------------------------------+-------------+-------+
+      | kt    | Keys Signing Threshold       |             |       |
+      +-------+------------------------------+-------------+-------+
+      | k     | List of Signing Keys         |             |       |
+      |       | (ordered key set)            |             |       |
+      +-------+------------------------------+-------------+-------+
+      | nt    | Next Keys Signing Threshold  |             |       |
+      +-------+------------------------------+-------------+-------+
+      | n     | List of Next Key Digests     |             |       |
+      |       | (ordered key digest set)     |             |       |
+      +-------+------------------------------+-------------+-------+
+      | bt    | Backer Threshold             |             |       |
+      +-------+------------------------------+-------------+-------+
+      | b     | List of Backers (ordered     |             |       |
+      |       | backer set of AIDs)          |             |       |
+      +-------+------------------------------+-------------+-------+
+      | br    | List of Backers to Remove    |             |       |
+      |       | (ordered backer set of AIDS) |             |       |
+      +-------+------------------------------+-------------+-------+
+      | ba    | List of Backers to Add       |             |       |
+      |       | (ordered backer set of AIDs) |             |       |
+      +-------+------------------------------+-------------+-------+
+      | c     | List of Configuration        |             |       |
+      |       | Traits/Modes                 |             |       |
+      +-------+------------------------------+-------------+-------+
+      | a     | List of Anchors (seals)      |             |       |
+      +-------+------------------------------+-------------+-------+
+      | di    | Delegator Identifier Prefix  |             |       |
+      |       | (AID)                        |             |       |
+      +-------+------------------------------+-------------+-------+
+      | rd    | Merkle Tree Root Digest      |             |       |
+      |       | (SAID)                       |             |       |
+      +-------+------------------------------+-------------+-------+
+      | ee    | Last Establishment Event Map |             |       |
+      +-------+------------------------------+-------------+-------+
+      | vn    | Version Number               |             |       |
+      |       | ("major.minor")              |             |       |
+      +-------+------------------------------+-------------+-------+
 
-                                  Table 4
+                                 Table 4
 
-   A field label may have different values in different contexts but not
-   a different *_type_* for its field value.  Although some field value
-   types may be a union of elemental value types.
+   A field label may have different values in different contexts but
+   MUST not have a different field value *_type_*. This requirement
+   makes it easier to implement in strongly typed languages with rigid
+   data structures.  Notwithstanding the former, some field value types
+   MAY be a union of elemental value types.
 
    Because the order of appearance of fields is enforced in all KERI
-   messages, where a label appears (in which message or which block in a
-   message) the message in which a label appears adds the necessary
-   context to fully determine its meaning.
+   data structures, whenever a field appears (in a given message or
+   block in a message) the message in which a label appears MUST provide
+   the necessary context to fully determine the meaning of that field
+   and hence the field value type and associated semantics.
 
-5.1.1.  Special Label Ordering Requirements
+5.2.  Compact Labels
 
-   The version string, v, field MUST be the first field when it appears.
+   The primary field labels are compact in that they use only one or two
+   characters.  KERI is meant to support resource-constrained
+   applications such as supply chain or IoT (Internet of Things)
+   applications.  Compact labels better support resource-constrained
+   applications in general.  With compact labels, the over-the-wire
+   verifiable signed serialization consumes a minimum amount of
+   bandwidth.  Nevertheless, without loss of generality, a one-to-one
+   normative semantic overlay using more verbose expressive field labels
+   may be applied to the normative compact labels after verification of
+   the over-the-wire serialization.  This approach better supports
+   bandwidth and storage constraints on transmission while not
+   precluding any later semantic post-processing.  This is a well-known
+   design pattern for resource-constrained applications.
+
+5.3.  Special Label Ordering Requirements
+
+5.4.  Version String Field
+
+   The version string, v, field MUST be the first field in any top-level
+   KERI field map in which it appears.  Typically the version string, v,
+   field appears as the first top-level field in a KERI message body.
    This enables a RegEx stream parser to consistently find the version
-   string in any of the supported serialization formats.
+   string in any of the supported serialization formats for KERI
+   messages.  The v field provides a regular expression target for
+   determining the serialization format and size (character count) of a
+   serialized KERI message body.  A stream parser may use the version
+   string to extract and deserialize (deterministically) any serialized
+   KERI message body in a stream of serialized KERI messages.  Each KERI
+   message in a stream may use a different serialization type.
 
-   There are two other identifiers that appear after v when v is present
-   or may appear first when v is not present.  These are i and d.
+   The format of the version string is KERIvvSSSShhhhhh_. The first four
+   characters KERI indicate the enclosing field map serialization.  The
+   next two characters, vv provide the lowercase hexadecimal notation
+   for the major and minor version numbers of the version of the KERI
+   specification used for the serialization.  The first v provides the
+   major version number and the second v provides the minor version
+   number.  For example, 01 indicates major version 0 and minor version
+   1 or in dotted-decimal notation 0.1.  Likewise 1c indicates major
+   version 1 and minor version decimal 12 or in dotted-decimal notation
+   1.12.  The next four characters SSSS indicate the serialization type
+   in uppercase.  The four supported serialization types are JSON, CBOR,
+   MGPK, and CESR for the JSON, CBOR, MessagePack, and CESR
+   serialization standards respectively
+   [JSOND][RFC4627][CBORC][RFC8949][MGPK][CESR-ID].  The next six
+   characters provide in lowercase hexadecimal notation the total number
+   of characters in the serialization of the KERI message body.  The
+   maximum length of a given KERI message body is thereby constrained to
+   be _2^24 = 16,777,216_ characters in length.  The final character -
+   is the version string terminator.  This enables later versions of
+   ACDC to change the total version string size and thereby enable
+   versioned changes to the composition of the fields in the version
+   string while preserving deterministic regular expression
+   extractability of the version string.  Although a given KERI
+   serialization type may use field map delimiters or framing code
+   characters that appear before (i.e. prefix) the version string field
+   in a serialization, the set of possible prefixes is sufficiently
+   constrained by the allowed serialization protocols to guarantee that
+   a regular expression can determine unambiguously the start of any
+   ordered field map serialization that includes the version string as
+   the first field value.  Given the version string, a parser may then
+   determine the end of the serialization so that it can extract the
+   full serialization (KERI message body) from the stream without first
+   deserializing it or parsing it field-by-field.  This enables
+   performant stream parsing and off-loading of KERI message streams
+   that include any or all of the supported serialization types
+   interleaved in a single stream.
 
-   In this context, i is short for ai, which is short for the Autonomic
-   IDentifier (AID).  The AID given by the i field may also be thought
-   of as a securely attributable identifier, authoritative identifier,
-   authenticatable identifier, authorizing identifier, or authoring
-   identifier.  Because AIDs may be namespaced, the essential component
-   of an AID is the cryptographically derived Controller identifier
-   prefix.  An AID MUST be self-certifying.  An AID may be simply the
-   Controller identifier prefix or MAY be namespaced as part of a W3C
-   Decentralized IDentifier (DID) [W3C_DID] or other namespace
-   convention.  Another way of thinking about an i field is that it is
-   the identifier of the authoritative entity to which a statement may
-   be securely attributed, thereby making the statement verifiably
-   authentic via a non-repudiable signature made by that authoritative
-   entity as the Controller of the private key(s).
+5.5.  SAID (Self-Addressing IDentifier) Fields
 
+   Some fields in KERI data structures may have for their value a SAID.
    In this context, d is short for digest, which is short for Self-
-   Addressing IDentifier (SAID).  The SAID given the the d field is ToDo
+   Addressing IDentifier (SAID).  A SAID follows the SAID protocol
+   [SAID-ID].  Essentially a SAID is a Self-Addressing IDentifier (self-
+   referential content addressable).  A SAID is a special type of
+   cryptographic digest of its encapsulating _field map_ (block).  The
+   encapsulating block of a SAID is called a SAD (Self-Addressed Data).
+   Using a SAID as a _field value_ enables a more compact but secure
+   representation of the associated block (SAD) from which the SAID is
+   derived.  Any nested field map that includes a SAID field (i.e. is,
+   therefore, a SAD) may be compacted into its SAID.  The uncompacted
+   blocks for each associated SAID may be attached or cached to optimize
+   bandwidth and availability without decreasing security.
 
-5.2.  Version String Field
+   Each SAID provides a stable universal cryptographically verifiable
+   and agile reference to its encapsulating block (serialized _field
+   map_).
+
+   Recall that a cryptographic commitment (such as a digital signature
+   or cryptographic digest) on a given digest with sufficient
+   cryptographic strength including collision resistance [HCR][QCHC] is
+   equivalent to a commitment to the block from which the given digest
+   was derived.  Specifically, a digital signature on a SAID makes a
+   verifiable cryptographic non-repudiable commitment that is equivalent
+   to a commitment on the full serialization of the associated block
+   from which the SAID was derived.  This enables reasoning about KERI
+   data structures in whole or in part via their SAIDS in a fully
+   interoperable, verifiable, compact, and secure manner.  This also
+   supports the well-known bow-tie model of Ricardian Contracts [RC].
+   This includes reasoning about the whole KERI data structure given by
+   its top-level SAID, d, field as well as reasoning about any nested or
+   attached data structures using their SAIDS.
+
+5.6.  AID (Autonomic IDentifier) Fields
+
+   Some fields, such as the i and di fields, MUST each have an AID
+   (Autonomic IDentifier) as its value.  An AID is a fully qualified
+   Self-Certifying IDentifier (SCID) as described above [KERI][KERI-ID].
+   An AID MUST be self-certifying.  In this context, i is short for ai,
+   which is short for the Autonomic IDentifier (AID).  The AID given by
+   the i field may also be thought of as a securely attributable
+   identifier, authoritative identifier, authenticatable identifier,
+   authorizing identifier, or authoring identifier.Another way of
+   thinking about an i field is that it is the identifier of the
+   authoritative entity to which a statement may be securely attributed,
+   thereby making the statement verifiably authentic via a non-
+   repudiable signature made by that authoritative entity as the
+   Controller of the private key(s).
+
+5.6.1.  Namespaced AIDs
+
+   Because KERI is agnostic about the namespace for any particular AID,
+   different namespace standards may be used to express KERI AIDs within
+   AID fields in an ACDC.  The examples below use the W3C DID namespace
+   specification with the did:keri method [DIDK-ID].  But the examples
+   would have the same validity from a KERI perspective if some other
+   supported namespace was used or no namespace was used at all.  The
+   latter case consists of a bare KERI AID (identifier prefix).
+
+   ToDo Explain agnosticism vis a vis namespaces Because AIDs may be
+   namespaced, the essential component of an AID is the
+   cryptographically derived Controller identifier prefix.  An AID MUST
+   be the Controller identifier prefix.  part of a W3C Decentralized
+   IDentifier (DID) [W3C_DID] or other namespace convention.
+
+   Version string namespaces the AIDs as KERI so don't need any
+   namespacing on a per identifier basis.
+
+5.7.  Version String Field
 
    Get from ACDC
 
-5.3.  Next Threshold Field
+5.8.  Next Threshold Field
 
    The nt field is next threshold for the next establishment event.
 
-5.4.  Common Normalized ACDC and KERI Labels
+5.9.  Common Normalized ACDC and KERI Labels
 
    v is the version string d is the SAID of the enclosing block or map i
    is a KERI identifier AID a is the data attributes or data anchors
@@ -1580,28 +1729,26 @@ Table of Contents
 
 6.  Seals
 
-6.1.  Seals
-
-6.1.1.  Digest Seal
+6.1.  Digest Seal
 
    {
      "d": "Eabcde..."
    }
 
-6.1.2.  Merkle Tree Root Digest Seal
+6.2.  Merkle Tree Root Digest Seal
 
    {
      "rd": "Eabcde8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
    }
 
-6.1.3.  Backer Seal
+6.3.  Backer Seal
 
    {
      "bi": "BACDEFG8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM",
      "d" : "EFGKDDA8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
    }
 
-6.1.4.  Event Seal
+6.4.  Event Seal
 
    {
 
@@ -1610,7 +1757,7 @@ Table of Contents
      "d": "Eabcde8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM"
    }
 
-6.1.5.  Last Establishment Event Seal
+6.5.  Last Establishment Event Seal
 
    {
      "i": "BACDEFG8JZAoTNZH3ULvaU6JR2nmwyYAfSVPzhzS6b5CM",
@@ -1627,11 +1774,7 @@ Table of Contents
    are not common.  The common fields are v, t, d.  The newly revised
    messages and seals are shown below.
 
-8.  Event Messages
-
-8.1.  Rotation
-
-8.1.1.  Inception Event
+7.1.  Inception Event
 
    When the AID in the i field is a self-addressing self-certifying AID,
    the new Inception Event has two qualified digest fields.  In this
@@ -1651,9 +1794,7 @@ Table of Contents
    replaced with dummy characters # of the correct length and then the
    digest is computed.  This is the standard SAID algorithm.
 
-8.2.  Inception Event Message
-
-8.2.1.  Event Message Body
+7.2.  Inception Event Message Body
 
    {
      "v": "KERI10JSON0001ac_",
@@ -1688,7 +1829,7 @@ Table of Contents
      "a": []
    }
 
-8.3.  Rotation Event Message
+7.3.  Rotation Event Message Body
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1719,7 +1860,7 @@ Table of Contents
      "a" : []
    }
 
-8.3.1.  Interaction Event (Also delegating Interaction)
+7.4.  Interaction Event Message Body
 
    {
      "v": "KERI10JSON00011c_",
@@ -1738,7 +1879,13 @@ Table of Contents
      ]
    }
 
-8.3.2.  Delegated Inception Event
+8.  Delegated Key Event Messages
+
+   ToDo in delegation section below.  Delegated custodial example with
+   partial rotation and using 0 fraction signing weights on exposed pre-
+   rotated keys
+
+8.1.  Delegated Inception Event Message Body
 
    {
      "v": "KERI10JSON0001ac_",
@@ -1774,7 +1921,7 @@ Table of Contents
      "di": "EJJR2nmwyYAZAoTNZH3ULvaU6Z-i0d8fSVPzhzS6b5CM"
    }
 
-8.3.3.  Delegated Rotation Event
+8.2.  Delegated Rotation Event Message Body
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1808,7 +1955,7 @@ Table of Contents
 
 9.  Receipt Messages
 
-9.1.  Non-Transferable Prefix Signer Receipt
+9.1.  Non-Transferable Prefix Signer Receipt Message Body
 
    For receipts, the d field is the SAID of the associated event, not
    the receipt message itself.
@@ -1821,7 +1968,7 @@ Table of Contents
      "s": "1"
    }
 
-9.1.1.  Transferable Prefix Signer Receipt
+9.2.  Transferable Prefix Signer Receipt Message Body
 
    For receipts, the d field is the SAID of the associated event, not
    the receipt message itself.
@@ -1840,11 +1987,9 @@ Table of Contents
        }
    }
 
-10.  Delegated Key Event Messages
+10.  Other Messages
 
-11.  Other Messages
-
-11.1.  Query Message
+10.1.  Query Message Message Body
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1877,7 +2022,7 @@ Table of Contents
      }
    }
 
-11.1.1.  Reply Message
+10.2.  Reply Message Body
 
    {
      "v" : "KERI10JSON00011c_",
@@ -1908,7 +2053,25 @@ Table of Contents
      }
    }
 
-11.1.2.  Bare Message
+10.3.  Prod Message Body
+
+   {
+     "v": "KERI10JSON00011c_",
+     "t": "prd",
+     "d": "EZ-i0d8JZAoTNZH3ULaU6JR2nmwyvYAfSVPzhzS6b5CM",
+     "r": "sealed/data",
+     "rr": "process/sealed/data"
+     "q":
+     {
+        d" : "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM",
+       "i" : "EAoTNZH3ULvYAfSVPzhzS6baU6JR2nmwyZ-i0d8JZ5CM",
+       "s" : "5",
+       "ri": "EAoTNZH3ULvYAfSVPzhzS6baU6JR2nmwyZ-i0d8JZ5CM",
+       "dd": "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM"
+     }
+   }
+
+10.4.  Bare Message Body
 
    Reference to the anchoring seal is provided as an attachment to the
    bare, bre message.  A bare, 'bre', message is a SAD item with an
@@ -1929,25 +2092,7 @@ Table of Contents
      }
    }
 
-11.1.3.  Prod Message
-
-   {
-     "v": "KERI10JSON00011c_",
-     "t": "prd",
-     "d": "EZ-i0d8JZAoTNZH3ULaU6JR2nmwyvYAfSVPzhzS6b5CM",
-     "r": "sealed/data",
-     "rr": "process/sealed/data"
-     "q":
-     {
-        d" : "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM",
-       "i" : "EAoTNZH3ULvYAfSVPzhzS6baU6JR2nmwyZ-i0d8JZ5CM",
-       "s" : "5",
-       "ri": "EAoTNZH3ULvYAfSVPzhzS6baU6JR2nmwyZ-i0d8JZ5CM",
-       "dd": "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM"
-     }
-   }
-
-11.1.4.  Exchange Message (exchange)
+10.5.  Exchange Message Body
 
    {
      "v": "KERI10JSON00006a_",
@@ -1961,9 +2106,9 @@ Table of Contents
      }
    }
 
-11.2.  Notices Embedded in Reply Messages
+11.  Notices Embedded in Reply Messages
 
-11.2.1.  Key State Notice (KSN)
+11.1.  Key State Notice (KSN)
 
    {
      "v": "KERI10JSON0001d9_",
@@ -1993,7 +2138,7 @@ Table of Contents
      "di": ""
    }
 
-11.2.1.1.  Embedded in Reply
+11.2.  Embedded in Reply
 
    {
      "v" : "KERI10JSON00011c_",
@@ -2031,7 +2176,7 @@ Table of Contents
        }
    }
 
-11.2.2.  Transaction State Notice (TSN)
+11.3.  Transaction State Notice (TSN)
 
    {
      "v": "KERI10JSON0001b0_",
@@ -2056,7 +2201,7 @@ Table of Contents
      "c": []
    }
 
-11.2.2.1.  Embedded in Reply
+11.4.  Embedded in Reply
 
    {
      "v" : "KERI10JSON00011c_",
@@ -2089,9 +2234,9 @@ Table of Contents
        }
    }
 
-11.3.  Transaction Event Log Messages
+12.  Transaction Event Log Messages
 
-11.3.1.  Registry Inception Event
+12.1.  Registry Inception Event Message Body
 
    {
      "v" : "KERI10JSON00011c_",
@@ -2105,7 +2250,7 @@ Table of Contents
      "c" : ["NB"]
    }
 
-11.3.2.  Registry Rotation Event
+12.2.  Registry Rotation Event Message Body
 
    {
      "v" : "KERI10JSON00011c_",
@@ -2119,7 +2264,7 @@ Table of Contents
      "ba" : []
    }
 
-11.3.3.  Backerless Credential Issuance
+12.3.  Backerless ACDC Issuance Message Body
 
    {
      "v" : "KERI10JSON00011c_",
@@ -2131,7 +2276,7 @@ Table of Contents
      "dt": "2020-08-01T12:20:05.123456+00:00"
    }
 
-11.3.4.  Backerless Credential Revocation
+12.4.  Backerless ACDC Revocation Message Body
 
    {
      "v" : "KERI10JSON00011c_",
@@ -2144,7 +2289,7 @@ Table of Contents
      "dt": "2020-08-01T12:20:05.123456+00:00"
    }
 
-11.3.5.  Backer Credential Issuance
+12.5.  Backered ACDC Issuance Message Body
 
    {
      "v" : "KERI10JSON00011c_",
@@ -2161,7 +2306,7 @@ Table of Contents
      "dt": "2020-08-01T12:20:05.123456+00:00"
    }
 
-11.3.6.  Backer Credential Revocation
+12.5.1.  Backered ACDC Revocation Message Body
 
    {
      "v" : "KERI10JSON00011c_",
@@ -2179,9 +2324,9 @@ Table of Contents
      "dt": "2020-08-01T12:20:05.123456+00:00"
    }
 
-12.  Appendix: Cryptographic Strength and Security
+13.  Appendix: Cryptographic Strength and Security
 
-12.1.  Cryptographic Strength
+13.1.  Cryptographic Strength
 
    For crypto-systems with _perfect-security_, the critical design
    parameter is the number of bits of entropy needed to resist any
@@ -2237,7 +2382,7 @@ Table of Contents
    with perfect security and 128 bits of cryptographic strength is
    computationally infeasible to break via brute force attack.
 
-12.2.  Information Theoretic Security and Perfect Security
+13.2.  Information Theoretic Security and Perfect Security
 
    The highest level of cryptographic security with respect to a
    cryptographic secret (seed, salt, or private key) is called
@@ -2255,7 +2400,7 @@ Table of Contents
    of secret sharing [SShr] that uses the same technique as a _one-time-
    pad_.
 
-13.  Conventions and Definitions
+14.  Conventions and Definitions
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -2263,17 +2408,17 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-14.  Security Considerations
+15.  Security Considerations
 
    TODO Security
 
-15.  IANA Considerations
+16.  IANA Considerations
 
    This document has no IANA actions.
 
-16.  References
+17.  References
 
-16.1.  Normative References
+17.1.  Normative References
 
    [CBORC]    "CBOR Mapping Object Codes", n.d.,
               <https://en.wikipedia.org/wiki/CBOR>.
@@ -2321,7 +2466,7 @@ Table of Contents
               Internet Draft", 2022,
               <https://github.com/WebOfTrust/ietf-said>.
 
-16.2.  Informative References
+17.2.  Informative References
 
    [BBGP]     Birge-Lee, H., "Bamboozling certificate authorities with
               BGP", vol. 27th USENIX Security Symposium, no. 18, pp.
@@ -2487,6 +2632,9 @@ Table of Contents
 
    [RB]       "Rainbow Table", n.d.,
               <https://en.wikipedia.org/wiki/Rainbow_table>.
+
+   [RC]       "Ricardian Contract", n.d.,
+              <https://en.wikipedia.org/wiki/Ricardian_contract>.
 
    [RFC0020]  Cerf, V., "ASCII format for network interchange", STD 80,
               RFC 20, DOI 10.17487/RFC0020, October 1969,

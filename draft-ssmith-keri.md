@@ -178,6 +178,20 @@ informative:
     target: https://en.wikipedia.org/wiki/Information_theory
     title: Information Theory
 
+  BLAKE3:
+    target: ttps://github.com/BLAKE3-team/BLAKE3
+    title: BLAKE3
+
+  BLAKE3Spec:
+    target: https://github.com/BLAKE3-team/BLAKE3-specs/blob/master/blake3.pdf
+    title: BLAKE3 one function, fast everywhere
+
+  BLAKE3Hash:
+    target: https://www.infoq.com/news/2020/01/blake3-fast-crypto-hash/
+    title: “BLAKE3 Is an Extremely Fast, Parallel Cryptographic Hash”
+    seriesinfo: InfoQ
+    date: 2020-01-12
+
   QCHC:
     target: https://cr.yp.to/hash/collisioncost-20090823.pdf
     title: "Cost analysis of hash collisions: Will quantum computers make SHARCS obsolete?"
@@ -272,7 +286,6 @@ informative:
   Hash:
     target: https://en.wikipedia.org/wiki/Cryptographic_hash_function
     title: Cryptographic Hash Function
-
 
   W3C_DID:
     target: https://w3c-ccg.github.io/did-spec/
@@ -409,14 +422,11 @@ informative:
       ins: "H. Birge-Lee"
       name: "H. Birge-Lee"
 
-
   RFC6962: CT
-
 
   CTE:
     target: https://certificate.transparency.dev
     title: Certificate Transparency Ecosystem
-
 
   CTAOL:
     target: https://queue.acm.org/detail.cfm?id=2668154
@@ -442,19 +452,9 @@ informative:
     title: Efficient sparse merkle trees
     seriesinfo: "Nordic Conference on Secure IT Systems, pp. 199-215, 2016"
 
-  BLAKE3:
-    target: ttps://github.com/BLAKE3-team/BLAKE3
-    title: BLAKE3
-
-  BLAKE3Spec:
-    target: https://github.com/BLAKE3-team/BLAKE3-specs/blob/master/blake3.pdf
-    title: BLAKE3 one function, fast everywhere
-
-  BLAKE3Hash:
-    target: https://www.infoq.com/news/2020/01/blake3-fast-crypto-hash/
-    title: “BLAKE3 Is an Extremely Fast, Parallel Cryptographic Hash”
-    seriesinfo: InfoQ
-    date: 2020-01-12
+  RC:
+    target: https://en.wikipedia.org/wiki/Ricardian_contract
+    title: Ricardian Contract
 
 
 --- abstract
@@ -855,7 +855,7 @@ The format of the version string is `KERIvvSSSShhhhhh_`. The first four characte
 ## SAID (Self-Addressing IDentifier) Fields
 
 
-Some fields in KERI data structures may have for their value a SAID. In this context, `d` is short for digest, which is short for Self-Addressing IDentifier (SAID). A SAID follows the SAID protocol {{SAID_ID}}. Essentially a SAID is a Self-Addressing IDentifier (self-referential content addressable). A SAID is a special type of cryptographic digest of its encapsulating *field map* (block). The encapsulating block of a SAID is called a SAD (Self-Addressed Data). Using a SAID as a *field value* enables a more compact but secure representation of the associated block (SAD) from which the SAID is derived. Any nested field map that includes a SAID field (i.e. is, therefore, a SAD) may be compacted into its SAID. The uncompacted blocks for each associated SAID may be attached or cached to optimize bandwidth and availability without decreasing security.
+Some fields in KERI data structures may have for their value a SAID. In this context, `d` is short for digest, which is short for Self-Addressing IDentifier (SAID). A SAID follows the SAID protocol {{SAID-ID}}. Essentially a SAID is a Self-Addressing IDentifier (self-referential content addressable). A SAID is a special type of cryptographic digest of its encapsulating *field map* (block). The encapsulating block of a SAID is called a SAD (Self-Addressed Data). Using a SAID as a *field value* enables a more compact but secure representation of the associated block (SAD) from which the SAID is derived. Any nested field map that includes a SAID field (i.e. is, therefore, a SAD) may be compacted into its SAID. The uncompacted blocks for each associated SAID may be attached or cached to optimize bandwidth and availability without decreasing security.
 
 Each SAID provides a stable universal cryptographically verifiable and agile reference to its encapsulating block (serialized *field map*).
 
@@ -865,14 +865,14 @@ Recall that a cryptographic commitment (such as a digital signature or cryptogra
 
 ## AID (Autonomic IDentifier) Fields
 
-Some fields, such as the `i` and `di` fields, MUST each have an AID (Autonomic IDentifier) as its value. An AID is a fully qualified Self-Certifying IDentifier (SCID) as described above {{KERI}}{{KERI_ID}}. An AID MUST be self-certifying.
+Some fields, such as the `i` and `di` fields, MUST each have an AID (Autonomic IDentifier) as its value. An AID is a fully qualified Self-Certifying IDentifier (SCID) as described above {{KERI}}{{KERI-ID}}. An AID MUST be self-certifying.
 In this context, `i` is short for `ai`, which is short for the Autonomic IDentifier (AID). The AID given by the `i` field may also be thought of as a securely attributable identifier, authoritative identifier, authenticatable identifier, authorizing identifier, or authoring identifier.Another way of thinking about an `i` field is that it is the identifier of the authoritative entity to which a statement may be securely attributed, thereby making the statement verifiably authentic via a non-repudiable signature made by that authoritative entity as the Controller of the private key(s).
 
 
 
 
 ### Namespaced AIDs
-Because KERI is agnostic about the namespace for any particular AID, different namespace standards may be used to express KERI AIDs within AID fields in an ACDC. The examples below use the W3C DID namespace specification with the `did:keri` method {{DIDK_ID}}. But the examples would have the same validity from a KERI perspective if some other supported namespace was used or no namespace was used at all. The latter case consists of a bare KERI AID (identifier prefix).
+Because KERI is agnostic about the namespace for any particular AID, different namespace standards may be used to express KERI AIDs within AID fields in an ACDC. The examples below use the W3C DID namespace specification with the `did:keri` method {{DIDK-ID}}. But the examples would have the same validity from a KERI perspective if some other supported namespace was used or no namespace was used at all. The latter case consists of a bare KERI AID (identifier prefix).
 
 ToDo Explain agnosticism vis a vis namespaces
  Because AIDs may be namespaced, the essential component of an AID is the cryptographically derived Controller identifier prefix.  An AID MUST be the Controller identifier prefix.  part of a W3C Decentralized IDentifier (DID) {{W3C_DID}} or other namespace convention.
